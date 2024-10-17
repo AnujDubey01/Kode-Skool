@@ -1,0 +1,60 @@
+.navCustom {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.logo img {
+    width: 200px;
+}
+
+.navbar {
+    margin: 0 0.8rem;
+}
+
+.txtBtn {
+    color: #183b56;
+
+    &:hover {
+        color: #2294ed;
+    }
+}
+
+.btn0 {
+    border: 2px solid rgb(25, 57, 88);
+    color: rgb(25, 57, 88);
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 9px 20px;
+
+    &:hover {
+        border-color: #2294ed;
+        color: #2294ed;
+
+    }
+}
+
+.btn1 {
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    background: linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%);
+    border-radius: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02rem;
+    transition: background-color 0.3s linear;
+
+    &:hover {
+        background: none;
+        background-color: #2294ed;
+        color: white;
+
+    }
+}
+
+.center-btns {
+    justify-content: center;
+    gap: 1.2rem;
+}
