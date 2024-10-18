@@ -19,7 +19,7 @@
     padding: 20px 60px;
     background: linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%);
     border-radius: 18px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.05rem;
     font-size: 1.3rem;
     transition: background-position 0.5s linear;
@@ -364,6 +364,12 @@ header {
 
 /* Responsiveness Media Query Code  */
 
+@media screen and (max-width:1300px) {
+    header {
+        padding-top: 10rem;
+    }
+}
+
 @media screen and (max-width:1024px) {
     .head-title {
         font-size: 3.5rem;
@@ -392,15 +398,37 @@ header {
 
 }
 
-@media screen and (max-width:769px) {
-
-
+@media screen and (max-width: 992px) {
     .head-title {
+        font-size: 3rem;
+    }
+
+    .btn2 {
+        padding: 15px 40px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width:769px) {
+    #hero {
+        min-height: 78vh;
+    }
+
+    header {
+        padding-top: 8rem;
+    }
+
+    .head-title,
+    .features-head {
         font-size: 2.5rem;
+        font-weight: 600;
+        text-align: center;
     }
 
     .head-txt {
         font-size: 1rem;
+        margin-bottom: 1.2rem !important;
     }
 
     .hero-img {
@@ -408,7 +436,7 @@ header {
     }
 
     header .btn2 {
-        padding: 15px 40px;
+        padding: 12px 60px;
         font-size: 1rem;
         border-radius: 10px;
     }
@@ -425,12 +453,56 @@ header {
         font-size: 0.8rem;
     }
 
+    .skills-container {
+        padding: 1.5rem 3.5rem;
+    }
+
+    .skills-heading {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .skill-card {
+        width: 150px;
+        height: 150px;
+        min-width: 150px;
+        min-height: 150px;
+    }
+
+    .skill-icon-container {
+        width: 75px;
+        height: 75px;
+        min-width: 75px;
+        min-height: 75px;
+    }
+
+    .skill-card i {
+        font-size: 1.5rem;
+    }
+
+    .skill-card h3 {
+        font-size: 0.8rem;
+        margin-top: 7px;
+    }
+
     .features-img {
         max-width: 50%;
     }
 
     .features-sub-head {
         font-size: 1.9rem;
+    }
+
+    .features-sub-head,
+    .features-details {
+        text-align: center;
+        width: 80%;
+        margin: auto;
+    }
+
+    .faq-section-container{
+        max-width: 100% !important;
     }
 
     #faqContainer {
@@ -452,8 +524,94 @@ header {
 
 }
 
-@media screen and (max-width:426px) {
+@media screen and (max-width: 570px) {
+    .banner-content {
+        width: 95%;
+        border-radius: 5px;
+        box-shadow: 0 0 20px 4px rgba(0, 0, 255, 0.3);
+    }
 
+    #skills {
+        padding: 0 !important;
+    }
+
+    .skills-container {
+        width: 100%;
+        border-radius: 0;
+        padding: 1.5rem 0.8rem;
+        gap: 1.5rem;
+    }
+
+    .skills-heading {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .skills-box {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: nowrap !important;
+        gap: 30px !important;
+        justify-content: start !important;
+        align-items: start !important;
+        width: 100%;
+        max-width: 100%;
+        overflow-y: scroll;
+    }
+
+    .skill-card {
+        width: 200px;
+        height: 200px;
+        min-width: 200px;
+        min-height: 200px;
+    }
+
+    .skill-icon-container {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        min-height: 100px;
+    }
+
+    .skill-card i {
+        font-size: 2rem;
+    }
+
+    .skill-card h3 {
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+
+    .ex-btn {
+        padding: 0.4rem 3rem !important;
+    }
+
+    .btn3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .section-heading {
+        font-size: 2.2rem;
+        font-weight: 600;
+    }
+
+    .features-container {
+        margin-top: 0.5rem !important;
+    }
+
+    .features-sub-head {
+        font-size: 1.7rem;
+        font-weight: 600;
+    }
+
+    .features-content {
+        margin-top: 1.5rem !important;
+    }
+}
+
+@media screen and (max-width:426px) {
 
     .head-title {
         font-size: 2.2rem;
@@ -463,23 +621,102 @@ header {
         font-size: 0.9rem;
     }
 
-
-
-    .skills-heading {
-        font-size: 1.5rem;
-    }
-
-    .skills-container {
-        padding: 2.3rem 2rem;
+    .sub-head {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem !important;
     }
 
     #banner {
-        margin: -1.6rem 1rem 0 1rem
+        margin: -1.6rem 1rem 0 1rem;
+    }
+
+    .skill-card {
+        width: 150px;
+        height: 150px;
+        min-width: 150px;
+        min-height: 150px;
+    }
+
+    .skill-icon-container {
+        width: 75px;
+        height: 75px;
+        min-width: 75px;
+        min-height: 75px;
+    }
+
+    .skill-card i {
+        font-size: 1.5rem;
+    }
+
+    .skill-card h3 {
+        font-size: 0.8rem;
+        margin-top: 7px;
+    }
+
+    .ex-btn {
+        padding: 0.3rem 2.5rem !important;
+        border-radius: 0.6rem;
+    }
+
+    .btn3 {
+        font-size: 1.05rem !important;
     }
 
     .section-heading {
-        font-size: 1.7rem;
+        font-size: 2rem;
         margin-left: 2vw;
+    }
+
+    .card {
+        border-radius: 0.6rem;
+        width: 70%;
+        margin: auto;
+        height: max-content;
+        padding: 1.1rem !important;
+    }
+
+    .card-img-top {
+        border-radius: 0.5rem;
+    }
+
+    .card-body {
+        padding: 15px 0 0 0 !important;
+    }
+
+    .verify-tick {
+        max-height: 1.1rem;
+        margin-bottom: 2px;
+    }
+
+    .card-detail {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+        line-height: 1.3;
+    }
+
+    .features-head {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    .features-container>.row {
+        display: block;
+        position: relative;
+        min-height: 400px;
+        overflow: hidden;
+    }
+
+    .features-box {
+        position: absolute;
+    }
+
+    .features-box.active {
+        z-index: 1;
+    }
+
+    .features-content {
+        gap: 0.2rem !important;
     }
 
     .features-sub-head {
@@ -488,6 +725,10 @@ header {
 
     .features-details {
         font-size: 0.8rem;
+    }
+
+    .faq-section {
+        margin-top: 3rem !important;
     }
 
     .download-section-head {

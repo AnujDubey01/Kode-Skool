@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../css/landingPage.css';
 import Navbar from '../Components/Navbar';
 import heroImage from '../assets/img/header-img.png';
@@ -61,6 +61,42 @@ function LandingPage() {
       answer: 'Answer10',
     },
   ];
+
+  const [activeFeature, setActiveFeature] = useState(0);
+  const features = [
+    {
+      id: 1,
+      img: bigFeature1,
+      title: "Learn with animated videos",
+      description: "Engage with fun and interactive animations that make coding concepts easy to understand and remember."
+    },
+    {
+      id: 2,
+      img: bigFeature2,
+      title: "Code and create with ease",
+      description: "Our simple editor helps students from 8th to 12th grade practice and improve their coding skills."
+    },
+    {
+      id: 3,
+      img: bigFeature3,
+      title: "Master Coding with Our Interactive Editor",
+      description: "Practice coding easily and improve your skills with our simple and user-friendly editor."
+    },
+    {
+      id: 4,
+      img: bigFeature4,
+      title: "Assessments, Quizzes, Tests",
+      description: "Easily launch live assignments, quizzes and tests. Student results are automatically entered in the online gradebook."
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveFeature((prevIndex) => (prevIndex + 1) % features.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [features.length]);
 
   return (
     <>
@@ -215,56 +251,65 @@ function LandingPage() {
         <div className="features-head mt-5">
           <h1 className="section-heading">What KodeSkool is providing?</h1>
         </div>
-        <div className="container mt-5 pt-3">
+        <div className="features-container container mt-5 pt-3">
           <div className="row">
-            <div className="container my-5 px-4">
-              <div className="row">
-                <div className="col-md-5 d-flex justify-content-center align-items-center">
-                  <img src={bigFeature1} className="features-img" alt="" />
-                </div>
-                <div className="col-md-7 mt-5 d-flex flex-column justify-content-center gap-2">
-                  <h4 className="features-sub-head">Learn with animated videos</h4>
-                  <p className="features-details">Engage with fun and interactive animations that make coding concepts easy to understand and remember.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="container my-5 px-4">
-              <div className="row">
-                <div className="col-md-7 mt-5 d-flex flex-column justify-content-center gap-2 order-2 order-md-1">
-                  <h4 className="features-sub-head">Code and create with ease</h4>
-                  <p className="features-details">Our simple editor helps students from 8th to 12th grade practice and improve their coding skills.</p>
-                </div>
-                <div className="col-md-5 d-flex justify-content-center align-items-center order1 order-md-2">
-                  <img src={bigFeature2} className="features-img" alt="" />
-                </div>
-              </div>
-            </div>
-
-            <div className="container my-5 px-4">
-              <div className="row">
-                <div className="col-md-5 d-flex justify-content-center align-items-center">
-                  <img src={bigFeature3} className="features-img" alt="" />
-                </div>
-                <div className="col-md-7 mt-5 d-flex flex-column justify-content-center gap-2">
-                  <h4 className="features-sub-head">Master Coding with Our Interactive Editor</h4>
-                  <p className="features-details">Practice coding easily and improve your skills with our simple and user-friendly editor.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="container my-5 px-4">
-              <div className="row">
-                <div className="col-md-7 mt-5 d-flex flex-column justify-content-center gap-2 order-2 order-md-1">
-                  <h4 class="features-sub-head">Assessments, Quizzes, Tests</h4>
-                  <p class="features-details">Easily launch live assignments, quizzes and tests. Student
-                    results are automatically entered in the online gradebook. </p>
-                </div>
-                <div className="col-md-5 d-flex justify-content-center align-items-center order-1 order-md-2">
-                  <img src={bigFeature4} className="features-img" alt="" />
-                </div>
-              </div>
-            </div>
+            {features.map((feature, index) => {
+              if (window.innerWidth < 426) {
+                return (
+                  <div
+                    key={feature.id}
+                    className={`features-box ${activeFeature === index ? 'active' : ''}`}
+                    style={{ transform: `translateX(${(index - activeFeature) * 100}%)` }}
+                  >
+                    <div className="row">
+                      <div className="col-md-5 d-flex justify-content-center align-items-center">
+                        <img src={feature.img} className="features-img" alt={feature.title} />
+                      </div>
+                      <div className="features-content col-md-7 mt-5 d-flex flex-column justify-content-center gap-2">
+                        <h4 className="features-sub-head">{feature.title}</h4>
+                        <p className="features-details">{feature.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              } else {
+                if (index % 2 === 0) {
+                  return (
+                    <div
+                      key={feature.id}
+                      className='features-box'
+                    >
+                      <div className="row">
+                        <div className="col-md-5 d-flex justify-content-center align-items-center">
+                          <img src={feature.img} className="features-img" alt={feature.title} />
+                        </div>
+                        <div className="features-content col-md-7 mt-5 d-flex flex-column justify-content-center gap-2">
+                          <h4 className="features-sub-head">{feature.title}</h4>
+                          <p className="features-details">{feature.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                } else {
+                  return (
+                    <div
+                      key={feature.id}
+                      className='features-box'
+                    >
+                      <div className="row">
+                        <div className="features-content col-md-7 mt-5 d-flex flex-column justify-content-center gap-2">
+                          <h4 className="features-sub-head">{feature.title}</h4>
+                          <p className="features-details">{feature.description}</p>
+                        </div>
+                        <div className="col-md-5 d-flex justify-content-center align-items-center">
+                          <img src={feature.img} className="features-img" alt={feature.title} />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+              }
+            })}
           </div>
         </div>
       </section>
@@ -273,7 +318,7 @@ function LandingPage() {
         <div className="faq-head">
           <h1 className="section-heading">Frequently Asked Questions</h1>
         </div>
-        <div className="container">
+        <div className="container faq-section-container">
           <div className="faq-section-questions-container mt-5" id="faqContainer">
             {faqData.map((faq, index) => (
               <div className="faq-question-card" key={index}>

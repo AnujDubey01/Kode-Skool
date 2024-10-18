@@ -68,30 +68,25 @@ function Navbar() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link me-3 txtBtn" href="#About">
-                Resources
-              </a>
-            </li>
-            <li className="nav-item">
               <a className="nav-link me-3 txtBtn" href="#Services">
-                Partners
+                About Us
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link txtBtn" href="#pricing">
-                Contact
+              <a className="nav-link me-3 txtBtn" href="#About">
+                Contact Us
               </a>
             </li>
           </ul>
           <ul className="navbar-nav ms-auto my-3 d-flex flex-row center-btns">
             <li className="nav-item m-1">
               <button type="button" className="btn btn0">
-                Register
+                Sign Up
               </button>
             </li>
             <li className="nav-item m-1">
               <button type="button" className="btn btn1">
-                Login
+                Sign In
               </button>
             </li>
           </ul>
