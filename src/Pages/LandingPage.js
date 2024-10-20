@@ -109,7 +109,7 @@ function LandingPage() {
               <div className="col-md-6 ps-5 order-2 order-md-1">
                 <h1 className="head-title mb-3">Become a coding champ</h1>
                 <p className="head-txt mb-4">
-                  Engaging Lessons for Future Tech Leaders with us.
+                  Engaging Lessons for Future Tech Leaders.
                 </p>
                 <button type="button" className="btn btn2">Let's Start</button>
               </div>
@@ -258,7 +258,7 @@ function LandingPage() {
                 return (
                   <div
                     key={feature.id}
-                    className={`features-box ${activeFeature === index ? 'active' : ''}`}
+                    className={`features-box my-5 ${activeFeature === index ? 'active' : ''}`}
                     style={{ transform: `translateX(${(index - activeFeature) * 100}%)` }}
                   >
                     <div className="row">
@@ -277,7 +277,7 @@ function LandingPage() {
                   return (
                     <div
                       key={feature.id}
-                      className='features-box'
+                      className='features-box my-5'
                     >
                       <div className="row">
                         <div className="col-md-5 d-flex justify-content-center align-items-center">
@@ -294,15 +294,15 @@ function LandingPage() {
                   return (
                     <div
                       key={feature.id}
-                      className='features-box'
+                      className='features-box my-5'
                     >
-                      <div className="row">
+                      <div className={window.innerWidth < 768 ? 'row ' : 'd-flex flex-row-reverse'}>
+                        <div className="col-md-5 d-flex justify-content-center align-items-center">
+                          <img src={feature.img} className="features-img" alt={feature.title} />
+                        </div>
                         <div className="features-content col-md-7 mt-5 d-flex flex-column justify-content-center gap-2">
                           <h4 className="features-sub-head">{feature.title}</h4>
                           <p className="features-details">{feature.description}</p>
-                        </div>
-                        <div className="col-md-5 d-flex justify-content-center align-items-center">
-                          <img src={feature.img} className="features-img" alt={feature.title} />
                         </div>
                       </div>
                     </div>
