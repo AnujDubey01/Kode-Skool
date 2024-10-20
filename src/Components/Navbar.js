@@ -1,10 +1,12 @@
 import '../css/navbar.css';
 import React, { useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/img/logo.png'; // Import the logo image
 
 function Navbar() {
   const navbarCollapseRef = useRef(null);
   const navbarTogglerRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const navbarCollapse = navbarCollapseRef.current;
@@ -68,24 +70,32 @@ function Navbar() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link me-3 txtBtn" href="#Services">
+              <a className="nav-link me-3 txtBtn" href="#About">
                 About Us
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link me-3 txtBtn" href="#About">
+              <a className="nav-link me-3 txtBtn" href="#Contact">
                 Contact Us
               </a>
             </li>
           </ul>
           <ul className="navbar-nav ms-auto my-3 d-flex flex-row center-btns">
             <li className="nav-item m-1">
-              <button type="button" className="btn btn0">
+              <button
+                type="button"
+                className="btn btn0"
+                onClick={() => navigate('/login?tab=signup')}
+              >
                 Sign Up
               </button>
             </li>
             <li className="nav-item m-1">
-              <button type="button" className="btn btn1">
+              <button
+                type="button"
+                className="btn btn1"
+                onClick={() => navigate('/login?tab=signin')}
+              >
                 Sign In
               </button>
             </li>

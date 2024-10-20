@@ -1,0 +1,533 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.navCustom {
+    position: absolute;
+    z-index: 9;
+}
+
+.rightSec {
+    position: relative;
+    height: 100%;
+}
+
+.card {
+    width: 90%;
+    min-height: 74vh;
+    border-radius: 15px;
+    background-color: white;
+    margin: auto;
+    padding: 0 2rem;
+}
+
+.OuterCircle {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    background: linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%);
+}
+
+.InnerCircle {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.OuterCircle1 {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    background: linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%);
+
+
+}
+
+.CoursesOuter {
+    width: 25%;
+    height: 10%;
+    background: linear-gradient(120deg, rgba(92, 127, 255, 0.15) 10%, rgba(103, 79, 255, 0.5) 100%);
+
+    border: 3px #97B8FF solid;
+    backdrop-filter: blur(1rem);
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, 0.533);
+
+}
+
+.CoursesOuter p {
+    margin: 0;
+}
+
+
+.TestOuter {
+    width: 25%;
+    height: 9%;
+    background: linear-gradient(120deg, rgba(92, 127, 255, 0.15) 10%, rgba(103, 79, 255, 0.5) 100%);
+    border: 3px #97B8FF solid;
+    backdrop-filter: blur(1rem);
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, 0.533);
+
+
+}
+
+.TestOuter p {
+    margin: 0;
+}
+
+.InnerCircle1 {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background-color: white;
+
+}
+
+.OuterCircle.signup {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 8%;
+    transform: translateX(-40%);
+    transition: all 0.3s linear;
+}
+
+.OuterCircle1.signup {
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    bottom: 8%;
+    transform: translateX(40%);
+    transition: all 0.3s linear;
+}
+
+.OuterCircle.signin {
+    position: absolute;
+    z-index: 0;
+    left: 80%;
+    top: 8%;
+    transform: translateX(40%);
+    transition: all 0.3s linear;
+}
+
+.OuterCircle1.signin {
+    position: absolute;
+    z-index: 0;
+    right: 80%;
+    bottom: 8%;
+    transform: translateX(-40%);
+    transition: all 0.3s linear;
+}
+
+
+.CoursesOuter.signup {
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    position: absolute;
+    z-index: 2;
+    left: -4rem;
+    bottom: 8%;
+    transform: translateY(-40%);
+    transition: all 0.3s linear;
+}
+
+.TestOuter.signup {
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    position: absolute;
+    z-index: 2;
+    right: -4rem;
+    top: 8%;
+    transform: translateY(40%);
+    transition: all 0.3s linear;
+
+}
+
+.CoursesOuter.signin {
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 80%;
+    transform: translateX(-40%);
+    transition: all 0.3s linear;
+
+}
+
+.TestOuter.signin {
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 80%;
+    transform: translateX(40%);
+    transition: all 0.3s linear;
+
+}
+
+
+#myTab {
+    background-color: #F9F9F9;
+    border: 2px solid #d4d4d4;
+    border-radius: 10px;
+
+}
+
+.nav-tabs .nav-link {
+    color: gray;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 10px;
+    font-weight: 400;
+    letter-spacing: 0.05rem;
+
+}
+
+.nav-tabs .nav-link.active {
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    background: linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%);
+    border-radius: 10px;
+    font-weight: 400;
+    letter-spacing: 0.05rem;
+}
+
+.form-label {
+    color: #696984;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    background-color: #F2F2F2;
+    border: 2px solid #C8C8C8;
+    color: rgba(64, 77, 141, 1);
+    width: 100%;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.10);
+    border-radius: 10px;
+    height: 3rem;
+    letter-spacing: 0.6px;
+
+    &:focus {
+        box-shadow: none;
+        border: double 2px transparent;
+        border-radius: 10px;
+        background-image: linear-gradient(white, white),
+            linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%);
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+    }
+}
+
+#myTabContent {
+    width: 85%;
+}
+
+.regBtn {
+    color: white;
+    border: none;
+    width: 100%;
+    background: linear-gradient(400deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%);
+    border-radius: 30px;
+    font-weight: 400;
+    height: 3rem;
+    letter-spacing: 0.05rem;
+    transition: background 1s ease;
+
+    &:hover {
+        background: linear-gradient(240deg, rgba(64, 77, 141, 1) 15%,
+                rgba(89, 109, 181, 1) 50%,
+                rgba(22, 155, 223, 1) 100%);
+        color: white;
+    }
+}
+
+.anc-link {
+    background: linear-gradient(100deg, rgba(64, 77, 141, 1) 15%,
+            rgba(89, 109, 181, 1) 50%,
+            rgba(22, 155, 223, 1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.custom-radio {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.custom-radio input[type="radio"] {
+    display: none;
+}
+
+
+.radio-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgb(216, 216, 216);
+    border: 1px solid black;
+    margin-right: 10px;
+}
+
+.custom-radio input[type="radio"]:checked+.radio-btn {
+    background: linear-gradient(100deg, rgba(64, 77, 141, 1) 15%,
+            rgba(89, 109, 181, 1) 50%,
+            rgba(22, 155, 223, 1) 100%);
+    border: none;
+
+}
+
+
+@media screen and (max-width: 1024px) {
+    .hero-img {
+        width: 70%;
+    }
+
+
+    .OuterCircle {
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .OuterCircle1 {
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .InnerCircle {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .InnerCircle1 {
+        width: 5.5rem;
+        height: 5.5rem;
+    }
+
+    .CoursesOuter {
+        width: 23%;
+    }
+
+    .CoursesOuter p {
+        font-size: 1rem;
+    }
+
+    .TestOuter {
+        width: 23%;
+    }
+
+    .TestOuter p {
+        font-size: 1rem;
+    }
+
+    .OuterCircle.signup {
+        transform: translateX(-38%);
+    }
+
+    .OuterCircle.signin {
+        left: 75%;
+    }
+
+    .OuterCircle1.signup {
+        transform: translateX(33%);
+    }
+
+    .OuterCircle1.signin {
+        right: 75%;
+    }
+
+    .TestOuter.signup {
+        right: -2rem;
+    }
+
+    .CoursesOuter.signup {
+        left: -2rem;
+    }
+
+    .TestOuter.signin {
+        transform: translateX(35%);
+    }
+
+    .CoursesOuter.signin {
+        transform: translateX(-35%);
+    }
+}
+
+
+@media screen and (max-width: 769px) {
+    .hero-img {
+        display: none;
+    }
+
+    /* .TestOuter.signup {
+        right: -2rem;
+    } */
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card {
+        min-height: 73vh;
+    }
+
+    .logo img {
+        width: 40%;
+    }
+
+    nav .nav-link {
+        display: none;
+    }
+
+    .navbar .navbar-toggler,
+    .collapse {
+        display: none;
+    }
+
+    .navbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-tabs .nav-link {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+
+    }
+
+    .nav-tabs .nav-link.active {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .OuterCircle {
+        height: 5.5rem;
+        width: 5.5rem;
+    }
+
+    .InnerCircle {
+        height: 4.2rem;
+        width: 4.2rem;
+    }
+
+    .OuterCircle.signup {
+        top: -7%;
+        transform: translateX(-5%)
+    }
+
+    .OuterCircle.signin {
+        top: -7%;
+        left: 83%;
+        transform: translateX(-5%)
+    }
+
+
+    .OuterCircle1 {
+        height: 5.5rem;
+        width: 5.5rem;
+    }
+
+    .InnerCircle1 {
+        height: 4.2rem;
+        width: 4.2rem;
+    }
+
+    .OuterCircle1.signup {
+        bottom: -8%;
+        transform: translateX(5%);
+    }
+
+    .OuterCircle1.signin {
+        right: 78%;
+        bottom: -8%;
+        transform: translateX(-35%);
+    }
+
+    .CoursesOuter {
+        width: 25%;
+    }
+
+    .CoursesOuter.signup {
+        bottom: -11%;
+        left: -1%;
+    }
+
+    .CoursesOuter.signin {
+        bottom: 95%;
+        left: 7%;
+    }
+
+    .TestOuter {
+        width: 25%;
+    }
+
+    .TestOuter.signup {
+        top: -8%;
+        right: -1%;
+    }
+
+    .TestOuter.signin {
+        top: 95%;
+        right: 7%;
+    }
+
+    .form-control {
+        height: 2.5rem
+    }
+
+    .card {
+        padding: 0 1rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+    }
+
+    #myTabContent {
+        width: 90%
+    }
+
+
+    .regBtn {
+        font-size: 1rem;
+        height: 2.5rem;
+    }
+
+    .radio-btn {
+        width: 12px;
+        height: 12px;
+    }
+
+    .selectUser {
+        font-size: 0.9rem;
+    }
+
+}
+
+@media screen and (max-width: 426px) {
+    .OuterCircle.signin {
+        top: -7%;
+        left: 80%;
+        transform: translateX(-5%)
+    }
+
+    .OuterCircle1.signin {
+        right: 72%;
+        bottom: -8%;
+        transform: translateX(-35%);
+    }
+}
