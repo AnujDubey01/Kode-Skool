@@ -65,6 +65,14 @@ function ResultsSection(props) {
         ],
     });
 
+    const container = useRef(null);
+    const dropBtn = useRef(null);
+    const handleOpenContainer = () => {
+        container.current.classList.toggle('close');
+        dropBtn.current.classList.toggle('fa-circle-chevron-up');
+        dropBtn.current.classList.toggle('fa-circle-chevron-down');
+    }
+
     useEffect(() => {
         // Intersection Observer callback
         const handleIntersection = (entries) => {
@@ -118,8 +126,11 @@ function ResultsSection(props) {
     return (
         <>
             <div className="test-section" ref={sectionRef}>
-                <h2>Results</h2>
-                <div className="test-container mt-3">
+                {window.screen.width <= 500 ? <div className="drop-down d-flex flex-row justify-content-between" style={{ width: '100%' }}  onClick={handleOpenContainer}>
+                    <h2>Results</h2>
+                    <i className="fa-solid fa-circle-chevron-down" ref={dropBtn}></i>
+                </div> : <h2>Results</h2>}
+                <div ref={container} className={window.screen.width <= 500 ? "test-container mt-3 close" : "test-container mt-3"}>
                     <div className={"pass-fail-chart " + props.toggleMode}>
                         <h3 className='pass-fail-title'>Pass VS Fail</h3>
                         <Pie
@@ -152,7 +163,7 @@ function ResultsSection(props) {
                                 <i className="fa-solid fa-ribbon"></i>
                             </div>
                             <div className="test-content d-flex flex-column py-1 justify-content-center">
-                                <h2 className="test-count">{result.badges}</h2>
+                                <h4 className="test-count">{result.badges}</h4>
                                 <p>Badges Earned</p>
                             </div>
                         </div>
@@ -161,7 +172,7 @@ function ResultsSection(props) {
                                 <i className="fa-solid fa-certificate"></i>
                             </div>
                             <div className="test-content d-flex flex-column py-1 justify-content-center">
-                                <h2 className="test-count">{result.certificates}</h2>
+                                <h4 className="test-count">{result.certificates}</h4>
                                 <p>Certificate Earned</p>
                             </div>
                         </div>

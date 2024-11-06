@@ -42,14 +42,14 @@ function Timeline(props) {
             <div className="timeline">
                 <h2>Timeline</h2>
                 <div className={'timeline-container mt-3 px-4 pt-4 pb-2 ' + props.toggleMode}>
-                    <div className="px-2 d-flex flex-row justify-content-between fw-medium" style={{ height: '30px' }}>
+                    <div className="timeline-head-section px-2 d-flex flex-row justify-content-between fw-medium">
                         <p>Timeline</p>
-                        <div className="d-flex flex-row justify-content-between" style={{ width: '30%' }}>
+                        <div className="active-days-max-streak d-flex flex-row justify-content-between">
                             <p>Total active days:40</p>
                             <p>Max streak:23</p>
                         </div>
                     </div>
-                    <div className="d-flex flex-row gap-2">
+                    <div className="timeline-box-year gap-2">
                         <div className={'timeline-box d-flex flex-row rounded-2 ' + props.toggleMode}>
                             <div className="week-days">
                                 <p></p>

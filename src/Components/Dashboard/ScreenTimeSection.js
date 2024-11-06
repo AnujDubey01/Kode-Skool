@@ -7,7 +7,7 @@ Chart.register(CategoryScale);
 
 
 function ScreenTimeSection(props) {
-    const [screenTime, setSreenTime] = useState({
+    const [screenTime, setScreenTime] = useState({
         streak: 0,
         upvote: 0
     });
@@ -31,7 +31,7 @@ function ScreenTimeSection(props) {
             const progress = frame / totalFrames;
 
             // Calculate the current state based on progress
-            setSreenTime({
+            setScreenTime({
                 streak: Math.floor(progress * targetValues.streak),
                 upvote: Math.floor(progress * targetValues.upvote)
             });
@@ -41,7 +41,7 @@ function ScreenTimeSection(props) {
                 requestAnimationFrame(animate);
             } else {
                 // Set the final values to make sure they reach the targets exactly
-                setSreenTime(targetValues);
+                setScreenTime(targetValues);
             }
         };
 
@@ -66,6 +66,14 @@ function ScreenTimeSection(props) {
             },
         ],
     });
+
+    const container = useRef(null);
+    const dropBtn = useRef(null);
+    const handleOpenContainer = () => {
+        container.current.classList.toggle('close');
+        dropBtn.current.classList.toggle('fa-circle-chevron-up');
+        dropBtn.current.classList.toggle('fa-circle-chevron-down');
+    }
 
     useEffect(() => {
         // Intersection Observer callback
@@ -118,8 +126,11 @@ function ScreenTimeSection(props) {
     return (
         <>
             <div className="test-section" ref={sectionRef}>
-                <h2>Screen Time</h2>
-                <div className="test-container mt-3">
+                {window.screen.width <= 500 ? <div className="drop-down d-flex flex-row justify-content-between" style={{ width: '100%' }}  onClick={handleOpenContainer}>
+                    <h2>Screen Time</h2>
+                    <i className="fa-solid fa-circle-chevron-down" ref={dropBtn}></i>
+                </div> : <h2>Screen Time</h2>}
+                <div ref={container} className={window.screen.width <= 500 ? "test-container mt-3 close" : "test-container mt-3"}>
                     <div className={"screen-time-chart "+props.toggleMode}>
                         <h3 className="total-screen-time">1h 34m</h3>
                         <Bar
@@ -179,7 +190,7 @@ function ScreenTimeSection(props) {
                                 <i className="fa-brands fa-gripfire"></i>
                             </div>
                             <div className="test-content d-flex flex-column py-1 justify-content-center">
-                                <h2 className="test-count">{screenTime.streak}</h2>
+                                <h4 className="test-count">{screenTime.streak}</h4>
                                 <p>Streak</p>
                             </div>
                         </div>
@@ -188,7 +199,7 @@ function ScreenTimeSection(props) {
                                 <i className="fa-solid fa-up-long"></i>
                             </div>
                             <div className="test-content d-flex flex-column py-1 justify-content-center">
-                                <h2 className="test-count">{screenTime.upvote}</h2>
+                                <h4 className="test-count">{screenTime.upvote}</h4>
                                 <p>Upvote</p>
                             </div>
                         </div>
@@ -198,28 +209,28 @@ function ScreenTimeSection(props) {
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-square-pen"></i>
                             </div>
-                            <h2 className="test-score-count">{targetValues.editor}</h2>
+                            <h4 className="test-score-count">{targetValues.editor}</h4>
                             <p>Editor</p>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-hourglass-half"></i>
                             </div>
-                            <h2 className="test-score-count">{targetValues.productivity}</h2>
+                            <h4 className="test-score-count">{targetValues.productivity}</h4>
                             <p>Productivity</p>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-stopwatch"></i>
                             </div>
-                            <h2 className="test-score-count">{targetValues.productivity}</h2>
+                            <h4 className="test-score-count">{targetValues.productivity}</h4>
                             <p>Productivity</p>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-square-pen"></i>
                             </div>
-                            <h2 className="test-score-count">{targetValues.editor}</h2>
+                            <h4 className="test-score-count">{targetValues.editor}</h4>
                             <p>Editor</p>
                         </div>
                     </div>

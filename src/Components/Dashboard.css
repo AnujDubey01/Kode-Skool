@@ -5,7 +5,22 @@
     width: 100%;
 }
 
-.welcome-text>h1 {
+.welcome-text {
+    column-gap: 20px;
+}
+
+.menu-icon {
+    margin: auto;
+
+    &>i {
+        background: -webkit-linear-gradient(-48deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 40px;
+    }
+}
+
+.welcome-text h1 {
     font-size: 34px;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
@@ -13,7 +28,7 @@
     margin: 0;
 }
 
-.welcome-text>p {
+.welcome-text p {
     font-size: 18px;
     font-family: "Poppins", sans-serif;
     font-weight: 300;
@@ -26,30 +41,48 @@
     display: flex;
     flex-direction: row;
     justify-content: left;
+    align-items: center;
     gap: 4rem;
     width: 45%;
 }
 
-
-#search {
-    padding: 15px 20px;
-    margin: auto 0;
-    border: none;
-    outline: none;
+.search-bar {
     height: max-content;
     background-color: #FFFFFF;
     box-shadow: 1px 2px 4px 2px #00000021;
     border-radius: 15px;
-    font-size: 14px;
     font-weight: 400;
     color: #000000;
     width: 55%;
+    padding: 15px 18px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    
+    &>i{
+        font-size: 16px;
+        color: #6c6c6c;
+        margin: auto 0;
+    }
+
+    &.dark {
+        background-color: #0D0D0D;
+        border: 1px solid #202020;
+    }
 }
 
-#search.dark {
-    color: #ffffff;
-    background-color: #0D0D0D;
-    border: 1px solid #202020;
+
+#search {
+    font-size: 14px;
+    font-weight: 500;
+    margin: auto 0;
+    border: none;
+    outline: none;
+    background: none;
+    
+    &.dark {
+        color: #ffffff;
+    }
 }
 
 .notify-box {
@@ -251,6 +284,19 @@
     padding-right: 15px;
 }
 
+.timeline-head-section {
+    height: 30px;
+}
+
+.active-days-max-streak {
+    width: 30%;
+}
+
+.timeline-box-year {
+    display: flex;
+    flex-direction: row;
+}
+
 .btn-group-vertical {
     row-gap: 10px;
 }
@@ -284,7 +330,7 @@
 
     &>p {
         margin: 0;
-        width: 75px;
+        width: 75.5px;
         height: 17px;
         font-size: 11px;
         font-weight: 500;
@@ -386,6 +432,7 @@
         background: -webkit-linear-gradient(133deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        font-size: 4em;
     }
 
     &>.date-number {
@@ -615,4 +662,970 @@
     color: #0d0d0dcc;
     font-weight: 500;
     margin-bottom: 10px;
+}
+
+
+
+
+@media screen and (max-width: 1500px) {
+    .your-course-box-i {
+        padding: 20px;
+    }
+
+    .your-course-details {
+        row-gap: 13px;
+    }
+
+    .your-course-text-block>h3 {
+        font-size: 14px;
+    }
+
+    .your-course-text-block>p {
+        font-size: 8.5px;
+    }
+
+    .course-resume-btn {
+        font-size: 10px;
+        font-weight: 500;
+        padding: 5px 15px;
+    }
+
+    .progress-container {
+        height: 60%;
+    }
+
+    .progress-text {
+        font-size: 14px;
+    }
+
+    .your-course-text-block>p {
+        font-size: 8px;
+    }
+
+    .active-days-max-streak {
+        width: 40%;
+    }
+
+    .timeline-container {
+        padding: 1.5rem 1rem 0.8rem 1.5rem !important;
+    }
+
+    .timeline-box {
+        padding: 1rem;
+        padding-right: 0.5rem;
+    }
+
+    .month-list {
+        width: max-content;
+        display: flex;
+        flex-direction: row;
+
+        &>p {
+            margin: 0;
+            width: 62px;
+            height: 17px;
+        }
+
+        &>p:nth-child(2) {
+            width: 53px !important;
+        }
+    }
+
+    .month-days {
+        height: 100px;
+    }
+
+    .day-box {
+        width: 12px;
+        height: 12px;
+    }
+
+    .week-days p {
+        height: 14.5px;
+    }
+
+    .upcoming-test>h3 {
+        font-size: 20px;
+    }
+
+    .test-name {
+        font-size: 12px;
+    }
+
+    .calendar-icon {
+        &>i {
+            font-size: 3.2em;
+        }
+
+        &>.date-number {
+            font-size: 15px;
+        }
+    }
+
+    .test-date {
+        font-size: 11px;
+    }
+
+    .test-access-btn {
+        margin-top: 1rem;
+        padding: 7px 20px;
+        font-size: 14px;
+    }
+
+    .pen-bg {
+        width: 65px;
+        height: 65px;
+        padding: 10px;
+
+        &>i {
+            font-size: 27px;
+        }
+    }
+
+    .test-count {
+        font-size: 27px;
+    }
+
+    .test-written,
+    .test-average {
+        & p {
+            font-size: 13px;
+        }
+    }
+
+    .score-icon-bg {
+        width: 50px;
+        height: 50px;
+        padding: 10px;
+
+        &>i {
+            font-size: 24px;
+        }
+    }
+
+    .test-score-count {
+        font-size: 17px;
+        margin-top: 7px;
+    }
+
+    .test-score {
+        padding: 1rem 2rem;
+        row-gap: 10px;
+
+        & p {
+            font-size: 9px;
+        }
+    }
+
+    .reminder-head {
+        font-size: 21px;
+        margin-bottom: 15px;
+    }
+
+    .reminder-selector-selected {
+        min-width: 25px;
+        width: 25px;
+        height: 25px;
+    }
+
+    .reminder-name {
+        font-size: 14px;
+        padding-bottom: 5px;
+    }
+
+    .reminder-selector {
+        min-width: 25px;
+        width: 25px;
+        height: 25px;
+    }
+
+    .pass-fail-title {
+        font-size: 19px;
+        margin-bottom: 5px;
+    }
+
+    .pass-fail-chart {
+        padding: 1rem 3rem;
+    }
+
+    .screen-time-chart {
+        padding: 2rem 1rem 1.5rem 0.5rem;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .btn-group-vertical>.btn {
+        padding: 3.5px 13px;
+        font-size: 12px;
+    }
+
+    .btn-group-vertical {
+        column-gap: 5px;
+        flex-direction: row;
+    }
+
+    .month-days {
+        height: 92px;
+    }
+
+    .day-box {
+        width: 11px;
+        height: 11px;
+    }
+
+    .month-list {
+        &>p {
+            width: 58px;
+            height: 14px;
+            font-size: 10px;
+        }
+
+        &>p:nth-child(2) {
+            width: 50px !important;
+        }
+    }
+
+    .week-days p {
+        font-size: 9px;
+        width: 23px;
+        height: 13px;
+    }
+
+    .timeline-head-section {
+        font-size: 15px;
+    }
+
+    .timeline-box-year {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: end;
+    }
+
+    .timeline-box {
+        width: 100%;
+    }
+
+    .pass-fail-chart {
+        padding: 1rem 2rem;
+    }
+}
+
+@media screen and (max-width: 1026px) {
+    .your-course-list {
+        column-gap: 1.5%;
+    }
+
+    .your-course-box-o {
+        min-width: 36.5%;
+        width: 36.5%;
+    }
+
+    .your-course-box-i {
+        padding: 15px;
+    }
+
+    .your-course-details {
+        row-gap: 20px;
+    }
+
+    .progress-container {
+        height: 65%;
+    }
+
+    .timeline-container {
+        padding: 1rem 0.5rem 0.6rem 1rem !important;
+    }
+
+    .timeline-box {
+        padding: 0.5rem;
+        padding-right: 0.2rem;
+    }
+
+    .month-days {
+        height: 85px;
+        column-gap: 1.4px;
+    }
+
+    .day-box {
+        width: 10.5px;
+        height: 10.5px;
+        margin: 0.7px 0;
+        border-radius: 2px;
+    }
+
+    .week-days p {
+        font-size: 8.2px;
+        width: 21px;
+        height: 12.2px;
+    }
+
+    .month-list {
+        &>p {
+            width: 53px;
+            height: 14px;
+            font-size: 9px;
+        }
+
+        &>p:nth-child(2) {
+            width: 43px !important;
+        }
+    }
+
+    .upcoming-test>h3 {
+        font-size: 17px;
+    }
+
+    .test-name {
+        font-size: 10px;
+    }
+
+    .calendar-icon {
+        margin-top: 7px;
+        margin-bottom: 3px;
+
+        &>i {
+            font-size: 2.5em;
+        }
+
+        &>.date-number {
+            font-size: 12px;
+        }
+    }
+
+    .test-date {
+        font-size: 9.5px;
+    }
+
+    .test-access-btn {
+        margin-top: 0.7rem;
+        padding: 5px 20px;
+        font-size: 12px;
+        border-radius: 5px;
+    }
+
+    .pen-bg {
+        width: 50px;
+        height: 50px;
+        padding: 5px;
+
+        &>i {
+            font-size: 19px;
+        }
+    }
+
+    .test-written,
+    .test-average {
+        column-gap: 12px;
+        padding: 0.5rem 1rem;
+
+        & p {
+            font-size: 11px;
+        }
+    }
+
+    .test-count {
+        font-size: 22px;
+    }
+
+    .score-icon-bg {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+
+        &>i {
+            font-size: 19px;
+        }
+    }
+
+    .test-score-count {
+        font-size: 15px;
+        margin-top: 4px;
+    }
+
+    .test-score {
+        padding: 0.7rem 1.5rem;
+        row-gap: 5px;
+
+        & p {
+            font-size: 8.5px;
+        }
+    }
+
+    .reminder-container {
+        padding: 20px;
+    }
+
+    .reminder-head {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .reminder-selector-selected {
+        min-width: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .reminder-name {
+        font-size: 12px;
+        padding-bottom: 2px;
+    }
+
+    .reminder-selector {
+        min-width: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .reminder-list {
+        margin-top: 15px !important;
+    }
+
+    .screen-time-chart {
+        padding: 1.5rem 0.7rem 1.2rem 0.4rem;
+    }
+
+    .total-screen-time {
+        font-size: 18px;
+        margin-left: 12px;
+        margin-bottom: 0;
+    }
+
+    .pass-fail-chart {
+        padding: 1rem 1rem;
+    }
+}
+
+@media screen and (max-width: 866px) {
+    .welcome-text h1 {
+        font-size: 25px;
+    }
+
+    .welcome-text p {
+        font-size: 14px;
+        margin-top: -5px;
+    }
+
+    .search-notify-box {
+        gap: 3rem;
+    }
+
+    .search-bar {
+        padding: 10px 20px;
+        box-shadow: 1px 1px 2px 1px #00000021;
+        border-radius: 10px;
+        width: 65%;
+
+        &>i {
+            font-size: 13px;
+        }
+    }
+
+    #search {
+        font-size: 12px;
+    }
+    
+    .notify-box ion-icon {
+        font-size: 30px;
+    }
+
+    .your-courses>h2,
+    .test-section>h2 {
+        font-size: 20px;
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 650px) {
+
+    .your-courses>h2,
+    .test-section>h2 {
+        font-size: 18px;
+    }
+
+    .your-course-list {
+        margin-top: 0.8rem;
+    }
+
+    .your-course-box-o {
+        min-width: 44.5%;
+        width: 44.5%;
+        border-radius: 10px;
+    }
+
+    .your-course-background {
+        border-radius: 10px;
+    }
+
+    .your-course-box-i {
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .your-course-text-block>h3 {
+        font-size: 12px;
+    }
+
+    .your-course-text-block>p {
+        font-size: 7px;
+    }
+
+    .course-resume-btn {
+        font-size: 8px;
+    }
+
+    .test-container {
+        &>* {
+            width: 32.5%;
+        }
+    }
+
+    .upcoming-test {
+        border-radius: 10px;
+        padding: 1rem;
+    }
+
+    .upcoming-test>h3 {
+        font-size: 15px;
+    }
+
+    .test-name {
+        font-size: 9px;
+    }
+
+    .calendar-icon {
+        margin-top: 6px;
+        margin-bottom: 1px;
+
+        &>i {
+            font-size: 2em;
+        }
+
+        &>.date-number {
+            font-size: 9px;
+        }
+    }
+
+    .test-date {
+        font-size: 8.5px;
+    }
+
+    .test-access-btn {
+        margin-top: 0.5rem;
+        font-size: 10px;
+    }
+
+    .pen-bg {
+        width: 40px;
+        height: 40px;
+
+        &>i {
+            font-size: 16px;
+        }
+    }
+
+    .test-written,
+    .test-average {
+        column-gap: 8px;
+        padding: 0.3rem 1rem;
+        border-radius: 10px;
+
+        & p {
+            font-size: 8.5px;
+        }
+    }
+
+    .test-count {
+        font-size: 18px;
+    }
+
+    .score-icon-bg {
+        width: 33px;
+        height: 33px;
+        padding: 5px;
+
+        &>i {
+            font-size: 16px;
+        }
+    }
+
+    .test-score-count {
+        font-size: 13px;
+        margin-top: 3px;
+
+    }
+
+    .test-score {
+        padding: 0.5rem;
+
+        & p {
+            font-size: 7.5px;
+            text-align: center;
+        }
+    }
+
+    .welcome-text h1 {
+        font-size: 22px;
+    }
+
+    .welcome-text p {
+        font-size: 13px;
+    }
+
+    .menu-icon>i {
+        font-size: 35px;
+    }
+
+    .search-bar {
+        padding: 8px 15px;
+        width: 70%;
+    }
+
+    .notify-box ion-icon {
+        font-size: 27px;
+    }
+
+    .notify-count {
+        right: 1.5px;
+        width: 10px;
+        height: 10px;
+        font-size: 7px;
+        font-weight: 500;
+    }
+
+    .search-notify-box {
+        gap: 2rem;
+    }
+
+    .welcome-text {
+        column-gap: 10px;
+    }
+
+    .reminder-container {
+        padding: 15px;
+    }
+
+    .reminder-head {
+        font-size: 17px;
+        margin-bottom: 5px;
+    }
+
+    .reminder-selector-selected {
+        min-width: 17px;
+        width: 17px;
+        height: 17px;
+    }
+
+    .reminder-name {
+        font-size: 10px;
+    }
+
+    .reminder-selector {
+        min-width: 17px;
+        width: 17px;
+        height: 17px;
+    }
+
+    .reminder-list {
+        margin-top: 13px !important;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .your-courses {
+        margin-bottom: 2rem;
+    }
+
+    .test-section {
+        margin-top: 1rem;
+        padding: 0;
+    }
+
+    .test-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: center;
+        overflow: hidden;
+        max-height: 560px;
+        transition: max-height 0.5s ease-in-out;
+        margin: 1rem 0 !important;
+
+        &>* {
+            width: 80%;
+        }
+
+        &>*:nth-child(2) {
+            flex-direction: row !important;
+            column-gap: 15px;
+        }
+
+        &.close {
+            max-height: 0;
+            margin: 0 !important;
+        }
+    }
+
+    .welcome-effect{
+        max-width: 170px;
+        transition: max-width 0.3s linear;
+        overflow: hidden;
+        text-wrap: nowrap;
+
+        &.openSearch {
+            max-width: 0;
+        }
+    }
+
+    .welcome-text h1 {
+        font-size: 19px;
+    }
+
+    .welcome-text p {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .search-bar {
+        column-gap: 0;
+    }
+
+    #search {
+        transform-origin: right center;
+        width: 200px;
+        max-width: 0;
+        transition: max-width 0.3s linear;
+
+        &.openSearch {
+            max-width: 300px;
+            margin-left: 8px;
+        }
+    }
+
+    .search-notify-box {
+        gap: 1rem;
+        width: max-content;
+        justify-content: right;
+    }
+
+    .menu-icon>i {
+        font-size: 31px;
+    }
+
+    .your-course-box-o {
+        min-width: 52.5%;
+        width: 52.5%;
+        border-radius: 10px;
+    }
+
+    .progress-container {
+        height: 62%;
+    }
+
+    .test-section h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .drop-down {
+        border: 1px solid rgb(68, 68, 68);
+        border-radius: 10px;
+        background-color: lightgrey;
+        padding: 5px 20px;
+        align-items: center;
+        
+        &>i {
+            font-size: 20px;
+        }
+    }
+
+    .upcoming-test>h3 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .test-name {
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+
+    .calendar-icon {
+        margin-top: 8px;
+        margin-bottom: 4px;
+
+        &>i {
+            font-size: 3em;
+        }
+
+        &>.date-number {
+            font-size: 13px;
+        }
+    }
+
+    .test-date {
+        font-size: 9.5px;
+    }
+
+    .test-access-btn {
+        margin-top: 1rem;
+        font-size: 12px;
+        padding: 7px 20px;
+    }
+
+    .pen-bg {
+        width: 50px;
+        height: 50px;
+        padding: 5px;
+
+        &>i {
+            font-size: 19px;
+        }
+    }
+
+    .test-written,
+    .test-average {
+        width: 48%;
+        column-gap: 6px;
+        padding: 0.5rem;
+
+        & p {
+            font-size: 9px;
+        }
+    }
+
+    .test-count {
+        font-size: 22px;
+    }
+
+    .score-icon-bg {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+
+        &>i {
+            font-size: 19px;
+        }
+    }
+
+    .test-score-count {
+        font-size: 15px;
+        margin-top: 4px;
+    }
+
+    .test-score {
+        padding: 0.7rem 1.5rem;
+        row-gap: 15px;
+
+        & p {
+            font-size: 8.5px;
+        }
+    }
+
+    .pass-fail-chart {
+        padding: 1rem 4rem;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .test-container {
+        &>* {
+            width: 100%;
+        }
+    }
+
+    .your-course-box-o {
+        min-width: 62.5%;
+        width: 62.5%;
+        border-radius: 10px;
+    }
+
+    .test-score-count {
+        font-size: 13px;
+        margin-top: 3px;
+    }
+
+    .test-score {
+        & p {
+            font-size: 8px;
+            font-weight: 500;
+            margin-top: -3px;
+        }
+    }
+
+    .pen-bg {
+        width: 40px;
+        height: 40px;
+
+        &>i {
+            font-size: 16px;
+        }
+    }
+
+    .test-count {
+        font-size: 19px;
+    }
+
+    .test-written, .test-average {
+        & p {
+            font-size: 8.7px;
+        }
+    }
+
+    .score-icon-bg {
+        width: 35px;
+        height: 35px;
+
+        &>i {
+            font-size: 16px;
+        }
+    }
+}
+
+@media screen and (max-width: 376px) {
+    .pass-fail-chart {
+        padding: 1rem 3rem;
+    }
+
+    .test-score-count {
+        font-size: 10.5px;
+        margin-top: 2px;
+    }
+
+    .test-score {
+        row-gap: 10px;
+        & p {
+            font-size: 7px;
+            font-weight: 500;
+        }
+    }
+
+    .pen-bg {
+        width: 35px;
+        height: 35px;
+
+        &>i {
+            font-size: 16px;
+        }
+    }
+
+    .test-count {
+        font-size: 17px;
+    }
+
+    .test-written, .test-average {
+        & p {
+            font-size: 8px;
+        }
+    }
+
+    .score-icon-bg {
+        width: 30px;
+        height: 30px;
+
+        &>i {
+            font-size: 12px;
+        }
+    }
 }

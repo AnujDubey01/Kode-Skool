@@ -15,7 +15,7 @@ function TestSection(props) {
 
     const sectionRef = useRef(null);
     const observerRef = useRef(null);
-    
+
     // Function to start the running numbers animation
     const startRunningNumbers = useCallback(() => {
         const duration = 2000; // Animation duration in milliseconds
@@ -50,7 +50,15 @@ function TestSection(props) {
 
         // Start the animation
         requestAnimationFrame(animate);
-    },[targetValues]);
+    }, [targetValues]);
+
+    const container = useRef(null);
+    const dropBtn = useRef(null);
+    const handleOpenContainer = () => {
+        container.current.classList.toggle('close');
+        dropBtn.current.classList.toggle('fa-circle-chevron-up');
+        dropBtn.current.classList.toggle('fa-circle-chevron-down');
+    }
 
     useEffect(() => {
         // Intersection Observer callback
@@ -80,17 +88,21 @@ function TestSection(props) {
     return (
         <>
             <div className="test-section" ref={sectionRef}>
-                <h2>Tests</h2>
-                <div className="test-container mt-3">
+                {window.innerWidth <= 500 ? <div className="drop-down d-flex flex-row justify-content-between" style={{ width: '100%' }}  onClick={handleOpenContainer}>
+                    <h2>Tests</h2>
+                    <i className="fa-solid fa-circle-chevron-down" ref={dropBtn}></i>
+                </div> : <h2>Tests</h2>}
+
+                <div ref={container} className={window.innerWidth <= 500 ? "test-container mt-3 close" : "test-container mt-3"}>
                     <div className={"upcoming-test " + props.toggleMode}>
                         <h3>Upcoming Test</h3>
                         <p className="test-name">C language</p>
                         <div className="calendar-icon">
-                            <i className="fa-solid fa-calendar fa-4x"></i>
+                            <i className="fa-solid fa-calendar"></i>
                             <p className="date-number">02</p>
                         </div>
                         <p className="test-date">2nd Sep, 2024</p>
-                        <button type="button" className={'test-access-btn '+props.toggleMode}>Get access</button>
+                        <button type="button" className={'test-access-btn ' + props.toggleMode}>Get access</button>
                     </div>
                     <div className="d-flex flex-column justify-content-between">
                         <div className={"test-written " + props.toggleMode}>
@@ -98,7 +110,7 @@ function TestSection(props) {
                                 <i className="fa-solid fa-pen"></i>
                             </div>
                             <div className="test-content d-flex flex-column py-1 justify-content-center">
-                                <h2 className="test-count">{test.testWritten}</h2>
+                                <h4 className="test-count">{test.testWritten}</h4>
                                 <p>Tests Written</p>
                             </div>
                         </div>
@@ -107,7 +119,7 @@ function TestSection(props) {
                                 <i className="fa-solid fa-percent"></i>
                             </div>
                             <div className="test-content d-flex flex-column py-1 justify-content-center">
-                                <h2 className="test-count">{test.overallAvg}%</h2>
+                                <h4 className="test-count">{test.overallAvg}%</h4>
                                 <p>Overall Average</p>
                             </div>
                         </div>
@@ -117,28 +129,28 @@ function TestSection(props) {
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-thumbs-up"></i>
                             </div>
-                            <h2 className="test-score-count">{test.testsTaken}</h2>
+                            <h4 className="test-score-count">{test.testsTaken}</h4>
                             <p>No. of Tests</p>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-thumbs-up"></i>
                             </div>
-                            <h2 className="test-score-count">{test.passed}</h2>
+                            <h4 className="test-score-count">{test.passed}</h4>
                             <p>Passed</p>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-thumbs-down"></i>
                             </div>
-                            <h2 className="test-score-count">{test.failed}</h2>
+                            <h4 className="test-score-count">{test.failed}</h4>
                             <p>Failed</p>
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <div className={"score-icon-bg " + props.toggleMode}>
                                 <i className="fa-solid fa-star"></i>
                             </div>
-                            <h2 className="test-score-count">{test.resultWaiting}</h2>
+                            <h4 className="test-score-count">{test.resultWaiting}</h4>
                             <p>Waiting for result</p>
                         </div>
                     </div>

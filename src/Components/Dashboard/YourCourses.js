@@ -71,7 +71,7 @@ function YourCourses(props) {
     return (
         <>
             <div className="your-courses">
-                <h2>Your courses</h2>
+                <h2>Your courses</h2>                
                 <div className="your-course-list">
                     <div className={'your-course-box-o ' + props.toggleMode}>
                         <div className="your-course-background"></div>

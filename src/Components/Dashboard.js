@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './Dashboard.css';
 import TestSection from './Dashboard/TestSection';
 import ScreenTimeSection from './Dashboard/ScreenTimeSection';
@@ -33,7 +33,7 @@ const user = {
         { date: new Date('2023-11-20').toString(), workTime: 'low' },
         { date: new Date('2023-12-10').toString(), workTime: 'high' },
         { date: new Date('2023-12-25').toString(), workTime: 'high' },
-    
+
         { date: new Date('2024-01-10').toString(), workTime: 'low' },
         { date: new Date('2024-01-25').toString(), workTime: 'high' },
         { date: new Date('2024-02-14').toString(), workTime: 'low' },
@@ -57,7 +57,7 @@ const user = {
         { date: new Date('2024-11-18').toString(), workTime: 'low' },
         { date: new Date('2024-12-01').toString(), workTime: 'high' },
         { date: new Date('2024-12-05').toString(), workTime: 'high' },
-    ],    
+    ],
     test: {
         testWritten: 32,
         overallAvg: 80,
@@ -68,31 +68,31 @@ const user = {
     },
     screenTime: {
         today: [
-            {time: '12am', usages: 0 },
-            {time: '1am', usages: 0 },
-            {time: '2am', usages: 0 },
-            {time: '3am', usages: 0 },
-            {time: '4am', usages: 0 },
-            {time: '5am', usages: 12 },
-            {time: '6am', usages: 0 },
-            {time: '7am', usages: 0 },
-            {time: '8am', usages: 0 },
-            {time: '9am', usages: 0 },
-            {time: '10am', usages: 0 },
-            {time: '11am', usages: 30},
-            {time: '12pm', usages: 0 },
-            {time: '1pm', usages: 0 },
-            {time: '2pm', usages: 0 },
-            {time: '3pm', usages: 4},
-            {time: '4pm', usages: 0 },
-            {time: '5pm', usages: 0 },
-            {time: '6pm', usages: 20},
-            {time: '7pm', usages: 59},
-            {time: '8pm', usages: 34},
-            {time: '9pm', usages: 0 },
-            {time: '10pm', usages: 0 },
-            {time: '11pm', usages: 0 },
-            {time: '12am', usages: 0 },
+            { time: '12am', usages: 0 },
+            { time: '1am', usages: 0 },
+            { time: '2am', usages: 0 },
+            { time: '3am', usages: 0 },
+            { time: '4am', usages: 0 },
+            { time: '5am', usages: 12 },
+            { time: '6am', usages: 0 },
+            { time: '7am', usages: 0 },
+            { time: '8am', usages: 0 },
+            { time: '9am', usages: 0 },
+            { time: '10am', usages: 0 },
+            { time: '11am', usages: 30 },
+            { time: '12pm', usages: 0 },
+            { time: '1pm', usages: 0 },
+            { time: '2pm', usages: 0 },
+            { time: '3pm', usages: 4 },
+            { time: '4pm', usages: 0 },
+            { time: '5pm', usages: 0 },
+            { time: '6pm', usages: 20 },
+            { time: '7pm', usages: 59 },
+            { time: '8pm', usages: 34 },
+            { time: '9pm', usages: 0 },
+            { time: '10pm', usages: 0 },
+            { time: '11pm', usages: 0 },
+            { time: '12am', usages: 0 },
         ],
         streak: 32,
         upvote: 32,
@@ -110,15 +110,40 @@ const user = {
 };
 
 function Dashboard(props) {
+    const welcome = useRef(null);
+    const search = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (search.current.parentElement && !search.current.parentElement.contains(event.target)) {
+            welcome.current.classList.remove('openSearch');
+            search.current.classList.remove('openSearch');
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+    };
+
+    const openSearchOpt = () => {
+        welcome.current.classList.add('openSearch');
+        search.current.classList.add('openSearch');
+        document.addEventListener('mousedown', handleClickOutside);
+    }
+
     return (
         <>
             <div className="board-heading">
-                <div className="welcome-text d-flex flex-column">
-                    <h1>Welcome {user.name}!</h1>
-                    <p>Let's crack the code</p>
+                <div className="welcome-text d-flex flex-row">
+                    <div className="menu-icon">
+                        <i className="fa-solid fa-list-ul"></i>
+                    </div>
+                    <div ref={welcome} className='d-flex flex-column welcome-effect'>
+                        <h1>Welcome {user.name}!</h1>
+                        <p>Let's crack the code</p>
+                    </div>
                 </div>
                 <div className="search-notify-box">
-                    <input type="text" name="search" id="search" className={props.toggleMode} placeholder='Search' />
+                    <div className={'search-bar ' + props.toggleMode}>
+                        <i className="fa-solid fa-magnifying-glass" onClick={openSearchOpt}></i>
+                        <input ref={search} type="text" name="search" id="search" className={props.toggleMode} placeholder='Search' />
+                    </div>
                     <div className="notify-box">
                         <span className="notify-count">5</span>
                         <ion-icon name="notifications"></ion-icon>
@@ -126,7 +151,7 @@ function Dashboard(props) {
                 </div>
             </div>
 
-            <YourCourses toggleMode={props.toggleMode} />            
+            <YourCourses toggleMode={props.toggleMode} />
             <Timeline toggleMode={props.toggleMode} activity={user.activity} />
             <TestSection toggleMode={props.toggleMode} test={user.test} />
             <ScreenTimeSection toggleMode={props.toggleMode} screenTime={user.screenTime} />
