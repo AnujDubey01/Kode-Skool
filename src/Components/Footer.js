@@ -5,9 +5,9 @@ import FooterLogo from '../Assets/Img/footer-logo.png';
 
 
 
-function Footer() {
+function Footer(props) {
     return (
-        <footer className="text-center text-lg-start bg-body-tertiary text-muted mt-4 px-5 pt-5">
+        <footer className={"text-center text-lg-start bg-body-tertiary text-muted mt-4 px-5 pt-5 "+props.toggleMode}>
             <section className="container text-center text-md-start mt-5">
                     <div className={`d-flex ${window.innerWidth < 768 ? 'flex-column' : 'flex-row'} mt-3`}>
                         {/* Footer Logo and Social Links */}

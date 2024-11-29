@@ -1,3 +1,10 @@
+footer.dark {
+    background-color: #373131 !important;
+
+    & .footer-copyright, hr {
+        color: white;
+    }
+}
 
 .footer-head {
     font-size: 1.3rem;
@@ -22,11 +29,6 @@
     border-radius: 50%;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    border-radius: 1rem;
-
 }
 
 .footer-logo {

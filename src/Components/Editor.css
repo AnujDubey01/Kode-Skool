@@ -1,0 +1,291 @@
+.EditorContainer {
+    margin-top: 2rem;
+    border-top: 1px solid rgb(179, 179, 179);
+    width: 100%;
+    height: 95vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.langController {
+    padding: 10px;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 70px;
+}
+
+.langOptions {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    height: 100%;
+    overflow-y: scroll;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.fullScreen {
+    width: 50px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 25px;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.langBox {
+    font-weight: 400;
+    font-size: 12px;
+    border-radius: 7px;
+    font-family: 'Poppins', sans-serif;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    text-wrap: wrap;
+    border: 0.7px solid #A7A7A7;
+    color: #000000;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.active {
+        background: linear-gradient(133deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+        border: none;
+        color: #FFFFFF;
+    }
+}
+
+.Editor {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.codeSection {
+    border-right: 1px solid #b3b3b3;
+    flex-grow: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.outputSection {
+    flex-grow: 9;
+    border-right: 1px solid #b3b3b3;
+    display: flex;
+    flex-direction: column;
+}
+
+.code-editor {
+    display: flex;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-right: 0;
+    font-family: monospace;
+    background-color: #FFFFFF;
+    overflow: auto;
+    flex-grow: 1;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.line-numbers {
+    padding: 10px;
+    color: #888;
+    text-align: right;
+    user-select: none;
+    border-right: 1px solid #ccc;
+    min-height: 100%;
+    height: max-content;
+}
+
+
+.line-numbers pre {
+    margin: 0;
+    line-height: 1.5em;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Poppins';
+    text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.code-input {
+    flex-grow: 1;
+    padding: 10px;
+    max-height: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    /* Prevent user resizing */
+    background-color: transparent;
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: 600;
+    text-wrap: nowrap;
+    line-height: 1.5em;
+    overflow: hidden;
+    /* Hide any overflow */
+}
+
+.code-input:focus {
+    outline: none;
+}
+
+.codeSectionHead,
+.outputSectionHead {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.filetab {
+    display: flex;
+    flex-direction: row;
+}
+
+.filename {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px 20px;
+    border-bottom: 3px solid rgb(15, 15, 139);
+}
+
+.fileadd {
+    font-size: 25px;
+    font-weight: 500;
+    padding: 0px 20px;
+    background: -webkit-linear-gradient(120deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+
+.codeBtns {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    padding: 5px 0;
+    padding-right: 10px;
+}
+
+.shareCodeBtn {
+    border-width: 1px;
+    border-style: solid;
+    /* border-image-source: linear-gradient(107deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+    border-image-slice: 1; */
+    border-color: #414D8E;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin: auto 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(0, 0, 0, 0.6);
+    word-spacing: 10px;
+
+    &:active {
+        background-color: #c9d0d1;
+    }
+
+    &>i {
+        margin-right: 5px;
+    }
+}
+
+.runBtn,
+.clearBtn,
+.AIBtn {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background: linear-gradient(113deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 20px;
+    margin: auto 0;
+
+    &:active{
+        background: linear-gradient(113deg, #525fab 18%, #5766af 18%, #6f88da 44%, #12a4ed 75%);
+    }
+}
+
+.outputHeader {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 6.5px 20px;
+}
+
+.clearBtn {
+    margin-right: 10px;
+}
+
+.code-output-container {
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    font-family: monospace;
+    background-color: #FFFFFF;
+    overflow: auto;
+    height: 100%;
+}
+
+.code-output {
+    flex-grow: 1;
+    padding: 10px;
+    max-height: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    /* Prevent user resizing */
+    background-color: transparent;
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    line-height: 1.5em;
+    color: #000000;
+    overflow: hidden;
+    /* Hide any overflow */
+}
+
+.code-save-btns {
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.saveCodeBtn {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #414D8E;
+    padding: 5px 15px;
+    border-radius: 5px;
+    margin: auto 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+    word-spacing: 10px;
+    background: none;
+}

@@ -126,7 +126,7 @@ function ScreenTimeSection(props) {
     return (
         <>
             <div className="test-section" ref={sectionRef}>
-                {window.screen.width <= 500 ? <div className="drop-down d-flex flex-row justify-content-between" style={{ width: '100%' }}  onClick={handleOpenContainer}>
+                {window.screen.width <= 500 ? <div className={"drop-down d-flex flex-row justify-content-between "+props.toggleMode} style={{ width: '100%' }}  onClick={handleOpenContainer}>
                     <h2>Screen Time</h2>
                     <i className="fa-solid fa-circle-chevron-down" ref={dropBtn}></i>
                 </div> : <h2>Screen Time</h2>}

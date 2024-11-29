@@ -9,13 +9,12 @@
 }
 
 .App-main {
-  width: 100vw;
   display: flex;
   flex-direction: row;
 
 }
 
-.App.dark :is(h1, h2, h3) {
+.App.dark :is(h1, h2, h3, h4, h5, h6) {
   color: #FFFFFF;
 }
 
@@ -24,7 +23,8 @@
 }
 
 .dashboard-nav {
-  width: 22%;
+  width: 15%;
+  min-width: max-content;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -33,10 +33,18 @@
   padding: 4rem 1rem 4rem 2.5rem;
   border-radius: 20px;
   background-color: #FFFFFF;
+  overflow: hidden;
 }
 
 .dashboard-nav.dark {
   background-color: rgb(0, 0, 0);
+}
+
+.dashboard-nav.full-screen {
+  max-width: 0px;
+  width: 0;
+  min-width: auto;
+  padding: 0;
 }
 
 .menu-icon {
@@ -44,12 +52,12 @@
 }
 
 .logo-image {
-  width: 67%;
+  width: max-content;
   height: max-content;
 }
 
 .logo-image img {
-  width: 100%;
+  width: 150px;
 }
 
 .nav-links {
@@ -71,6 +79,7 @@
 
 .nav-item {
   width: 100%;
+  min-width: max-content;
   padding: 10px;
   border-radius: 15px;
   padding-left: 20px;
@@ -122,7 +131,7 @@
 
 .modeNotSet {
   padding: 7px 15px;
-  border-radius: 15px;
+  border-radius: 10px;
   color: rgb(0, 0, 0, 0.4);
 }
 
@@ -133,7 +142,7 @@
 .modeSet {
   padding: 7px 15px;
   background: linear-gradient(113deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
-  border-radius: 15px;
+  border-radius: 10px;
   color: rgb(255, 255, 255);
 }
 
@@ -158,8 +167,34 @@ main {
   flex-grow: 1;
   min-height: 110vh;
   height: max-content;
-  margin: 5rem 4rem;
-  padding: 0 2rem;
+}
+
+@media screen and (max-width: 1600px) {
+  .nav-item {
+    padding: 10px;
+    border-radius: 12px;
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  .modeChangeBtn {
+    margin-left: 5px;
+  }
+
+  .modeSet,
+  .modeNotSet {
+    padding: 5px 15px;
+    border-radius: 10px;
+
+    &>ion-icon {
+      font-size: 14px;
+    }
+
+    &>.navLabel {
+      font-size: 12px;
+      margin-left: 6px;
+    }
+  }
 }
 
 
@@ -198,11 +233,6 @@ main {
       margin-left: 5px;
     }
   }
-
-  main {
-    margin: 5rem 1rem;
-    padding: 0 1rem 0 2rem;
-  }
 }
 
 @media screen and (max-width: 1026px) {
@@ -231,6 +261,10 @@ main {
       margin-left: 4px;
     }
   }
+
+  .logo-image img {
+    width: 140px;
+  }
 }
 
 @media screen and (max-width: 937px) {
@@ -241,23 +275,95 @@ main {
 
 @media screen and (max-width: 866px) {
   .dashboard-nav {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 4rem 1rem 3rem 2rem;
+    width: 27%;
+    overflow: hidden;
+    transform: translateX(-100%);
+    transition: transform 0.3s linear;
+
+    &.show {
+      transform: translateX(0);
+
+    }
   }
 
-  main {
-    margin: 3rem 0rem;
-    width: 100%;
+  .nav-links {
+    height: 80%;
+  }
+
+  .nav-item {
+    padding: 6px;
+    border-radius: 9px;
+    padding-left: 14px;
+    font-size: 11px;
   }
 
   .menu-icon {
     display: block;
   }
+
+  main {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .dashboard-nav {
+    width: 31%;
+  }
+
+  .logo-image img {
+    width: 130px;
+  }
 }
 
 @media screen and (max-width: 500px) {
   main {
-    margin: 3rem 0rem;
-    padding: 0 1rem;
     min-height: auto;
   }
+
+  .dashboard-nav {
+    padding: 4rem 2rem 10rem 1.5rem;
+  }
+
+  .nav-links {
+    height: 60%;
+    padding: 10px 10px;
+  }
+
+  .nav-item {
+    &.active {
+      box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .logo-image img {
+    width: 120px;
+  }
+
+  .modeSet,
+  .modeNotSet {
+    padding: 6px 9px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: auto;
+
+    &>ion-icon {
+      font-size: 11px;
+      margin: auto;
+    }
+
+    &>.navLabel {
+      font-size: 8px;
+      margin-left: 3px;
+    }
+  }
+
+
 }

@@ -129,33 +129,35 @@ function Dashboard(props) {
 
     return (
         <>
-            <div className="board-heading">
-                <div className="welcome-text d-flex flex-row">
-                    <div className="menu-icon">
-                        <i className="fa-solid fa-list-ul"></i>
+            <div className="dashboardContainer">
+                <div className="board-heading">
+                    <div className="welcome-text d-flex flex-row">
+                        <div className="menu-icon" onClick={props.controlNav}>
+                            <i className="fa-solid fa-list-ul"></i>
+                        </div>
+                        <div ref={welcome} className='d-flex flex-column welcome-effect'>
+                            <h1>Welcome {user.name}!</h1>
+                            <p>Let's crack the code</p>
+                        </div>
                     </div>
-                    <div ref={welcome} className='d-flex flex-column welcome-effect'>
-                        <h1>Welcome {user.name}!</h1>
-                        <p>Let's crack the code</p>
+                    <div className="search-notify-box">
+                        <div className={'search-bar ' + props.toggleMode}>
+                            <i className="fa-solid fa-magnifying-glass" onClick={openSearchOpt}></i>
+                            <input ref={search} type="text" name="search" id="search" className={props.toggleMode} placeholder='Search' />
+                        </div>
+                        <div className="notify-box">
+                            <span className="notify-count">5</span>
+                            <ion-icon name="notifications"></ion-icon>
+                        </div>
                     </div>
                 </div>
-                <div className="search-notify-box">
-                    <div className={'search-bar ' + props.toggleMode}>
-                        <i className="fa-solid fa-magnifying-glass" onClick={openSearchOpt}></i>
-                        <input ref={search} type="text" name="search" id="search" className={props.toggleMode} placeholder='Search' />
-                    </div>
-                    <div className="notify-box">
-                        <span className="notify-count">5</span>
-                        <ion-icon name="notifications"></ion-icon>
-                    </div>
-                </div>
-            </div>
 
-            <YourCourses toggleMode={props.toggleMode} />
-            <Timeline toggleMode={props.toggleMode} activity={user.activity} />
-            <TestSection toggleMode={props.toggleMode} test={user.test} />
-            <ScreenTimeSection toggleMode={props.toggleMode} screenTime={user.screenTime} />
-            <ResultsSection toggleMode={props.toggleMode} results={user.results} />
+                <YourCourses toggleMode={props.toggleMode} />
+                <Timeline toggleMode={props.toggleMode} activity={user.activity} />
+                <TestSection toggleMode={props.toggleMode} test={user.test} />
+                <ScreenTimeSection toggleMode={props.toggleMode} screenTime={user.screenTime} />
+                <ResultsSection toggleMode={props.toggleMode} results={user.results} />
+            </div>
         </>
     )
 }
