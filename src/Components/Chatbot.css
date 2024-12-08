@@ -1,0 +1,221 @@
+.chatbotContainer {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.suggestInterface {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 70%;
+    height: 100%;
+    padding-top: 11%;
+    text-align: center;
+    align-items: center;
+}
+
+.chatInterface {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 70%;
+    height: 85%;
+    padding-top: 50px;
+    text-align: center;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.chatbox-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.welcome-chatbox {
+    font-size: 44px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    background: -webkit-linear-gradient(284deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.how-can-help {
+    font-size: 34px;
+    color: #000000;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+}
+
+.chat-suggestions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.suggested-que {
+    padding: 20px;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    width: 32%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.chatbar {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    column-gap: 30px;
+    width: 70%;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.chat-input {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    background-color: #ffffff;
+    border: 1px solid #CBCBCB;
+    border-radius: 15px;
+    padding: 18px 15px;
+    flex-grow: 1;
+}
+
+.chat-input textarea {
+    flex-grow: 1;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    line-height: 1.5;
+    max-height: 100px;
+    /* Limit maximum height */
+    overflow-y: auto;
+    /* Allow scrolling only when max-height is reached */
+    padding: 5px;
+}
+
+.document,
+.mic {
+    height: max-content;
+    width: max-content;
+    text-align: center;
+    margin: 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    line-height: 1.5;
+    padding: 5px 0;
+    cursor: pointer;
+
+    &>i {
+        font-size: 20px;
+        color: black;
+        vertical-align: middle;
+    }
+}
+
+.send-prompt {
+    height: 65px;
+    text-align: center;
+    padding: 7px 20px 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: linear-gradient(131deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+    cursor: pointer;
+
+    &>i {
+        font-size: 24px;
+        color: white;
+    }
+}
+
+.querySection {
+    width: 100%;
+    padding: 10px;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.queryBox {
+    width: max-content;
+    max-width: 700px;
+    height: max-content;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border-top-right-radius: 0;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    
+    &>pre {
+        font-size: 14px;
+        font-weight: 400;
+        font-family: 'Poppins', sans-serif;
+        text-align: left;
+        white-space: pre-wrap;
+    }
+}
+
+.resSection {
+    width: 100%;
+    padding: 10px 0;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    justify-content: left;
+}
+
+.resLogo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &>img {
+        width: 100%;
+    }
+}
+
+.resBox {
+    flex-grow: 1;
+    padding-right: 10px;
+    text-align: left;
+    padding-left: 5px;
+    padding-top: 5px;
+    
+    &>pre {
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 400;
+        font-family: 'Poppins', sans-serif;
+    }
+}

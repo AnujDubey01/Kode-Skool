@@ -140,7 +140,7 @@ function Editor(props) {
             <div className="EditorContainer">
                 <div className="langController">
                     <div className="fullScreen" onClick={fullScreen}>
-                        {fullEditor? <i class="fa-solid fa-bars"></i> : <i class="fa-solid fa-expand"></i>}
+                        {fullEditor? <i className="fa-solid fa-bars"></i> : <i className="fa-solid fa-expand"></i>}
                     </div>
                     <div className="langOptions">
                         {Object.keys(languages).map((language) => (
@@ -167,7 +167,7 @@ function Editor(props) {
                             </div>
                             <div className="codeBtns">
                                 <button type="button" className='shareCodeBtn'>
-                                    <i class="fa-solid fa-share-nodes"></i>
+                                    <i className="fa-solid fa-share-nodes"></i>
                                     Share
                                 </button>
                                 <button type="button" className='runBtn' onClick={runCode}>Run</button>
