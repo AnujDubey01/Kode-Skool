@@ -256,7 +256,7 @@ function App() {
           <main>
             <Routes>
               <Route exact path="/" element={<Dashboard toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
-              <Route exact path="/Editor" element={<Editor toggleMode={toggleMode} dashboardNav={dashboardNav} />} />
+              <Route exact path="/Editor" element={<Editor toggleMode={toggleMode} dashboardNav={dashboardNav} user={user} controlNav={controlNav} />} />
               <Route exact path="/Courses" element={<Courses toggleMode={toggleMode} />} >
                 <Route path="" element={<CourseList toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
                 <Route path="View" element={<CourseView toggleMode={toggleMode}/>} />
