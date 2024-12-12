@@ -262,7 +262,7 @@ function App() {
                 <Route path="View" element={<CourseView toggleMode={toggleMode}/>} />
                 <Route path="Video" element={<CourseVideo toggleMode={toggleMode}/>} />
               </Route>
-              <Route exact path="/Chatbot" element={<Chatbot toggleMode={toggleMode} />} />
+              <Route exact path="/Chatbot" element={<Chatbot toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
             </Routes>
           </main>
         </div>

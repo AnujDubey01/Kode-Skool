@@ -48,7 +48,7 @@ function CourseList(props) {
                 <div className="courses-head my-4">
                     <h1>All courses catalog</h1>
                 </div>
-                <div className="courses-body container">
+                <div className="courses-body d-flex align-items-center justify-content-center">
                     <div className="row gap-4 course-card-collection">
 
                         <div className="course-card col-md-5 p-4 d-flex align-items-center flex-column gap-3">
@@ -61,9 +61,9 @@ function CourseList(props) {
                                 </div>
                             </div>
                             <div className="course-body">
-                                <div className="level">Beginner</div>
-                                <div className="d-flex align-items-center">
-                                    <div className="units-number me-2">
+                                <div class="level">Beginner</div>
+                                <div className="d-flex gap-2">
+                                    <div className="units-number">
                                         <h5>36</h5>
                                     </div>
                                     <div className="units-number">
@@ -84,13 +84,13 @@ function CourseList(props) {
                                     <img src={cLang} alt="C language" />
                                 </div>
                                 <div className="course-name">
-                                    <h4>Learn C Programming</h4>
+                                    <h4>Learn C++ Programming</h4>
                                 </div>
                             </div>
                             <div className="course-body">
-                                <div className="level">Beginner</div>
-                                <div className="d-flex align-items-center">
-                                    <div className="units-number me-2">
+                                <div class="level">Beginner</div>
+                                <div className="d-flex gap-2">
+                                    <div className="units-number">
                                         <h5>36</h5>
                                     </div>
                                     <div className="units-number">
@@ -115,9 +115,9 @@ function CourseList(props) {
                                 </div>
                             </div>
                             <div className="course-body">
-                                <div className="level">Beginner</div>
-                                <div className="d-flex align-items-center">
-                                    <div className="units-number me-2">
+                                <div class="level">Beginner</div>
+                                <div className="d-flex gap-2">
+                                    <div className="units-number">
                                         <h5>36</h5>
                                     </div>
                                     <div className="units-number">
@@ -131,13 +131,13 @@ function CourseList(props) {
                                 </Link>
                             </div>
                         </div>
-                        <div className="course-card col-md-5 p-4 d-flex align-items-center flex-column gap-3">
-                            <div className="course-card-head">
+                        <div className="course-card col-md-5 p-4 d-flex align-items-center justify-content-center flex-column gap-3">
+                            <div className="course-card-head d-flex align-items-center justify-content-center">
                                 <div className="course-name">
                                     <h5>Many More Options to Explore</h5>
                                 </div>
                             </div>
-                            <div className="course-body">
+                            <div className="course-explore">
                                 <a href='#!' className="btn1 course-play">Explore</a>
                             </div>
                         </div>

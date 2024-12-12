@@ -1,3 +1,7 @@
+.courses-section {
+    width: 100%;
+}
+
 .courseContainer {
     margin: 5rem 4rem;
     padding: 0 2rem;
@@ -36,15 +40,7 @@
     font-size: 1.8rem;
 }
 
-.course-img>img {
-    height: 2rem;
-    width: 2rem;
-}
-
 .course-card {
-    overflow: auto;
-    width: 48%;
-    /* max-width: auto; */
     border-radius: 15px;
     background-color: #ffffff;
     box-shadow: 0px 0px 10px 0px #00000021;
@@ -67,9 +63,10 @@
 }
 
 .course-body {
-    width: 95%;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-around;
 }
 
@@ -119,11 +116,12 @@
 
 .course-details {
     width: 100%;
+    gap: 0.8rem;
 }
 
 .course-video iframe {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     aspect-ratio: 16/9;
 }
@@ -146,5 +144,100 @@
     .courseContainer {
         margin: 3rem 0rem;
         padding: 0 1rem;
+    }
+}
+
+@media screen and (max-width: 1026px) {
+    .course-image img {
+        height: 3rem;
+        width: 3rem;
+    }
+    .course-name h4 {
+        font-size: 1.3rem;
+    }
+    .level p {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+        font-weight: 400;
+    }
+    .units-number h5 {
+        font-size: 1rem;
+    }
+    .playBtn {
+        min-height: 2.2rem;
+        min-width: 2.2rem;
+    }
+    .course-name h5 {
+        font-size: 1.1rem;
+    }
+    .course-explore a {
+        padding: 8px 21px;
+        font-size: 0.9rem;
+    }
+    .course-details .course-name h2 {
+        font-size: 1.7rem
+    }
+    .course-about p {
+        font-size: 0.9rem;
+    }
+    .topic-head h3 {
+        font-size: 1.2rem;
+    }
+    .playbtn .btn1 {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    .course-topic-body {
+        font-size: 0.8rem;
+    }
+    #course-unit {
+        font-size: 1.5rem;
+    }
+    .course-topic-body li h5 {
+        font-size: 1rem;
+    }
+}
+@media screen and (max-width: 769px) {
+    .welcome-text h1 {
+        font-size: 1.7rem;
+    }
+    .welcome-text p {
+        font-size: 1rem;
+    }
+    .search-notify-box {
+        gap: 2rem;
+    }
+    #course-unit {
+        font-size: 1.3rem;
+    }
+}
+@media screen and (max-width: 426px) {
+    .welcome-text h1 {
+        font-size: 1.3rem;
+    }
+    .welcome-text p {
+        font-size: 0.8rem;
+    }
+    .course-details .course-name h2 {
+        font-size: 1.3rem
+    }
+    .course-about p {
+        font-size: 0.7rem;
+    }
+    .courses-head h1 {
+        font-size: 1.5rem;
+    }
+    .topic-head h3 {
+        font-size: 1rem;
+    }
+    .playbtn .btn1 {
+        padding: 0.3rem 1rem;
+        font-size: 0.7rem;
+    }
+    #course-unit {
+        font-size: 1.2rem;
+    }
+    .course-topic-body li h5 {
+        font-size: 0.8rem;
     }
 }

@@ -50,7 +50,7 @@ function fetchResponse(userQuery) {
 
 
 
-function Chatbot() {
+function Chatbot(props) {
   const [chatHistory, setChatHistory] = useState([]);
   const input = useRef(null)
   const chatInterface = useRef(null);
@@ -120,9 +120,50 @@ function Chatbot() {
   }, [chatHistory])
 
 
+  // Small screen UI functions
+  const welcome = useRef(null);
+  const search = useRef(null);
+
+  const handleClickOutside = (event) => {
+      if (search.current.parentElement && !search.current.parentElement.contains(event.target)) {
+          welcome.current.classList.remove('openSearch');
+          search.current.classList.remove('openSearch');
+          document.removeEventListener('mousedown', handleClickOutside);
+      }
+  };
+
+  const openSearchOpt = () => {
+      welcome.current.classList.add('openSearch');
+      search.current.classList.add('openSearch');
+      document.addEventListener('mousedown', handleClickOutside);
+  }
+
   return (
     <>
       <div className="chatbotContainer">
+        {window.innerWidth < 866 ?
+          <div className="board-heading">
+            <div className="welcome-text d-flex flex-row">
+              <div className="menu-icon" onClick={props.controlNav}>
+                <i className="fa-solid fa-list-ul"></i>
+              </div>
+              <div ref={welcome} className='d-flex flex-column welcome-effect'>
+                <h1>Welcome {props.user.name}!</h1>
+                <p>Let's crack the code</p>
+              </div>
+            </div>
+            <div className="search-notify-box">
+              <div className={'search-bar ' + props.toggleMode}>
+                <i className="fa-solid fa-magnifying-glass" onClick={openSearchOpt}></i>
+                <input ref={search} type="text" name="search" id="search" className={props.toggleMode} placeholder='Search' />
+              </div>
+              <div className="notify-box">
+                <span className="notify-count">5</span>
+                <ion-icon name="notifications"></ion-icon>
+              </div>
+            </div>
+          </div> : <></>
+        }
         {chatHistory.length ?
           <div ref={chatInterface} className="chatInterface">
             {chatHistory.map(renderChatItem)}

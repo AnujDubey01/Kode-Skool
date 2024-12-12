@@ -1,0 +1,518 @@
+.chatbotContainer {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.suggestInterface {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 70%;
+    height: 100%;
+    padding-top: 11%;
+    text-align: center;
+    align-items: center;
+}
+
+.chatInterface {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 70%;
+    height: 85%;
+    padding-top: 50px;
+    text-align: center;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.chatbox-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.welcome-chatbox {
+    font-size: 44px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    background: -webkit-linear-gradient(284deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.how-can-help {
+    font-size: 34px;
+    color: #000000;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+}
+
+.chat-suggestions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.suggested-que {
+    padding: 20px;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    width: 32%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.chatbar {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    column-gap: 30px;
+    width: 70%;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.chat-input {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    background-color: #ffffff;
+    border: 1px solid #CBCBCB;
+    border-radius: 15px;
+    padding: 18px 15px;
+    flex-grow: 1;
+}
+
+.chat-input textarea {
+    flex-grow: 1;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    line-height: 1.5;
+    max-height: 100px;
+    /* Limit maximum height */
+    overflow-y: auto;
+    /* Allow scrolling only when max-height is reached */
+    padding: 5px;
+}
+
+.document,
+.mic {
+    height: max-content;
+    width: max-content;
+    text-align: center;
+    margin: 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    line-height: 1.5;
+    padding: 5px 0;
+    cursor: pointer;
+
+    &>i {
+        font-size: 20px;
+        color: black;
+        vertical-align: middle;
+    }
+}
+
+.send-prompt {
+    height: 65px;
+    text-align: center;
+    padding: 7px 20px 10px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: linear-gradient(131deg, #414D8E 18%, #424F90 18%, #5D74BD 44%, #169BDF 75%);
+    cursor: pointer;
+
+    &>i {
+        font-size: 24px;
+        color: white;
+    }
+}
+
+.querySection {
+    width: 100%;
+    padding: 10px;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.queryBox {
+    width: max-content;
+    max-width: 700px;
+    height: max-content;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    border-top-right-radius: 0;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+
+    &>pre {
+        font-size: 14px;
+        font-weight: 400;
+        font-family: 'Poppins', sans-serif;
+        text-align: left;
+        white-space: pre-wrap;
+        margin-bottom: 0.3rem;
+    }
+}
+
+.resSection {
+    width: 100%;
+    padding: 10px 0;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    justify-content: left;
+}
+
+.resLogo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &>img {
+        width: 100%;
+    }
+}
+
+.resBox {
+    flex-grow: 1;
+    padding-right: 10px;
+    text-align: left;
+    padding-left: 5px;
+    padding-top: 5px;
+
+    &>pre {
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 400;
+        font-family: 'Poppins', sans-serif;
+        text-align: left;
+        white-space: pre-wrap;
+        margin-bottom: 0.3rem;
+    }
+}
+
+
+/* Mobile version css */
+@media screen and (max-width: 866px) {
+    .chatbotContainer {
+        height: 95vh;
+        padding: 20px;
+    }
+
+    .suggestInterface {
+        width: 100%;
+        padding-top: 7%;
+    }
+
+    .chatbar {
+        column-gap: 12px;
+        width: 90%;
+    }
+
+    .chat-input {
+        border-radius: 8px;
+        padding: 12px 10px;
+
+        &>textarea {
+            font-size: 12px;
+        }
+    }
+
+    .document,
+    .mic {
+        margin: 0 8px;
+
+        &>i {
+            font-size: 17px;
+        }
+    }
+
+    .send-prompt {
+        height: 52px;
+        padding: 7px 17px 9px 17px;
+
+        &>i{
+            font-size: 20px;
+        }
+    }
+
+    .chatInterface {
+        width: 100%;
+        height: 80%;
+        margin-top: 10px;
+    }
+
+    .queryBox {
+        border-radius: 7px;
+        max-width: 625px;
+
+        &>pre {
+            font-size: 13px;
+        }
+    }
+
+    .resSection {
+        column-gap: 9px;
+    }
+
+    .resBox {
+        padding-top: 7px;
+
+        &>pre {
+            font-size: 13px;
+        }
+    }
+
+    .chatbox-logo {
+        margin-bottom: 5px;
+    }
+
+    .welcome-chatbox {
+        font-size: 40px;
+    }
+
+    .how-can-help {
+        font-size: 30px;
+    }
+
+    .chat-suggestions {
+        margin-top: 20px;
+    }
+
+    .suggested-que {
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 13px;
+        width: 33%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .chat-suggestions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 5px;
+    }
+
+    .suggested-que {
+        width: 70%;
+    }
+
+    .queryBox {
+        border-radius: 6px;
+        max-width: 470px;
+    }
+
+    .resLogo {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+    }
+
+    .resSection {
+        column-gap: 5px;
+    }
+
+    .resBox {
+        padding-top: 4px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .chatbotContainer {
+        height: 90vh;
+    }
+
+    .chat-suggestions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 5px;
+    }
+
+    .suggested-que {
+        width: 85%;
+    }
+
+    .queryBox {
+        border-radius: 6px;
+        max-width: 375px;
+    }
+
+    .welcome-chatbox {
+        font-size: 35px;
+    }
+
+    .how-can-help {
+        font-size: 27px;
+    }
+
+    .chatbox-logo {
+        margin-bottom: 3px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .suggestInterface {
+        padding-top: 15%;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .suggested-que {
+        width: 90%;
+    }
+
+    .chatbar {
+        column-gap: 7px;
+        width: 93%;
+    }
+
+    .chat-input {
+        border-radius: 5px;
+        padding: 8px 6px;
+
+        &>textarea {
+            font-size: 10.5px;
+        }
+    }
+
+    .document, .mic {
+        margin: 0px 6px;
+
+        &>i {
+            font-size: 15px;
+        }
+    }
+
+    .send-prompt {
+        height: 43px;
+        padding: 7px 13px 9px 13px;
+        border-radius: 7px;
+
+        &>i {
+            font-size: 16px;
+        }
+    }
+
+    .queryBox {
+        max-width: 275px;
+    }
+
+    .welcome-chatbox {
+        font-size: 32px;
+    }
+
+    .how-can-help {
+        font-size: 25px;
+    }
+
+}
+
+@media screen and (max-width: 376px) {
+    .suggested-que {
+        width: 95%;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .welcome-chatbox {
+        font-size: 30px;
+    }
+
+    .how-can-help {
+        font-size: 24px;
+    }
+
+    .chatbox-logo {
+        margin-bottom: 1px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .queryBox {
+        padding: 7px 12px;
+
+        &>pre {
+            font-size: 12px;
+        }
+    }
+
+    .resBox {
+        padding-top: 2px;
+        padding-left: 3px;
+        &>pre {
+            font-size: 12px;
+        }
+    }
+}
+
+@media screen and (max-width: 321px) {
+    .suggested-que {
+        width: 97%;
+        padding: 7px;
+        font-size: 11px;
+        border-radius: 5px;
+    }
+
+    .chat-suggestions {
+        row-gap: 2px;
+        margin-top: 15px;
+    }
+
+    .welcome-chatbox {
+        font-size: 27px;
+    }
+
+    .how-can-help {
+        font-size: 22px;
+    }
+
+    .queryBox {
+        max-width: 240px;
+
+        &>pre {
+            font-size: 11px;
+        }
+    }
+
+    .resBox {
+        &>pre {
+            font-size: 11px;
+        }
+    }
+}

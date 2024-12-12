@@ -16,7 +16,7 @@ function CourseView() {
             </div>
             <div className="courses-section my-5">
                 <div className="courses-head my-4 d-flex justify-content-between px-3">
-                    <div className="course-details d-flex flex-column gap-3">
+                    <div className="course-details d-flex flex-column">
                         <div className="course-name">
                             <h2>Python</h2>
                         </div>

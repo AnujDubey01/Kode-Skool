@@ -14,7 +14,7 @@ function CourseVideo() {
                 <div className="courses-head my-2 d-flex justify-content-between px-3">
                     <div className="course-details d-flex flex-column">
                         <div className="course-name">
-                            <h2>Unit 1: Variables and Data types</h2>
+                            <h2  id="course-unit">Unit 1: Variables and Data types</h2>
                         </div>
                         <div className="course-video">
                             <iframe src="https://www.youtube.com/embed/60kyKPfVMAM?si=fevWcxCk9zBYAjwQ"
