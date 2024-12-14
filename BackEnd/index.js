@@ -1,16 +1,18 @@
 const express = require("express");
-const mongoose = require("monogoose");
+const mongoose = require("mongoose");
 const cors = require("cors");
 
-mongoose.connect("monogdb://localhost:27017/");
+mongoose.connect("mongodb://localhost:27017/");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 // Available routes
+const authenticate = require("./api/authenticate");
+app.use('/api',authenticate);
 
 
-app.listen(port, () => {
-    console.log(`iNotebook backend listening at http://localhost:${port}`)
+app.listen(5000, () => {
+    console.log(`iNotebook backend listening at http://localhost:${5000}`)
   })
