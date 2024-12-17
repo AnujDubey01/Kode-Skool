@@ -6,8 +6,36 @@ const addressSchema = new mongoose.Schema({
     city: { type: String, trim: true },
     state: { type: String, trim: true },
     country: { type: String, trim: true },
-    zip: { type: String, trim: true, match: [/^\\d{5}$/, 'Zip code must be 5 digits'] },
+    pin: { type: String, trim: true, match: [/^\d{6}$/, 'Pin code must be 6 digits'] },
 });
+
+// Define the Subdocument Schema for Education
+const educationSchema = new mongoose.Schema({
+    university_type: {
+        type: String,
+        enum: ['School', 'College']
+    },
+    school_clg_name: {
+        type: String,
+        trim: true
+    },
+    class_year: {
+        type: Number,
+        min: 1
+    }
+})
+
+// Subdocument for social handle
+const socialHandle = new mongoose.Schema({
+    handle_name: {
+        type: String,
+        trim: true
+    },
+    handle_link: {
+        type: String,
+        trim: true
+    }
+})
 
 // Define the Main Schema for Student
 const studentSchema = new mongoose.Schema({
@@ -27,12 +55,10 @@ const studentSchema = new mongoose.Schema({
     },
     Name: { type: String, required: true, trim: true },
     Address: addressSchema, // Subdocument
-    Phone: { type: String, trim: true, match: [/^\\d{10}$/, 'Phone number must be 10 digits'] },
-    Father_Name: { type: String, trim: true },
-    Mother_Name: { type: String, trim: true },
-    Parents_Phone: { type: String, trim: true, match: [/^\\d{10}$/, 'Parents phone number must be 10 digits'] },
-    Education: { type: String, trim: true },
+    Phone: { type: String, trim: true, match: [/^\d{10}$/, 'Phone number must be 10 digits'] },
+    Education: educationSchema, // Subdocument
     DOB: { type: Date },
+    Social_Handles: [socialHandle]
 }, {
     timestamps: true,
 });

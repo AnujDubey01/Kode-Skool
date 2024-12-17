@@ -71,7 +71,7 @@ router.post('/register/student', [
                 res.status(404).send({ msg: "Unable to create user." });
             })
 
-        const Auth_token = jwt.sign({User: {id: userId}},JWT_SECRET)
+        const Auth_token = jwt.sign({user: {id: userId}},JWT_SECRET)
         
         res.status(200).send({
             msg: "User registered successfully.",
@@ -106,7 +106,7 @@ router.post("/login",[
             return res.status(400).send({msg: "Wrong Password!"});
         }
 
-        const Auth_token = jwt.sign({User: {id: user._id}},JWT_SECRET)
+        const Auth_token = jwt.sign({user: {id: user._id}},JWT_SECRET)
         
         res.status(200).send({
             msg: "User login successful.",
