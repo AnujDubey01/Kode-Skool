@@ -29,20 +29,20 @@ const ratingSchema = new mongoose.Schema({
 ratingSchema.index({ User_ID: 1, Course_ID: 1 }, { unique: true });
 
 // Update Course Rating on Save/Update/Delete
-courseRatingSchema.post("save", async function () {
-    const Course = mongoose.model("Course");
+ratingSchema.post("save", async function () {
+    const Course = require("./Course");
     await Course.updateRating(this.Course_ID);
 });
 
-courseRatingSchema.post("findOneAndUpdate", async function (doc) {
-    const Course = mongoose.model("Course");
+ratingSchema.post("findOneAndUpdate", async function (doc) {
+    const Course = require("./Course");
     if (doc) {
         await Course.updateRating(doc.Course_ID);
     }
 });
 
-courseRatingSchema.post("findOneAndDelete", async function (doc) {
-    const Course = mongoose.model("Course");
+ratingSchema.post("findOneAndDelete", async function (doc) {
+    const Course = require("./Course");
     if (doc) {
         await Course.updateRating(doc.Course_ID);
     }

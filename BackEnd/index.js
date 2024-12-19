@@ -13,9 +13,13 @@ app.use(express.json());
 const authenticate = require("./api/authenticate");
 app.use('/api',authenticate);
 
-// Uset Details
+// User Details
 const userData = require("./api/userdata");
 app.use('/api',userData);
+
+// Course Api
+const course = require("./api/course");
+app.use('/api',course)
 
 
 app.listen(5000, () => {

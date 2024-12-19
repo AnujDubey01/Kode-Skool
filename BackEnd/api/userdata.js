@@ -11,7 +11,7 @@ router.post('/profile/student/update', fetchUser, async (req, res) => {
     const user = await User.findById(userId).select("-Password");
     try {
         if (!user) {
-            return res.status(400).send({msg: "User doesn't exists."});
+            return res.status(400).send({ success: false, msg: "User doesn't exists."});
         }
 
         const {name, phone, street, city, state, country, pin, university_type, school_clg_name, class_year, dob, hacker_rank, linkedin, codechef, instagram} = req.body;
@@ -47,9 +47,9 @@ router.post('/profile/student/update', fetchUser, async (req, res) => {
         );
 
         if(student){
-            return res.status(200).send({msg: "Updated details successfully."});
+            return res.status(200).send({ success: true, msg: "Updated details successfully."});
         }else{
-            return res.status(400).send({msg: "Student account doesn't exits."});
+            return res.status(400).send({ success: false, msg: "Student account doesn't exits."});
         }
         
     } catch (error) {

@@ -36,7 +36,7 @@ const courseSchema = new mongoose.Schema({
 
 // Update Course Rating Automatically
 courseSchema.statics.updateRating = async function (courseId) {
-    const CourseRating = mongoose.model("CourseRating");
+    const CourseRating = require("./CourseRating");
     const courseRatings = await CourseRating.find({ Course_ID: courseId });
 
     const averageRating = courseRatings.length

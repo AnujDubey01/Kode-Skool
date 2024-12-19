@@ -28,13 +28,13 @@ router.post('/register/student', [
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).render("register", { msg: errors.array()[0], otherDetails: req.body });
+        return res.status(400).send({success: false, msg: errors.array()[0]});
     }
 
     try {
         let user = await User.findOne({ Email: req.body.email })
         if (user) {
-            return res.status(400).send({ msg: "User already exists with this email." })
+            return res.status(400).send({ success: false, msg: "User already exists with this email." })
         }
 
         const { email, password, name } = req.body;
@@ -49,7 +49,7 @@ router.post('/register/student', [
                 return savedStudent._id;
             })
             .catch((err) => {
-                res.status(404).send({ msg: "Unable to create user." });
+                res.status(404).send({ success: false, msg: "Unable to create user." });
             });
 
         // Creating Hash of password
@@ -68,18 +68,19 @@ router.post('/register/student', [
                 return savedUser._id;
             })
             .catch((err) => {
-                res.status(404).send({ msg: "Unable to create user." });
+                res.status(404).send({ success: false, msg: "Unable to create user." });
             })
 
         const Auth_token = jwt.sign({user: {id: userId}},JWT_SECRET)
         
         res.status(200).send({
+            success: true,
             msg: "User registered successfully.",
             auth_token: Auth_token
         })
 
     } catch (error) {
-        res.status(500).send({ err: error });
+        res.status(500).send({ success: false, err: error });
     }
 })
 
@@ -89,13 +90,13 @@ router.post("/login",[
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).render("login", { message: errors.array()[0], otherDetails: req.body});
+        return res.status(400).send({ success: false, message: errors.array()[0], otherDetails: req.body});
     }
 
     try {
         const user = await User.findOne({ Email: req.body.email }).select('+Password')
         if (!user) {
-            return res.status(400).send({msg: "User doesn't exists."});
+            return res.status(400).send({ success: false, msg: "User doesn't exists."});
         }
 
         const hash = user.Password;
@@ -103,18 +104,19 @@ router.post("/login",[
         const result = await bcrypt.compare(req.body.password, hash);
 
         if(!result){
-            return res.status(400).send({msg: "Wrong Password!"});
+            return res.status(400).send({ success: false, msg: "Wrong Password!"});
         }
 
         const Auth_token = jwt.sign({user: {id: user._id}},JWT_SECRET)
         
         res.status(200).send({
+            success: true,
             msg: "User login successful.",
             auth_token: Auth_token
         })
 
     } catch (error) {
-        res.status(500).send({ err: error.message });
+        res.status(500).send({ success: true, err: error.message });
     }
 })
 
