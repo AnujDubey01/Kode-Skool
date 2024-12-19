@@ -16,6 +16,10 @@ const courseSchema = new mongoose.Schema({
         required: true,
         min: 0,
     },
+    Rating: {
+        type: Number,
+        default: 0
+    },
     Duration: {
         type: Number, // Duration in hours
         required: true,

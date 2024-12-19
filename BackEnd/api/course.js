@@ -57,6 +57,11 @@ router.post('/rate-course', async (req, res) => {
             return res.status(400).json({ success: false, error: 'User_ID, Course_ID, and Rating are required.' });
         }
 
+        const rateExists = await Rating.findOne({User_ID: user_id, Course_ID: course_id});
+        if(rateExists){
+            return res.status(400).json({ success: false, msg: "Already rated by you!"})
+        }
+
         // Create and save a new rating
         const newRating = new Rating({
             User_ID: user_id,
@@ -68,8 +73,7 @@ router.post('/rate-course', async (req, res) => {
         const savedRating = await newRating.save();
         res.status(201).json({ success: true, msg: 'Rating saved successfully.'});
     } catch (error) {
-        console.error('Error saving rating:', error);
-        res.status(500).json({ success: false, error: 'Internal server error.' });
+        res.status(500).json({ success: false, err: error, msg: "Internal server error!" });
     }
 });
 
