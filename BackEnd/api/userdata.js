@@ -53,7 +53,7 @@ router.post('/profile/student/update', fetchUser, async (req, res) => {
         }
         
     } catch (error) {
-        res.status(500).send({ err: error });
+        res.status(500).send({ err: error.message });
     }
 })
 
@@ -73,7 +73,7 @@ router.get('/profile/student', fetchUser, async(req, res) => {
             return res.status(400).send({msg: "Student account doesn't exits."});
         }
     } catch (error) {
-        res.status(500).send({ err: error });
+        res.status(500).send({ err: error.message });
     }
 })
 

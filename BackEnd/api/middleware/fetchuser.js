@@ -18,7 +18,7 @@ const fetchUser = (req, res, next) => {
             })
         }
     } catch (error) {
-        res.status(500).send({ err: error });
+        res.status(500).send({ err: error.message });
     }
 }
 

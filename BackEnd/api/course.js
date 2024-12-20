@@ -1,8 +1,11 @@
 const express = require("express")
 const router = express.Router()
 
-const Course = require('../models/Course')
-const Rating = require('../models/CourseRating')
+const User = require('../models/User');
+const Course = require('../models/Course');
+const Rating = require('../models/CourseRating');
+const CourseEnroll= require('../models/CourseEnroll');
+const fetchUser = require("./middleware/fetchuser");
 
 router.post('/add-course', async (req, res) => {
     try {
@@ -27,7 +30,7 @@ router.post('/add-course', async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).send({ success: false, err: error });
+        res.status(500).send({ success: false, err: error.message });
     }
 });
 
@@ -44,13 +47,19 @@ router.get('/get-course', async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).send({ err: error });
+        res.status(500).send({ err: error.message });
     }
 })
 
-router.post('/rate-course', async (req, res) => {
+router.post('/rate-course', fetchUser, async (req, res) => {
+    let user_id = req.user.id;
+    const user = await User.findById(user_id).select("-Password");
     try {
-        const { user_id, course_id, rating, feedback } = req.body;
+        if (!user) {
+            return res.status(400).send({msg: "User not logged in properly."});
+        }
+
+        const { course_id, rating, feedback } = req.body;
 
         // Validate required fields
         if (!user_id || !course_id || rating === undefined) {
@@ -71,10 +80,44 @@ router.post('/rate-course', async (req, res) => {
         });
 
         const savedRating = await newRating.save();
-        res.status(201).json({ success: true, msg: 'Rating saved successfully.'});
+        if(savedRating){
+            res.status(200).json({ success: true, msg: 'Rating saved successfully.'});
+        }else{
+            res.status(200).json({ success: false, msg: 'Unable to add rating.'});
+        }
     } catch (error) {
-        res.status(500).json({ success: false, err: error, msg: "Internal server error!" });
+        res.status(500).send({ success: false, err: error.message, msg: "Internal server error!" });
     }
 });
+
+router.post('/enroll-course', fetchUser, async (req, res) => {
+    let userId = req.user.id;
+    const user = await User.findById(userId).select("-Password");
+    try {
+        if (!user) {
+            return res.status(400).send({msg: "User not logged in properly."});
+        }
+
+        const course_id = req.body.course_id;
+        const enrollExits = await CourseEnroll.findOne({Std_ID: userId, Course_ID: course_id});
+        if(enrollExits){
+            return res.status(400).json({ success: false, msg: "Course enrolled already."})
+        }
+
+        const newEnroll = new CourseEnroll({
+            Std_ID: userId,
+            Course_ID: course_id,
+            Status: []
+        })
+
+        newEnroll.save().then(() => {
+            res.status(200).json({ success: true, msg: "Course Enrolled Successfully."});
+        }).catch((err) => {
+            res.status(404).send({ success: false, err: err, msg: "Unable to create user." });
+        })
+    } catch (error) {
+        res.status(500).send({ success: false, err: error.message });
+    }
+})
 
 module.exports = router;

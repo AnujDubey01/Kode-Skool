@@ -68,7 +68,7 @@ router.post('/register/student', [
                 return savedUser._id;
             })
             .catch((err) => {
-                res.status(404).send({ success: false, msg: "Unable to create user." });
+                res.status(404).send({ success: false, err: err, msg: "Unable to create user." });
             })
 
         const Auth_token = jwt.sign({user: {id: userId}},JWT_SECRET)
@@ -80,7 +80,7 @@ router.post('/register/student', [
         })
 
     } catch (error) {
-        res.status(500).send({ success: false, err: error });
+        res.status(500).send({ success: false, err: error.message });
     }
 })
 

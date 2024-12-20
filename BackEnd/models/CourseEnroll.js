@@ -12,11 +12,14 @@ const enrollSchema = new mongoose.Schema({
         required: true
     },
     Status: {
-        type: [mongoose.Schema.Types.ObjectId] // List of the topics, stages completed or milestones achieved.
+        type: [mongoose.Schema.Types.ObjectId], // List of the topics.
+        ref: "CourseStruct.Unit_List.Topic_List"
     }
 },{
     timestamps: true
 });
+
+enrollSchema.index({ Std_ID: 1, Course_ID: 1 }, { unique: true });
 
 const Enroll = mongoose.model('Enroll',enrollSchema);
 
