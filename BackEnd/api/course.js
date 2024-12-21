@@ -5,6 +5,7 @@ const User = require('../models/User');
 const Course = require('../models/Course');
 const Rating = require('../models/CourseRating');
 const CourseEnroll= require('../models/CourseEnroll');
+const CourseStruct = require('../models/CourseStruct');
 const fetchUser = require("./middleware/fetchuser");
 
 router.post('/add-course', async (req, res) => {
@@ -33,6 +34,36 @@ router.post('/add-course', async (req, res) => {
         res.status(500).send({ success: false, err: error.message });
     }
 });
+
+router.post('/add-course-struct', async (req, res) => {
+    try {
+        const { course_id, unit_list } = req.body;
+
+        let courseStruct = await CourseStruct.findOne({Course_ID: course_id});
+
+        if(!courseStruct){
+            courseStruct = new CourseStruct({
+                Course_ID: course_id,
+                Unit_List: unit_list
+            })
+        }else{
+            courseStruct.Unit_List = unit_list;
+        }
+
+
+        courseStruct.save().then(() => {
+            res.status(200).send({
+                success: true,
+                msg: 'Course structure saved successfully'
+            });
+        }).catch((err) => {
+            res.status(400).send({success: false, msg: 'Error while adding course.', err: err});
+        });
+
+    } catch (error) {     
+        res.status(500).send({ success: false, err: error.message });
+    }
+})
 
 
 router.get('/get-course', async (req, res) => {
