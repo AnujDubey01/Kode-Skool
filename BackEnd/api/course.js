@@ -151,4 +151,42 @@ router.post('/enroll-course', fetchUser, async (req, res) => {
     }
 })
 
+router.post('/update-course-status', fetchUser, async (req, res) => {
+    let userId = req.user.id;
+    const user = await User.findById(userId).select("-Password");
+    try {
+        if (!user) {
+            return res.status(400).send({msg: "User not logged in properly."});
+        }
+
+        const {course_id, topic_id} = req.body;
+        const enrollExits = await CourseEnroll.findOne({Std_ID: userId, Course_ID: course_id});
+        if(!enrollExits){
+            return res.status(400).json({ success: false, msg: "Course not enrolled."})
+        }
+
+        const course = await Course.findById(course_id);
+        if(course.Unit_List.Topic_List.includes(topic_id)){
+            enrollExits.Status.append(topic_id);
+            const topic_name = course.Unit_List.Topic_List.find((topic) => topic._id == topic_id).Topic_Name;
+            await enrollExits.save().then(() => {
+                res.status(200).send({
+                    success: true,
+                    msg: `Topic: ${topic_name} is Completed`
+                });
+            }).catch((err) => {
+                res.status(400).send({success: false, msg: 'Error while updating course status.', err: err});
+            });
+        }else{
+            res.status(400).send({
+                success: false,
+                msg: 'Topic does not exists in main course.'
+            })
+        }
+
+    } catch (error) {
+        res.status(500).send({ success: false, err: error.message });
+    }
+})
+
 module.exports = router;
