@@ -151,6 +151,22 @@ router.post('/enroll-course', fetchUser, async (req, res) => {
     }
 })
 
+router.get('/my-courses', fetchUser, async (req, res) => {
+    let userId = req.user.id;
+    const user = await User.findById(userId).select("-Password");
+    try {
+        if (!user) {
+            return res.status(400).send({msg: "User not logged in properly."});
+        }
+
+        const userEnrolls = await CourseEnroll.find();
+        
+        res.status(200).json(userEnrolls)
+    } catch (error) {
+        res.status(500).send({ success: false, err: error.message });
+    } 
+})
+
 router.post('/update-course-status', fetchUser, async (req, res) => {
     let userId = req.user.id;
     const user = await User.findById(userId).select("-Password");
@@ -165,10 +181,21 @@ router.post('/update-course-status', fetchUser, async (req, res) => {
             return res.status(400).json({ success: false, msg: "Course not enrolled."})
         }
 
-        const course = await Course.findById(course_id);
-        if(course.Unit_List.Topic_List.includes(topic_id)){
-            enrollExits.Status.append(topic_id);
-            const topic_name = course.Unit_List.Topic_List.find((topic) => topic._id == topic_id).Topic_Name;
+        const course = await CourseStruct.findOne({Course_ID: course_id});
+
+        let topic_name = null;
+
+        for (const unit of course.Unit_List) {
+            for (const topic of unit.Topic_List) {
+                if (topic._id.toString() === topic_id) {
+                    topic_name = topic.Topic_Name;
+                }
+            }
+        }
+        if(topic_name){
+            if(!enrollExits.Status.includes(topic_id)){
+                enrollExits.Status.push(topic_id);
+            }
             await enrollExits.save().then(() => {
                 res.status(200).send({
                     success: true,
