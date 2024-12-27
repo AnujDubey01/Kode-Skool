@@ -1,0 +1,160 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title KodeSkool | Code is Cool
+    link(rel='icon', type='image/x-icon', href='/static/img/logoWeb.png')
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65', crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM', crossorigin='anonymous')
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+    link(href='https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap', rel='stylesheet')
+    link(rel='stylesheet', href='../static/css/login.css')
+    link(rel='stylesheet', href='../static/css/styles.css')
+    script(src='https://kit.fontawesome.com/51d768ed59.js', crossorigin='anonymous')
+    script(src='../static/js/login.js', defer='')
+  body
+    nav.navbar.navbar-expand-lg.navCustom
+      .container
+        .logo.col-md-2
+          img(src='/static/img/logo.png', alt='KodeSkool')
+        button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #navbarSupportedContent.collapse.navbar-collapse.text-center.fs-5.col-md-10
+          ul.navbar-nav.ms-auto.my-3
+            li.nav-item
+              a.nav-link.me-3.txtBtn(href='#') About Us
+            li.nav-item
+              a.nav-link.me-3.txtBtn(href='#') Courses
+    header#header
+      .container.px-4
+        .row
+          .col-md-6.d-flex.align-items-center.justify-content-start
+            img.img-fluid.hero-img(src='/static/img/loginImg.png', alt='')
+          .col-md-6.rightSec
+            #ele1.OuterCircle.animateElement.signup.d-flex.align-items-center.justify-content-center
+              .InnerCircle
+            #ele2.OuterCircle1.animateElement.signup.d-flex.align-items-center.justify-content-center
+              .InnerCircle1
+            #ele3.CoursesOuter.animateElement.signup.d-flex.align-items-center.justify-content-center
+              p Courses
+            #ele4.TestOuter.animateElement.signup.d-flex.align-items-center.justify-content-center
+              p Test
+            #card.card.py-1.d-flex.flex-column.align-items-center.gap-3
+              ul#myTab.nav.nav-tabs(role='tablist')
+                li.nav-item
+                  button#signup-tab.nav-link.active(data-bs-toggle='tab', data-bs-target='#signup', type='button', role='tab', aria-controls='signup', aria-selected='true', onclick='switchToSignup()')
+                    | Sign
+                    | Up
+                li.nav-item
+                  button#signin-tab.nav-link(data-bs-toggle='tab', data-bs-target='#signin', type='button', role='tab', aria-controls='signin', aria-selected='false', onclick='switchToSignin()')
+                    | Sign
+                    | In
+              #selectRole.selectUser
+                #instituteSelect.select.d-flex.gap-5
+                  label.custom-radio
+                    input(type='radio', name='institution', value='school', onclick='toggleRoles()', required='')
+                    span.radio-btn
+                    |  School
+                  label.custom-radio
+                    input(type='radio', name='institution', value='college', onclick='toggleRoles()', required='')
+                    span.radio-btn
+                    |  College
+                hr.m-1
+                #roleSelection.select.gap-5(style='display: none;')
+                  label.custom-radio
+                    input(type='radio', name='role', value='faculty', checked='')
+                    span.radio-btn
+                    |  Faculty
+                  label.custom-radio
+                    input(type='radio', name='role', value='student')
+                    span.radio-btn
+                    |  Student
+              #myTabContent.tab-content
+                #signin.tab-pane.fade(role='tabpanel', aria-labelledby='signin-tab')
+                  form(action='/login', method='post',onsubmit='return validateSignin()')
+                    .mb-3
+                      label.form-label(for='signinEmail') Email ID
+                      input#signinEmail.form-control(type='email', name='email', placeholder='Enter Email Id...', required='')
+                    .mb-3
+                      label.form-label(for='signinPassword') Password
+                      .form-control.d-flex.align-items-center.justify-content-between
+                        input#signinPassword(type='password', name='password', placeholder='Enter Password...', required='')
+                        span#showPassSignin(onclick='togglePasswordVisibility()')
+                          i#SignintogglePasswordIcon.fas.fa-eye
+                    a#forgetpass.anc-link(onclick='showForgetPassword()')
+                      | Forget
+                      | Password
+                    button.btn.regBtn.mt-2(type='submit') Sign In
+                    p.mt-3
+                      | Don&apos;t have an account?
+                      a#toggleToSignup.mt-0.anc-link(href='#', onclick='switchToSignup()')
+                        | Sign
+                        | Up
+                #signup.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='signup-tab')
+                  form(action='/register', method='post', onsubmit='return validateSignup()')
+                    .mb-3
+                      label.form-label(for='email') Email ID
+                      input#email.form-control(type='email', name='email', placeholder='Enter Email Id...', required='')
+                    .mb-3
+                      label.form-label(for='newUsername')
+                        | User
+                        | Name
+                      input#newUsername.form-control(type='text', name='name', placeholder='Enter Your Name...', required='')
+                    .mb-3.position-relative
+                      label.form-label(for='signupPassword') Password
+                      .form-control.d-flex.align-items-center.justify-content-between
+                        input#signupPassword(type='password', name='password', placeholder='Enter Password...', required='')
+                        span#showPassSignup(onclick='togglePasswordVisibility()')
+                          i#SignuptogglePasswordIcon.fas.fa-eye
+                    button.btn.regBtn(type='submit') Register
+                    p.mt-3
+                      | Already have an account?
+                      a#toggleToSignin.mt-0.anc-link(href='#', onclick='switchToSignin()')
+                        | Sign
+                        | In
+                #forgetPassword.tab-pane.justify-content-center.align-items-center(role='tabpanel', aria-labelledby='forget-tab')
+                  #forgetScreen
+                    h1#forgetHead Forget Password
+                    form(onsubmit='return otpScreen()')
+                      .mb-3
+                        label.form-label(for='forget-email') Email
+                        input#forget-email.form-control(type='email', name='email', placeholder='Enter Email Id...', required='')
+                      button.btn.regBtn(type='submit') Send OTP
+                  #OTPPage
+                    h1.mb-4 OTP Verification
+                    p.mb-4.otpContent
+                      | Enter the code from the sms we sent to
+                      | kodeskool@gmail.com
+                    p
+                      span#timer 2:30
+                    .otp-inputs.d-flex.justify-content-center.mt-4
+                      form#otpForm(onsubmit='return verifyOTP()')
+                        input.otp-box(type='text', maxlength='1', oninput='moveToNext(this)')
+                        input.otp-box(type='text', maxlength='1', oninput='moveToNext(this)')
+                        input.otp-box(type='text', maxlength='1', oninput='moveToNext(this)')
+                        input.otp-box(type='text', maxlength='1', oninput='moveToNext(this)')
+                        input.otp-box(type='text', maxlength='1', oninput='moveToNext(this)')
+                        input.otp-box(type='text', maxlength='1', oninput='moveToNext(this)')
+                    p.mt-3
+                      | I didn&apos;t receive any code.
+                      a#resendOTP.mt-0(onclick='resendOTP()') Resend
+                    button.btn.regBtn(type=' submit', onclick='verifyOTP()') Verify OTP
+            #PasswordReset.modal.fade.p-3(aria-labelledby='PasswordReset', aria-hidden='true')
+              .modal-dialog.modal-dialog-centered
+                .modal-content
+                  #resetPassModal.modal-body.d-flex.justify-content-center.align-items-center.flex-column.gap-5
+                    h1 Forgot Password
+                    form#resetPass(onsubmit='return ResetPassword()')
+                      .mb-4
+                        label.form-label(for='newPass') New Password
+                        input#newPass.form-control(type='password', placeholder='Enter Password...', required='')
+                      .mb-4
+                        label.form-label(for='confirmPass') Confirm Password
+                        input#confirmPass.form-control(type='password', placeholder='Enter Confirm Password...', required='')
+                      #PasswordAlert(style='display: none;')
+                        p(style='color: rgb(196, 45, 45);') Password Doesn&apos;t Match
+                      button.btn.regBtn.mt-2(type='submit', onclick='ResetPassword()')
+                        | Reset
+                        | Password

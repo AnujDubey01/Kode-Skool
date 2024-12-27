@@ -131,6 +131,23 @@ const user = {
 
 function App() {
 
+  // UseEffect for login
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const msg = params.get('msg');
+    const authToken = params.get('auth_token');
+
+    if(msg && authToken){
+      localStorage.setItem('auth_token', authToken);
+    }
+
+    if (msg || authToken) {
+      const url = new URL(window.location.href);
+      url.search = ''; // Removes all query parameters
+      window.history.replaceState({}, document.title, url.toString());
+    }
+  }, [])
+
   const [navItems, setNavItems] = useState(navData.navItems);
   const [toggleMode, setToggleMode] = useState('light');
 

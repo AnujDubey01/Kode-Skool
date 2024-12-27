@@ -1,0 +1,319 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title KodeSkool | Code is Cool
+    link(rel='icon', type='image/x-icon', href='/static/img/logoWeb.png')
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65', crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM', crossorigin='anonymous')
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+    link(href='https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600;700&display=swap', rel='stylesheet')
+    link(rel='stylesheet', href='../static/css/styles.css')
+    script(src='https://kit.fontawesome.com/51d768ed59.js', crossorigin='anonymous')
+    script(src='/static/js/script.js', defer='')
+  body
+    section#hero
+      nav.navbar.navbar-expand-lg.navCustom
+        .container
+          .logo.col-md-2
+            img(src='/static/img/logo.png', alt='KodeSkool')
+          button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+          #navbarSupportedContent.collapse.navbar-collapse.text-center.fs-5.col-md-10
+            ul.navbar-nav.ms-auto.my-3
+              li.nav-item
+                a.nav-link.me-3.txtBtn(href='#courses') Courses
+              li.nav-item
+                a.nav-link.me-3.txtBtn(href='#features') About Us
+              li.nav-item
+                a.nav-link.txtBtn(href='#contact') Contact Us
+            ul.navbar-nav.ms-auto.my-3.d-flex.flex-row.center-btns
+              li.nav-item.m-1
+                button.btn.btn0(type='button', onclick="window.location.href='/login?tab=signup'") Sign Up
+              li.nav-item.m-1
+                button.btn.btn1(type='button', onclick="window.location.href='/login?tab=signin'") Sign In
+      header
+        .container
+          .row.d-flex.flex-row.justify-content-center.align-items-center
+            .col-md-6.ps-5.order-2.order-md-1
+              h1.head-title.mb-3 Become a coding champ
+              p.head-txt.mb-4
+                | Engaging Lessons for Future Tech Leaders with us.
+              button.btn.btn2(type='button', onclick="window.location.href='/login?tab=signup'") Let&apos;s Start
+            .col-md-6.text-center.order-1.order-md-2
+              #carouselExampleSlidesOnly.carousel.slide(data-bs-ride='carousel')
+                .carousel-inner
+                  .carousel-item.active(data-bs-interval='2000')
+                    img.hero-img(src='/static/img/heor-img2.png', alt='Hero Image')
+                  .carousel-item(data-bs-interval='2000')
+                    img.hero-img(src='/static/img/hero-img1.png', alt='Hero Image')
+                  .carousel-item(data-bs-interval='2000')
+                    img.hero-img(src='/static/img/heror-img3.png', alt='Hero Image')
+    section#banner
+      .container.banner-content
+        .px-2.d-flex.justify-content-center.align-items-center.gap-3
+          img.banner-img(src='/static/img/company-section-logo.png', alt='KodeSkool')
+          h4.banner-txt
+            | KodeSkool Makes Coding Fun For School Students With Interactive Animations.
+    section#skills.skills.my-5.p-5
+      .container.skills-container.d-flex.justify-content-center.align-items-center.flex-column.flex-wrap
+        h1.skills-heading
+          | Develop your skills and stand out
+        .skills-box.d-flex.justify-content-center.align-items-center.flex-wrap
+          .skill-card
+            .skill-icon-container
+              i.fa-brands.fa-html5
+              h3 HTML
+          .skill-card
+            .skill-icon-container
+              i.fa-brands.fa-css3
+              h3 CSS
+          .skill-card
+            .skill-icon-container
+              i.fa-brands.fa-js
+              h3 JavaScript
+          .skill-card
+            .skill-icon-container
+              i.fa-solid.fa-c
+              h3 C Lang
+          .skill-card
+            .skill-icon-container
+              i.fa-brands.fa-java
+              h3 Java
+          .skill-card
+            .skill-icon-container
+              i.fa-brands.fa-python
+              h3 Python
+          .skill-card
+            .skill-icon-container
+              i.fa-brands.fa-node
+              h3 Node.js
+          .skill-card
+            .skill-icon-container
+              i.fa-solid.fa-database
+              h3 Database
+        .ex-btn.px-5.py-2
+          button.btn.btn3(type='button') Explore
+    section#choose-us.choose-us.my-5.d-flex.flex-column.justify-content-center.align-items-center
+      .choose-us-head
+        h1.section-heading
+          | Why Schools choose us?
+      .container.mt-4
+        .row
+          .col-lg-4.card-outline
+            .card.my-2.p-4
+              .img-container
+                img.card-img-top(src='/static/img/why-card-1.png', alt='choose-us-1')
+              .card-body
+                .card-head.d-flex.align-items-center.gap-2
+                  h4.card-title.sub-head Personalized learning
+                  img.verify-tick.d-flex.justify-content-center(src='/static/img/tick.png', alt='Tick')
+                .card-content
+                  p.card-detail
+                    | Unlock your potential with personalized coding lessons that make
+                    | learning fun and
+                    | engaging.
+          .col-lg-4
+            .card.my-2.p-4
+              .img-container
+                img.card-img-top(src='/static/img/why-choose-2.png', alt='choose-us-1')
+              .card-body
+                .card-head.d-flex.align-items-center.gap-2
+                  h4.card-title.sub-head Trusted content
+                  img.verify-tick.d-flex.justify-content-center(src='/static/img/tick.png', alt='Tick')
+                .card-content
+                  p.card-detail
+                    | Learn coding with content you can trust, made by experts to give
+                    | you the best and most reliable learning experience.
+          .col-lg-4
+            .card.my-2.p-4
+              .img-container
+                img.card-img-top(src='/static/img/why-choose-3.png', alt='choose-us-1')
+              .card-body
+                .card-head.d-flex.align-items-center.gap-2
+                  h4.card-title.sub-head Empower teachers
+                  img.verify-tick.d-flex.justify-content-center(src='/static/img/tick.png', alt='Tick')
+                .card-content
+                  p.card-detail
+                    | Give teachers easy-to-use tools that make coding lessons fun and
+                    | help them inspire students to learn.
+    section#features.features.mt-5.d-flex.flex-column.justify-content-center.align-items-center
+      .features-head.mt-5
+        h1.section-heading What KodeSkool is providing?
+      .container.mt-5.pt-3
+        .row
+          #carouselExampleInterval.carousel.slide(data-bs-ride='carousel')
+            .carousel-inner
+              .carousel-item.active(data-bs-interval='1000')
+                .container.my-5.px-4
+                  .row
+                    .col-md-5.d-flex.justify-content-center.align-items-center
+                      img.features-img(src='/static/img/big-feature-1.png', alt='')
+                    .col-md-7.mt-5.d-flex.flex-column.justify-content-center.gap-2
+                      h4.features-sub-head Learn with animated videos
+                      p.features-details
+                        | Engage with fun and interactive animations that make
+                        | coding
+                        | concepts easy to understand and remember.
+              .carousel-item(data-bs-interval='2000')
+                .container.my-5.px-4
+                  .row
+                    .col-md-7.mt-5.d-flex.flex-column.justify-content-center.gap-2.order-2.order-md-1
+                      h4.features-sub-head Code and create with ease
+                      p.features-details
+                        | Our simple editor helps students from 8th to 12th
+                        | grade practice
+                        | and improve their coding skills.
+                    .col-md-5.d-flex.justify-content-center.align-items-center.order1.order-md-2
+                      img.features-img(src='/static/img/big-feature-2.png', alt='')
+              .carousel-item(data-bs-interval='2000')
+                .container.my-5.px-4
+                  .row
+                    .col-md-5.d-flex.justify-content-center.align-items-center
+                      img.features-img(src='/static/img/big-feature-3.png', alt='')
+                    .col-md-7.mt-5.d-flex.flex-column.justify-content-center.gap-2
+                      h4.features-sub-head Master Coding with Our Interactive Editor
+                      p.features-details
+                        | Practice coding easily and improve your skills with
+                        | our simple
+                        | and user-friendly editor.
+              .carousel-item(data-bs-interval='2000')
+                .container.my-5.px-4
+                  .row
+                    .col-md-7.mt-5.d-flex.flex-column.justify-content-center.gap-2.order-2.order-md-1
+                      h4.features-sub-head Assessments, Quizzes, Tests
+                      p.features-details
+                        | Easily launch live assignments, quizzes and tests.
+                        | Student
+                        | results are automatically entered in the online gradebook.
+                    .col-md-5.d-flex.justify-content-center.align-items-center.order-1.order-md-2
+                      img.features-img(src='/static/img/big-feature-4.png', alt='')
+            button.carousel-control-prev(type='button', data-bs-target='#carouselExampleInterval', data-bs-slide='prev')
+              span.carousel-control-prev-icon(aria-hidden='true')
+              span.visually-hidden Previous
+            button.carousel-control-next(type='button', data-bs-target='#carouselExampleInterval', data-bs-slide='next')
+              span.carousel-control-next-icon(aria-hidden='true')
+              span.visually-hidden Next
+    section#faq.faq-section.my-5.pt-5.d-flex.flex-column.justify-content-center.align-items-center
+      .faq-head
+        h1.section-heading Frequently Asked Questions
+      .container
+        #faqContainer.faq-section-questions-container.mt-5
+          // Initially visible questions
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p What age group is the platform designed for?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer1.
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p How do the video lessons and animations help me learn coding?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer2
+          // Hidden questions
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p Do I need any prior coding experience to start?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer3
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p How do the coding exercises work?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer4
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p Can I learn at my own pace?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer5
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p Does the platform align with my school&apos;s curriculum?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer6
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p Are there any quizzes or tests to check my progress?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer7
+          .faq-question-card
+            .faq-question-card-details(onclick='toggleFAQ(this)')
+              p Is there any support if I get stuck or have questions?
+              i.fa-solid.fa-plus
+            .faq-answer
+              p Answer10
+    section#start-learning
+      section.download-section
+        .container.download-section-container
+          img.download-section-img(src='/static/img/download-section.png', alt='')
+          .download-section-details
+            h1.download-section-head
+              | Start your coding adventure with
+              | KodeSkool
+            .start-learning-btn
+              button.btn.btn3(type='button') Start Learning
+    footer.text-center.text-lg-start.bg-body-tertiary.text-muted.mt-4.px-5.pt-5
+      section
+        .container.text-center.text-md-start.mt-5
+          .row.mt-3
+            .d-flex.flex-column.col-md-3.col-lg-4.col-xl-3.mx-auto.mb-4.gap-4
+              img.footer-logo(src='/static/img/footer-logo.png', alt='Logo')
+              p
+                | KodeSkool makes coding fun for school student with interactive animations
+              .socials
+                .social-icons
+                  a(href='')
+                    i.fa-brands.fa-x-twitter
+                  a(href='')
+                    i.fa-brands.fa-instagram
+                  a(href='')
+                    i.fa-brands.fa-facebook
+                  a(href='https://www.linkedin.com/company/kode-skool/posts/?feedView=all')
+                    i.fa-brands.fa-linkedin
+                  a(href='')
+                    i.fa-brands.fa-youtube
+            .col-md-2.col-lg-2.col-xl-2.mx-auto.mb-4
+              h6.footer-head.mb-4
+                | KodeSkool
+              p
+                a.footer-link(href='#!') C++
+              p
+                a.footer-link(href='#!') Java
+              p
+                a.footer-link(href='#!') JavaScript
+              p
+                a.footer-link(href='#!') Python
+              p
+                a.footer-link(href='#!') SQL
+              p
+                a.footer-link(href='#!') Swift
+            .col-md-3.col-lg-2.col-xl-2.mx-auto.mb-4
+              // Links
+              h6.footer-head.mb-4
+                | Legal
+              p
+                a.footer-link(href='#!') Terms &amp; conditions
+              p
+                a.footer-link(href='#!') Privacy Policy
+            .col-md-3.col-lg-2.col-xl-2.mx-auto.mb-4
+              // Links
+              h6.footer-head.mb-4
+                | Company
+              p
+                a.footer-link(href='#features') About us
+              p
+                a.footer-link(href='#') Contact us
+              p
+                a.footer-link(href='#faq') FAQ
+      hr
+      .footer-copyright.text-center.p-4
+        | &copy; Copyright 2024 Home Helps. All rights reserved
