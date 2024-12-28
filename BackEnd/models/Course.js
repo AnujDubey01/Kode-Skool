@@ -20,6 +20,10 @@ const courseSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    Technology: {
+        type: String,
+        enum: ['C','C++','JavaScript','Python','Java','Ruby','Go','Swift','PHP','Kotlin','TypeScript','R','SQL','Dart','Scala','Rust','Perl','Haskell','MATLAB','Shell','Assembly','Objective-C','Visual Basic','Groovy','Elixir','Clojure','Erlang','Lua']
+    },
     Duration: {
         type: Number, // Duration in hours
         required: true,
@@ -29,6 +33,10 @@ const courseSchema = new mongoose.Schema({
             },
             message: 'Duration must be a positive number.',
         },
+    },
+    Units: {
+        type: Number,
+        min: 1
     },
     Description: {
         type: String,

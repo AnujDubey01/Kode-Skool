@@ -1,34 +1,31 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import cLang from '../../Assets/Img/cLang.png';
 
-const courses = [
-    {
-        id: 1,
-        name: 'Learn C Programming',
-        image: cLang,
-        level: 'Beginner',
-        units: 36,
-        link: '/Courses/View',
-    },
-    {
-        id: 2,
-        name: 'Learn C++ Programming',
-        image: cLang,
-        level: 'Beginner',
-        units: 36,
-        link: '/Courses/View',
-    },
-    {
-        id: 3,
-        name: 'Learn Java',
-        image: cLang,
-        level: 'Beginner',
-        units: 36,
-        link: '/Courses/View',
-    },
-];
+const host = 'http://localhost:5000';
+
+const getEnrolledCourses = async () => {
+    const response = await fetch(`${host}/api/my-courses`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('auth_token')
+        }
+    });
+
+    return response.json();
+}
+
+const getCourseDetails = async (id) => {
+    const response = await fetch(`${host}/api/get-course?course_id=${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    return response.json();
+}
 
 function CourseList(props) {
     const welcome = useRef(null);
@@ -47,6 +44,33 @@ function CourseList(props) {
         search.current.classList.add('openSearch');
         document.addEventListener('mousedown', handleClickOutside);
     }
+
+    const [courses, setCourses] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            let tempCourses = [];
+            const Enrolled_Courses = await getEnrolledCourses();
+
+            for (const crs of Enrolled_Courses) {
+                const Course_Details = await getCourseDetails(crs.Course_ID);
+                const queryParams = new URLSearchParams({ course_id: crs.Course_ID }).toString();
+                tempCourses.push({
+                    id: crs.Course_ID,
+                    name: Course_Details.Course_Name,
+                    image: cLang,
+                    level: 'Beginner',
+                    units: Course_Details.Units,
+                    link: `/Courses/View?${queryParams}`
+                });
+            }
+
+            setCourses(tempCourses);
+        }
+
+        fetchData();
+    }, []);
+
 
     return (
         <>
