@@ -80,6 +80,42 @@ router.get('/get-course', async (req, res) => {
     } catch (error) {
         res.status(500).send({ err: error.message });
     }
+});
+
+router.get('/get-course-struct', async (req, res) => {
+    try {
+        const { course_id } = req.query;
+        
+        const structure = await CourseStruct.findOne({ Course_ID: course_id});
+        if (structure) {
+            res.status(200).json(structure);
+        } else {
+            return res.status(400).send({ msg: "Enable fetch course structure." });
+        }
+    } catch (error) {
+        res.status(500).send({ err: error.message });
+    }
+})
+
+router.get('/get-course-topic', async (req, res) => {
+    try {
+        const { topic_id } = req.query;
+        
+        const course = await CourseStruct.findOne(
+            { 'Unit_List.Topic_List._id': topic_id }
+        ).select('+Unit_List.Topic_List.Video_Link +Unit_List.Topic_List.Notes_Link');
+
+        if (course && course.Unit_List.length > 0) {
+            const unit = course.Unit_List[0]; // The first matched outer subdocument
+            const topic = unit.Topic_List.find(doc => doc._id.equals(topic_id));
+            res.status(200).json(topic); // The matched inner subdocument
+        } else {
+            return res.status(400).send({ msg: "Enable find topic details." });
+        }
+
+    } catch (error) {
+        res.status(500).send({ err: error.message });
+    }
 })
 
 router.post('/rate-course', fetchUser, async (req, res) => {
