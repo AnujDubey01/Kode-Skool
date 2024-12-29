@@ -1,20 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-function CourseVideo() {
-  const courseData = {
-    unit: 'Unit 1: Variables and Data Types',
-    videoLink: 'https://www.youtube.com/embed/60kyKPfVMAM?si=fevWcxCk9zBYAjwQ',
-    outline: [
-      'Types of Variables',
-      'Types of Data Types',
-      'Representation of Data Types and Variables',
-    ],
-  };
+const fetchTopic = async (host, topic_id) => {
+  const response = await fetch(`${host}/api/get-course-topic?topic_id=${topic_id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+
+  return response.json();
+}
+
+function CourseVideo(props) {
+  const [ courseData, setCourseData ] = useState({
+    Topic_Name: '',
+    Description: '',
+    Video_Link: '',
+    Notes_Link: ''
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const params = new URLSearchParams(window.location.search);
+      const topic_id = params.get('topic_id')
+      let data = await fetchTopic(props.host, topic_id);
+      setCourseData(data)
+    }
+
+    fetchData();
+  }, [props, setCourseData])
+
+
 
   return (
     <>
-      <div className="board-heading">
-        <div className="welcome-text">
+      <div className="back-arrow">
           <h4
             onClick={() => {
               window.history.back();
@@ -23,17 +43,16 @@ function CourseVideo() {
           >
             <i className="fa-solid fa-arrow-left"></i>
           </h4>
-        </div>
       </div>
-      <div className="courses-section my-3">
+      <div className="courses-section">
         <div className="courses-head my-2 d-flex justify-content-between px-3">
           <div className="course-details d-flex flex-column">
             <div className="course-name">
-              <h2 id="course-unit">{courseData.unit}</h2>
+              <h2 id="course-unit">{courseData.Topic_Name}</h2>
             </div>
             <div className="course-video">
               <iframe
-                src={courseData.videoLink}
+                src={courseData.Video_Link}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -42,12 +61,9 @@ function CourseVideo() {
               ></iframe>
             </div>
             <div className="course-outline course-topic-card course-topic-body">
-              <ul>
-                {courseData.outline.map((topic, index) => (
-                  <li key={index}>
-                    <h5>{topic}</h5>
-                  </li>
-                ))}
+              <ul type='circle'>
+                <li>{courseData.Description}</li>
+                <li>Notes: {courseData.Notes_Link}</li>
               </ul>
             </div>
           </div>

@@ -129,6 +129,8 @@ const user = {
   }
 };
 
+const host = 'http://localhost:5000';
+
 function App() {
 
   // UseEffect for login
@@ -275,9 +277,9 @@ function App() {
               <Route exact path="/" element={<Dashboard toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
               <Route exact path="/Editor" element={<Editor toggleMode={toggleMode} dashboardNav={dashboardNav} user={user} controlNav={controlNav} />} />
               <Route exact path="/Courses" element={<Courses toggleMode={toggleMode} />} >
-                <Route path="" element={<CourseList toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
+                <Route path="" element={<CourseList toggleMode={toggleMode} user={user} controlNav={controlNav} host={host} />} />
                 <Route path="View" element={<CourseView toggleMode={toggleMode}/>} />
-                <Route path="Video" element={<CourseVideo toggleMode={toggleMode}/>} />
+                <Route path="Video" element={<CourseVideo toggleMode={toggleMode} host={host}/>} />
               </Route>
               <Route exact path="/Chatbot" element={<Chatbot toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
             </Routes>

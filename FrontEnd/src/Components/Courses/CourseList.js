@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 
 import cLang from '../../Assets/Img/cLang.png';
 
-const host = 'http://localhost:5000';
-
-const getEnrolledCourses = async () => {
+const getEnrolledCourses = async (host) => {
     const response = await fetch(`${host}/api/my-courses`, {
         method: 'GET',
         headers: {
@@ -17,7 +15,7 @@ const getEnrolledCourses = async () => {
     return response.json();
 }
 
-const getCourseDetails = async (id) => {
+const getCourseDetails = async (host, id) => {
     const response = await fetch(`${host}/api/get-course?course_id=${id}`, {
         method: 'GET',
         headers: {
@@ -50,10 +48,10 @@ function CourseList(props) {
     useEffect(() => {
         async function fetchData() {
             let tempCourses = [];
-            const Enrolled_Courses = await getEnrolledCourses();
+            const Enrolled_Courses = await getEnrolledCourses(props.host);
 
             for (const crs of Enrolled_Courses) {
-                const Course_Details = await getCourseDetails(crs.Course_ID);
+                const Course_Details = await getCourseDetails(props.host, crs.Course_ID);
                 const queryParams = new URLSearchParams({ course_id: crs.Course_ID }).toString();
                 tempCourses.push({
                     id: crs.Course_ID,
@@ -69,7 +67,7 @@ function CourseList(props) {
         }
 
         fetchData();
-    }, []);
+    }, [props]);
 
 
     return (

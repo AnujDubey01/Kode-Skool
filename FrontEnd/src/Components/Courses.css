@@ -1,5 +1,5 @@
 .courses-section {
-    width: 100%;
+    width: 90%;
 }
 
 .courseContainer {
@@ -25,6 +25,11 @@
         color: white;
 
     }
+}
+
+.back-arrow {
+    position: absolute;
+    top: 5%;
 }
 
 .course-card-head {
@@ -137,6 +142,10 @@
     .courseContainer {
         margin: 3rem 0rem;
         width: 100%;
+    }
+
+    .back-arrow{
+        top: 3%;
     }
 }
 
