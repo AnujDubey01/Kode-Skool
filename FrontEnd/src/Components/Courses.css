@@ -45,6 +45,19 @@
     font-size: 1.8rem;
 }
 
+.course-name>h2 {
+    margin-bottom: 0;
+}
+
+.course-about p {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.7);
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+}
+
 .course-card {
     border-radius: 15px;
     background-color: #ffffff;
@@ -85,14 +98,6 @@
     text-decoration: none;
 }
 
-.course-img img {
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    object-fit: contain;
-    aspect-ratio: 16/9;
-}
-
 .course-topic-card {
     width: 100%;
     display: flex;
@@ -113,6 +118,46 @@
 
 .course-topic-body li::marker {
     content: "> ";
+}
+
+.course-topic-body li {
+    position: relative;
+    margin-bottom: 1rem;
+    font-weight: 400;
+
+    & p {
+        margin-bottom: 0.1rem;
+    }
+}
+
+.topic-description {
+    margin-left: 5px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.topic-playbtn {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-65%);
+    cursor: pointer;
+
+    &>i {
+        font-size: 25px;
+        font-weight: 500;
+    }
+}
+
+.topic-complete {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-65%);
+    cursor: pointer;
+
+    &>i {
+        font-size: 25px;
+    }
 }
 
 .course-card-collection {
@@ -144,7 +189,7 @@
         width: 100%;
     }
 
-    .back-arrow{
+    .back-arrow {
         top: 3%;
     }
 }
@@ -161,91 +206,117 @@
         height: 3rem;
         width: 3rem;
     }
+
     .course-name h4 {
         font-size: 1.3rem;
     }
+
     .level p {
         padding: 8px 10px;
         font-size: 0.9rem;
         font-weight: 400;
     }
+
     .units-number h5 {
         font-size: 1rem;
     }
+
     .playBtn {
         min-height: 2.2rem;
         min-width: 2.2rem;
     }
+
     .course-name h5 {
         font-size: 1.1rem;
     }
+
     .course-explore a {
         padding: 8px 21px;
         font-size: 0.9rem;
     }
+
     .course-details .course-name h2 {
         font-size: 1.7rem
     }
+
     .course-about p {
         font-size: 0.9rem;
     }
+
     .topic-head h3 {
         font-size: 1.2rem;
     }
+
     .playbtn .btn1 {
         padding: 0.5rem 1.5rem;
         font-size: 0.9rem;
     }
+
     .course-topic-body {
         font-size: 0.8rem;
     }
+
     #course-unit {
         font-size: 1.5rem;
     }
+
     .course-topic-body li h5 {
         font-size: 1rem;
     }
 }
+
 @media screen and (max-width: 769px) {
     .welcome-text h1 {
         font-size: 1.7rem;
     }
+
     .welcome-text p {
         font-size: 1rem;
     }
+
     .search-notify-box {
         gap: 2rem;
     }
+
     #course-unit {
         font-size: 1.3rem;
     }
 }
+
 @media screen and (max-width: 426px) {
     .welcome-text h1 {
         font-size: 1.3rem;
     }
+
     .welcome-text p {
         font-size: 0.8rem;
     }
+
     .course-details .course-name h2 {
         font-size: 1.3rem
     }
+
     .course-about p {
         font-size: 0.7rem;
     }
+
     .courses-head h1 {
         font-size: 1.5rem;
     }
+
     .topic-head h3 {
         font-size: 1rem;
     }
+
     .playbtn .btn1 {
         padding: 0.3rem 1rem;
         font-size: 0.7rem;
     }
+
     #course-unit {
         font-size: 1.2rem;
     }
+
     .course-topic-body li h5 {
         font-size: 0.8rem;
     }

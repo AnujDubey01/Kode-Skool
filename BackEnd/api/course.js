@@ -106,8 +106,15 @@ router.get('/get-course-topic', async (req, res) => {
         ).select('+Unit_List.Topic_List.Video_Link +Unit_List.Topic_List.Notes_Link');
 
         if (course && course.Unit_List.length > 0) {
-            const unit = course.Unit_List[0]; // The first matched outer subdocument
-            const topic = unit.Topic_List.find(doc => doc._id.equals(topic_id));
+            let topic = null
+            for (const i in course.Unit_List) {
+                topic = course.Unit_List[i].Topic_List.find(doc => doc._id.equals(topic_id));
+                if(topic) {
+                    topic = topic.toJSON()
+                    topic.Course_ID = course.Course_ID;
+                    break;
+                }
+            }
             res.status(200).json(topic); // The matched inner subdocument
         } else {
             return res.status(400).send({ msg: "Enable find topic details." });
@@ -195,7 +202,7 @@ router.get('/my-courses', fetchUser, async (req, res) => {
             return res.status(400).send({ msg: "User not logged in properly." });
         }
 
-        const userEnrolls = await CourseEnroll.find();
+        const userEnrolls = await CourseEnroll.find({Std_ID: userId});
 
         res.status(200).json(userEnrolls)
     } catch (error) {
@@ -231,15 +238,20 @@ router.post('/update-course-status', fetchUser, async (req, res) => {
         if (topic_name) {
             if (!enrollExits.Status.includes(topic_id)) {
                 enrollExits.Status.push(topic_id);
-            }
-            await enrollExits.save().then(() => {
+                await enrollExits.save().then(() => {
+                    res.status(200).send({
+                        success: true,
+                        msg: `Topic: ${topic_name} is Completed`
+                    });
+                }).catch((err) => {
+                    res.status(400).send({ success: false, msg: 'Error while updating course status.', err: err });
+                });
+            }else{
                 res.status(200).send({
-                    success: true,
+                    success: false,
                     msg: `Topic: ${topic_name} is Completed`
                 });
-            }).catch((err) => {
-                res.status(400).send({ success: false, msg: 'Error while updating course status.', err: err });
-            });
+            }
         } else {
             res.status(400).send({
                 success: false,

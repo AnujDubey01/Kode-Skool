@@ -13,6 +13,7 @@ const fetchTopic = async (host, topic_id) => {
 
 function CourseVideo(props) {
   const [ courseData, setCourseData ] = useState({
+    Course_ID: '',
     Topic_Name: '',
     Description: '',
     Video_Link: '',
@@ -30,15 +31,32 @@ function CourseVideo(props) {
     fetchData();
   }, [props, setCourseData])
 
+  const handleBackClick = async () => {
+    const response = await fetch(`${props.host}/api/update-course-status`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('auth_token')
+      },
+      body: JSON.stringify({
+        'course_id': courseData.Course_ID,
+        'topic_id': courseData._id
+    })
+    })
+    const result = await response.json();
+    console.log(result)
+    if(result.success){
+      alert(result.msg);
+    }
 
+    window.history.back();
+  }
 
   return (
     <>
       <div className="back-arrow">
           <h4
-            onClick={() => {
-              window.history.back();
-            }}
+            onClick={handleBackClick}
             style={{ cursor: 'pointer', color: 'black' }}
           >
             <i className="fa-solid fa-arrow-left"></i>

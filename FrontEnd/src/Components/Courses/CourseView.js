@@ -68,7 +68,98 @@ function CircularProgress({ value }) {
     );
 }
 
+const getCourseDetails = async (host, id) => {
+    const response = await fetch(`${host}/api/get-course?course_id=${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    return response.json();
+}
+
+async function fetchStructure(host, courseId) {
+    const response = await fetch(`${host}/api/get-course-struct?course_id=${courseId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return response.json();
+}
+
+async function fetchEnrollStatus(host, courseId) {
+    const response = await fetch(`${host}/api/my-courses`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': localStorage.getItem('auth_token')
+        }
+    });
+    const data = await response.json();
+
+    let status = null;
+    data.forEach(enroll => {
+        if (enroll.Course_ID === courseId) {
+            status = enroll.Status;
+        }
+    })
+
+    return status;
+}
+
 function CourseView(props) {
+    const [course, setCourse] = useState({})
+    const [unitList, setUnitList] = useState([])
+    const [resume, setResume] = useState('')
+
+    useEffect(() => {
+        async function fetchData() {
+            const params = new URLSearchParams(window.location.search);
+            const course_id = params.get('course_id')
+            const crs = await getCourseDetails(props.host, course_id);
+            setCourse(crs);
+            const struct = await fetchStructure(props.host, course_id);
+            const sts = await fetchEnrollStatus(props.host, course_id);
+
+            let filterUnit = [];
+            struct.Unit_List.forEach(unit => {
+                let filterTopic = [];
+                unit.Topic_List.forEach(topic => {
+                    if (sts.includes(topic._id)) {
+                        topic.complete = true;
+                        filterTopic.push(topic);
+                    } else {
+                        topic.complete = false;
+                        filterTopic.push(topic);
+                    }
+                })
+                unit.Topic_List = filterTopic;
+                filterUnit.push(unit);
+            });
+
+            setUnitList(filterUnit);
+
+            let nextTopic = '';
+            for (const i in filterUnit) {
+                let checkBreak = false;
+                for (const j in filterUnit[i].Topic_List) {
+                    if (!filterUnit[i].Topic_List[j].complete) {
+                        nextTopic = filterUnit[i].Topic_List[j]._id;
+                        checkBreak = true;
+                        break;
+                    }
+                }
+                if (checkBreak) break;
+            }
+
+
+            setResume(nextTopic);
+        }
+
+        fetchData();
+    }, [props])
 
     return (
         <>
@@ -83,11 +174,10 @@ function CourseView(props) {
                 <div className="courses-head my-4 d-flex justify-content-between px-3">
                     <div className="course-details d-flex flex-column">
                         <div className="course-name">
-                            <h2>Python</h2>
+                            <h2>{course.Course_Name}</h2>
                         </div>
                         <div className="course-about">
-                            <p>Learn python to quickly develop anything from web development to artificial intelligence
-                            </p>
+                            <p>{course.Description}</p>
                         </div>
                     </div>
                     <div className={'your-course-box-o ' + props.toggleMode}>
@@ -95,10 +185,12 @@ function CourseView(props) {
                         <div className={'your-course-box-i ' + props.toggleMode}>
                             <div className="your-course-details">
                                 <div className="your-course-text-block">
-                                    <h3>C Programming</h3>
+                                    <h3>{course.Course_Name}</h3>
                                     <p>2.Arrays & pointers</p>
                                 </div>
-                                <button type="button" className='course-resume-btn'>Resume</button>
+                                <Link to={'/Courses/Video?topic_id=' + resume}>
+                                    <button type="button" className='course-resume-btn'>Resume</button>
+                                </Link>
                             </div>
                             <CircularProgress value={16} />
                         </div>
@@ -106,66 +198,33 @@ function CourseView(props) {
                 </div>
                 <div className="courses-body container">
                     <div className="course-topics">
-                        <div className="course-topic-card">
-                            <div className="course-topic-head">
-                                <div className="topic-head">
-                                    <h3>Unit 1: Variables and Data types</h3>
-                                </div>
-                                <div className="playbtn">
+                        {unitList.map(unit => (
+                            <div className="course-topic-card">
+                                <div className="course-topic-head">
+                                    <div className="topic-head">
+                                        <h3>Unit {unit.Unit_No}: {unit.Unit_Name}</h3>
+                                    </div>
+                                    {/* <div className="playbtn">
                                     <Link to="/Courses/Video" className="btn1 course-play" style={{ textDecoration: 'none' }}>Play</Link>
+                                </div> */}
+                                </div>
+                                <div className="course-topic-body">
+                                    <ul>
+                                        {unit.Topic_List.map(topic => (
+                                            <li>
+                                                <p>{topic.Topic_Name}</p>
+                                                <p className='topic-description'>{topic.Description}</p>
+                                                <Link to={`/Courses/Video?topic_id=${topic._id}`} style={{ color: 'rgba(0,0,0,0.9)' }}>
+                                                    <div className="topic-complete">
+                                                        <i className={topic.complete ? "fa-solid fa-circle-check" : "fa-regular fa-circle-play"}></i>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
-                            <div className="course-topic-body">
-                                <ul>
-                                    <li>Types of variables</li>
-                                    <li>Types of Data types</li>
-                                    <li>Representation of data types and variables</li>
-                                </ul>
-                            </div>
-
-                        </div>
-                        <div className="course-topic-card">
-                            <div className="course-topic-head">
-                                <div className="topic-head">
-                                    <h3>Unit 2: Strings and Conditional statements</h3>
-                                </div>
-                                <div className="playbtn">
-                                    <Link to="/Courses/Video" className="btn1 course-play">Play</Link>
-                                </div>
-                            </div>
-                            <div className="course-topic-body">
-                                <ul>
-                                    <li>Types of strings</li>
-                                    <li>If..Else</li>
-                                    <li>ElseIf</li>
-                                    <li>Else</li>
-                                    <li>Nested If</li>
-                                </ul>
-                            </div>
-
-                        </div>
-                        <div className="course-topic-card">
-                            <div className="course-topic-head">
-                                <div className="topic-head">
-                                    <h3>Unit 3: List and Tuple</h3>
-                                </div>
-                                <div className="playbtn">
-                                    <Link to="/Courses/Video" className="btn1 course-play">Play</Link>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div className="course-topic-card">
-                            <div className="course-topic-head">
-                                <div className="topic-head">
-                                    <h3>Unit 4: Dictionary and Set</h3>
-                                </div>
-                                <div className="playbtn">
-                                    <Link to="/Courses/Video" className="btn1 course-play">Play</Link>
-                                </div>
-                            </div>
-
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>

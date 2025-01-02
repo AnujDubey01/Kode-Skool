@@ -138,7 +138,7 @@ function CourseList(props) {
                                 </div>
                             </div>
                             <div className="course-explore">
-                                <a href="#!" className="btn1 course-play">
+                                <a href="#!" className="btn1 course-play" style={{textDecoration: 'none'}}>
                                     Explore
                                 </a>
                             </div>
