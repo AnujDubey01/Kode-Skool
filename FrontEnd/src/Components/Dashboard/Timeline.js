@@ -453,10 +453,12 @@ function Timeline(props) {
                         </div>
                         <div className="timeline-years">
                             <div className="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
-                                <input type="radio" className="btn-check" name="timeline-year" id="vbtn-radio1" autoComplete="off" value="2024" checked={timelineYear === 2024} onChange={handleYearChange} />
-                                <label className="btn btn-outline-primary" htmlFor="vbtn-radio1">2024</label>
-                                <input type="radio" className="btn-check" name="timeline-year" id="vbtn-radio2" autoComplete="off" value="2023" checked={timelineYear === 2023} onChange={handleYearChange} />
-                                <label className="btn btn-outline-primary" htmlFor="vbtn-radio2">2023</label>
+                                <input type="radio" className="btn-check" name="timeline-year" id="vbtn-radio1" autoComplete="off" value="2025" checked={timelineYear === 2025} onChange={handleYearChange} />
+                                <label className="btn btn-outline-primary" htmlFor="vbtn-radio1">2025</label>
+                                <input type="radio" className="btn-check" name="timeline-year" id="vbtn-radio2" autoComplete="off" value="2024" checked={timelineYear === 2024} onChange={handleYearChange} />
+                                <label className="btn btn-outline-primary" htmlFor="vbtn-radio2">2024</label>
+                                <input type="radio" className="btn-check" name="timeline-year" id="vbtn-radio3" autoComplete="off" value="2023" checked={timelineYear === 2023} onChange={handleYearChange} />
+                                <label className="btn btn-outline-primary" htmlFor="vbtn-radio3">2023</label>
                             </div>
                         </div>
                     </div>
