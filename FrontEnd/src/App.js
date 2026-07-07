@@ -1,7 +1,7 @@
 import './App.css';
 import logo from './Assets/Img/logo.png';
 import { useState, useRef, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 
 import Dashboard from './Components/Dashboard';
 import Footer from './Components/Footer';
@@ -11,15 +11,17 @@ import CourseList from './Components/Courses/CourseList';
 import Courses from './Components/Courses';
 import CourseView from './Components/Courses/CourseView';
 import CourseVideo from './Components/Courses/CourseVideo';
+import Profile from './Components/Profile';
+import LandingPage from './Components/LandingPage';
 const host = 'http://localhost:5000'; // Server address of backend, This will be used to fetch data from backend.
 
 const navData = {
   navItems: [
-    { label: 'Home', icon: 'fa-house', linkTo: '/', isActive: true },
+    { label: 'Home', icon: 'fa-house', linkTo: '/dashboard', isActive: true },
     { label: 'Editor', icon: 'fa-pen', linkTo: '/Editor', isActive: false },
     { label: 'Courses', icon: 'fa-note-sticky', linkTo: '/Courses', isActive: false },
     { label: 'Profile', icon: 'fa-user-tie', linkTo: '/Profile', isActive: false },
-    { label: 'Chat Bot', icon: 'fa-comment-dots', linkTo: '/ChatBot', isActive: false },
+    { label: 'Chat Bot', icon: 'fa-comment-dots', linkTo: '/Chatbot', isActive: false },
     { label: 'Settings', icon: 'fa-gear', linkTo: '/Settings', isActive: false, position: 'bottom' },
     { label: 'Log Out', icon: 'fa-arrow-right-from-bracket', linkTo: '/Logout', isActive: false, position: 'bottom', rotateIcon: true }
   ]
@@ -132,22 +134,22 @@ const user = {
 
 function App() {
 
-  // UseEffect for login
-  useEffect(() => {
+  // Save auth token from URL params synchronously on first render,
+  // before AppShell checks localStorage — prevents the race condition
+  // where the token arrives in the URL but useEffect runs too late.
+  (() => {
     const params = new URLSearchParams(window.location.search);
-    const msg = params.get('msg');
     const authToken = params.get('auth_token');
-
-    if (msg && authToken) {
+    const msg = params.get('msg');
+    if (authToken) {
       localStorage.setItem('auth_token', authToken);
     }
-
     if (msg || authToken) {
       const url = new URL(window.location.href);
-      url.search = ''; // Removes all query parameters
+      url.search = '';
       window.history.replaceState({}, document.title, url.toString());
     }
-  }, [])
+  })();
 
   const [navItems, setNavItems] = useState(navData.navItems);
   const [toggleMode, setToggleMode] = useState('light');
@@ -196,14 +198,10 @@ function App() {
   };
 
   useEffect(() => {
-    // Check user is logged in or not
     if(!localStorage.getItem('auth_token')){
-      window.location.href = `${host}/login?tab=signin`;
+      return;
     }
-
     const currentPath = window.location.pathname;
-
-    // Only update state if necessary
     setNavItems((prevNavItems) =>
       prevNavItems.map((item) => ({
         ...item,
@@ -214,91 +212,124 @@ function App() {
 
   return (<>
     <BrowserRouter>
-      <div className={'App ' + toggleMode}>
-        <div className="App-main">
-          <nav ref={dashboardNav} className={'dashboard-nav ' + toggleMode}>
-            <div className="logo-image">
-              <img src={logo} alt="kodeskool" />
-            </div>
-            <div className="nav-links">
-              <div className="nav-top">
-                {navItems
-                  .filter(item => !item.position)
-                  .map(item => (
-                    <Link to={item.linkTo} style={{ textDecoration: 'none' }}>
-                      <div
-                        key={item.label}
-                        className={`nav-item ${item.isActive ? 'active' : ''} ${toggleMode}`}
-                        onClick={() => handleNavClick(item.label)}
-                      >
-                        <i className={`${item.isActive ? 'fa-solid' : 'fa-regular'} ${item.icon}`} />
-                        <span className='navLabel'>{item.label}</span>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
-              <div className="nav-bottom">
-                {navItems
-                  .filter(item => item.position === 'bottom')
-                  .map(item => (
-                    <Link to={item.linkTo} style={{ textDecoration: 'none' }}>
-                      <div
-                        key={item.label}
-                        className={`nav-item ${item.isActive ? 'active' : ''} ${toggleMode}`}
-                        onClick={() => handleNavClick(item.label)}
-                      >
-                        <span style={{ rotate: item.rotateIcon ? '180deg' : '0deg' }}>
-                          <i className={`${item.isActive ? 'fa-solid' : 'fa-regular'} ${item.icon}`} />
-                        </span>
-                        <span className='navLabel'>{item.label}</span>
-                      </div>
-                    </Link>
-                  ))}
-              </div>
-            </div>
-            <div className={'d-flex flex-row modeChangeBtn ' + toggleMode}>
-              {toggleMode === 'light' ? (
-                <>
-                  <div className="modeSet" onClick={() => handleToggleMode('light')}>
-                    <ion-icon name="sunny"></ion-icon>
-                    <span className='navLabel'>Light</span>
-                  </div>
-                  <div className="modeNotSet" onClick={() => handleToggleMode('dark')}>
-                    <ion-icon name="moon-outline"></ion-icon>
-                    <span className='navLabel'>Dark</span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className={'modeNotSet ' + toggleMode} onClick={() => handleToggleMode('light')}>
-                    <ion-icon name="sunny-outline"></ion-icon>
-                    <span className='navLabel'>Light</span>
-                  </div>
-                  <div className="modeSet" onClick={() => handleToggleMode('dark')}>
-                    <ion-icon name="moon"></ion-icon>
-                    <span className='navLabel'>Dark</span>
-                  </div>
-                </>
-              )}
-            </div>
-          </nav>
-          <main>
-            <Routes>
-              <Route exact path="/" element={<Dashboard toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
-              <Route exact path="/Editor" element={<Editor toggleMode={toggleMode} dashboardNav={dashboardNav} user={user} controlNav={controlNav} />} />
-              <Route exact path="/Courses" element={<Courses toggleMode={toggleMode} />} >
-                <Route path="" element={<CourseList toggleMode={toggleMode} user={user} controlNav={controlNav} host={host} />} />
-                <Route path="View" element={<CourseView toggleMode={toggleMode} host={host} />} />
-                <Route path="Video" element={<CourseVideo toggleMode={toggleMode} host={host} />} />
-              </Route>
-              <Route exact path="/Chatbot" element={<Chatbot toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
-            </Routes>
-          </main>
-        </div>
-        <Footer toggleMode={toggleMode} />
-      </div>
+      <Routes>
+        {/* ── Root redirect → landing page ── */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
+
+        {/* ── Public landing page ── */}
+        <Route path="/home" element={<LandingPage />} />
+
+        {/* ── Authenticated dashboard shell ── */}
+        <Route path="/*" element={<AppShell
+          toggleMode={toggleMode}
+          handleToggleMode={handleToggleMode}
+          navItems={navItems}
+          handleNavClick={handleNavClick}
+          dashboardNav={dashboardNav}
+          controlNav={controlNav}
+          user={user}
+          host={host}
+          logo={logo}
+        />} />
+      </Routes>
     </BrowserRouter>
   </>
+  );
+}
+
+/* ── AppShell: the authenticated dashboard wrapper ── */
+function AppShell({ toggleMode, handleToggleMode, navItems, handleNavClick, dashboardNav, controlNav, user, host, logo }) {
+  const isLoggedIn = !!localStorage.getItem('auth_token');
+
+  if (!isLoggedIn) {
+    return <Navigate to="/home" replace />;
+  }
+
+  return (
+    <div className={'App ' + toggleMode}>
+      <div className="App-main">
+        <nav ref={dashboardNav} className={'dashboard-nav ' + toggleMode}>
+          <div className="logo-image">
+            <img src={logo} alt="kodeskool" />
+          </div>
+          <div className="nav-links">
+            <div className="nav-top">
+              {navItems
+                .filter(item => !item.position)
+                .map(item => (
+                  <Link key={item.label} to={item.linkTo} style={{ textDecoration: 'none' }}>
+                    <div
+                      className={`nav-item ${item.isActive ? 'active' : ''} ${toggleMode}`}
+                      onClick={() => handleNavClick(item.label)}
+                    >
+                      <i className={`${item.isActive ? 'fa-solid' : 'fa-regular'} ${item.icon}`} />
+                      <span className='navLabel'>{item.label}</span>
+                    </div>
+                  </Link>
+                ))}
+            </div>
+            <div className="nav-bottom">
+              {navItems
+                .filter(item => item.position === 'bottom')
+                .map(item => (
+                  <Link key={item.label} to={item.linkTo} style={{ textDecoration: 'none' }}>
+                    <div
+                      className={`nav-item ${item.isActive ? 'active' : ''} ${toggleMode}`}
+                      onClick={() => handleNavClick(item.label)}
+                    >
+                      <span style={{ rotate: item.rotateIcon ? '180deg' : '0deg' }}>
+                        <i className={`${item.isActive ? 'fa-solid' : 'fa-regular'} ${item.icon}`} />
+                      </span>
+                      <span className='navLabel'>{item.label}</span>
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          </div>
+          <div className={'d-flex flex-row modeChangeBtn ' + toggleMode}>
+            {toggleMode === 'light' ? (
+              <>
+                <div className="modeSet" onClick={() => handleToggleMode('light')}>
+                  <ion-icon name="sunny"></ion-icon>
+                  <span className='navLabel'>Light</span>
+                </div>
+                <div className="modeNotSet" onClick={() => handleToggleMode('dark')}>
+                  <ion-icon name="moon-outline"></ion-icon>
+                  <span className='navLabel'>Dark</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={'modeNotSet ' + toggleMode} onClick={() => handleToggleMode('light')}>
+                  <ion-icon name="sunny-outline"></ion-icon>
+                  <span className='navLabel'>Light</span>
+                </div>
+                <div className="modeSet" onClick={() => handleToggleMode('dark')}>
+                  <ion-icon name="moon"></ion-icon>
+                  <span className='navLabel'>Dark</span>
+                </div>
+              </>
+            )}
+          </div>
+        </nav>
+        <main>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
+            <Route path="/Editor" element={<Editor toggleMode={toggleMode} dashboardNav={dashboardNav} user={user} controlNav={controlNav} />} />
+            <Route exact path="/Courses" element={<Courses toggleMode={toggleMode} />} >
+              <Route path="" element={<CourseList toggleMode={toggleMode} user={user} controlNav={controlNav} host={host} />} />
+              <Route path="View" element={<CourseView toggleMode={toggleMode} host={host} />} />
+              <Route path="Video" element={<CourseVideo toggleMode={toggleMode} host={host} />} />
+            </Route>
+            <Route path="/Chatbot" element={<Chatbot toggleMode={toggleMode} user={user} controlNav={controlNav} />} />
+            <Route path="/Profile" element={<Profile toggleMode={toggleMode} host={host} controlNav={controlNav} />} />
+            {/* Any unknown authenticated path → dashboard */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </main>
+      </div>
+      <Footer toggleMode={toggleMode} />
+    </div>
   );
 }
 

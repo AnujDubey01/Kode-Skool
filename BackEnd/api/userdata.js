@@ -16,7 +16,7 @@ router.post('/profile/student/update', fetchUser, async (req, res) => {
 
         const {name, phone, street, city, state, country, pin, university_type, school_clg_name, class_year, dob, hacker_rank, linkedin, codechef, instagram} = req.body;
 
-        updateData = {
+        let updateData = {
             Name: name,
             Phone: phone,
             Address: {

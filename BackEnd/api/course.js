@@ -103,7 +103,7 @@ router.get('/get-course-topic', async (req, res) => {
         
         const course = await CourseStruct.findOne(
             { 'Unit_List.Topic_List._id': topic_id }
-        ).select('+Unit_List.Topic_List.Video_Link +Unit_List.Topic_List.Notes_Link');
+        );
 
         if (course && course.Unit_List.length > 0) {
             let topic = null

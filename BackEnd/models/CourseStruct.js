@@ -7,13 +7,11 @@ const topicSchema = new mongoose.Schema({
     },
     Video_Link: {
         type: String,
-        trim: true,
-        select: false
+        trim: true
     },
     Notes_Link: {
         type: String,
-        trim: true,
-        select: false
+        trim: true
     }
 });
 

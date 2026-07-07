@@ -7,7 +7,7 @@ const { body, validationResult } = require("express-validator");
 const User = require("../models/User");
 const Student = require("../models/Student");
 
-const JWT_SECRET = 'JWT_SECRET_KEY';
+const JWT_SECRET = process.env.JWT_SECRET || 'JWT_SECRET_KEY';
 
 router.post('/register/student', [
     body("email", "Enter a valid Email").isEmail(),
@@ -63,15 +63,14 @@ router.post('/register/student', [
             User_Data: stdId
         })
 
-        const userId = newUser.save()
-            .then((savedUser) => {
-                return savedUser._id;
-            })
+        const savedUser = await newUser.save()
             .catch((err) => {
-                res.status(404).send({ success: false, err: err, msg: "Unable to create user." });
-            })
+                return res.status(404).send({ success: false, err: err, msg: "Unable to create user." });
+            });
 
-        const Auth_token = jwt.sign({user: {id: userId}},JWT_SECRET)
+        if (!savedUser) return; // response already sent in catch
+
+        const Auth_token = jwt.sign({user: {id: savedUser._id}}, JWT_SECRET, { expiresIn: '7d' })
         
         res.status(200).send({
             success: true,
@@ -107,7 +106,7 @@ router.post("/login",[
             return res.status(400).send({ success: false, msg: "Wrong Password!"});
         }
 
-        const Auth_token = jwt.sign({user: {id: user._id}},JWT_SECRET)
+        const Auth_token = jwt.sign({user: {id: user._id}}, JWT_SECRET, { expiresIn: '7d' })
         
         res.status(200).send({
             success: true,
@@ -116,7 +115,7 @@ router.post("/login",[
         })
 
     } catch (error) {
-        res.status(500).send({ success: true, err: error.message });
+        res.status(500).send({ success: false, err: error.message });
     }
 })
 

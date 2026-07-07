@@ -1,11 +1,20 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const axios = require('axios');
 
-mongoose.connect("mongodb://localhost:27017/Kodeskool");
+const port = process.env.PORT || 5000;
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/Kodeskool")
+    .then(() => console.log("Connected to MongoDB"))
+    .catch((err) => {
+        console.error("MongoDB connection error:", err.message);
+        process.exit(1);
+    });
+
 const app = express();
-const port = 5000
 
 app.use(cors());
 app.use(express.json());
@@ -35,34 +44,32 @@ app.get('/login', (req, res) => {
 
 app.post('/register', async (req, res) => {
   try {
-    const response = await axios.post(`http://localhost:${port}/api/register/student`,req.body);
+    const response = await axios.post(`http://localhost:${port}/api/register/student`, req.body);
     const data = response.data;
 
     if(data.success){
       const queryParams = new URLSearchParams({ msg: data.msg, auth_token: data.auth_token }).toString();
-      res.redirect(`http://localhost:3000/?${queryParams}`);
+      res.redirect(`${frontendUrl}/dashboard?${queryParams}`);
     }else{
-      res.status(400).render('login.pug',{data: data});
+      res.status(400).render('login.pug', {data: data});
     }    
   } catch (error) {
-    console.error('Error during login:', error.message);
+    console.error('Error during register:', error.message);
     res.status(500).send({
       error: error.response ? error.response.data : 'Unknown error',
       message: 'Internal Server Error',
     });
-    
   }
 })
 
 app.post('/login', async (req, res) => {
   try {
-    // Make a POST request to your internal API
     const response = await axios.post(`http://localhost:${port}/api/login`, req.body);
     const data = response.data;
 
     if (data.success) {
       const queryParams = new URLSearchParams({ msg: data.msg, auth_token: data.auth_token }).toString();
-      res.redirect(`http://localhost:3000/?${queryParams}`);
+      res.redirect(`${frontendUrl}/dashboard?${queryParams}`);
     } else {
       res.status(400).render('login.pug', { data });
     }
@@ -78,18 +85,17 @@ app.post('/login', async (req, res) => {
 // Available API Routes
 // Authentication
 const authenticate = require("./api/authenticate");
-app.use('/api',authenticate);
+app.use('/api', authenticate);
 
 // User Details
 const userData = require("./api/userdata");
-app.use('/api',userData);
+app.use('/api', userData);
 
 // Course Api
 const course = require("./api/course");
-const { body } = require("express-validator");
-app.use('/api',course)
+app.use('/api', course);
 
 
 app.listen(port, () => {
-    console.log(`iNotebook backend listening at http://localhost:${port}`)
-  })
+    console.log(`KodeSkool backend listening at http://localhost:${port}`)
+});

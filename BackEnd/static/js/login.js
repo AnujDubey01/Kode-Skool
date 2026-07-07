@@ -54,11 +54,9 @@ function toggleRoles() {
 function validateSignup() {
     const email = document.getElementById('email').value;
     const username = document.getElementById('newUsername').value;
-    const password = document.getElementById('newPassword').value;
-    const institutionSelectedSignup = document.querySelector('input[name="institution"]:checked');
-
-    if (!email || !username || !password || !institutionSelectedSignup) {
-        alert("Please fill in all fields and select an institution.");
+    const password = document.getElementById('signupPassword').value;
+    if (!email || !username || !password) {
+        alert("Please fill in all fields.");
         return false;
     }
     return true;
@@ -67,10 +65,8 @@ function validateSignup() {
 function validateSignin() {
     const email = document.getElementById('signinEmail').value;
     const password = document.getElementById('signinPassword').value;
-    const institutionSelectedSignin = document.querySelector('input[name="institution"]:checked')
-    if (!email || !password || !institutionSelectedSignin) {
-        alert("Please fill in all fields and select an institution.");
-
+    if (!email || !password) {
+        alert("Please fill in your email and password.");
         return false;
     }
     return true;
@@ -260,35 +256,3 @@ function togglePasswordVisibility() {
         SignintoggleIcon.classList.add('fa-eye');
     }
 }
-
-
-
-function toggleMode() {
-    // Toggle main container mode
-    const app = document.querySelector('.App');
-    app.classList.toggle('light');
-    app.classList.toggle('dark');
-
-    // Toggle dashboard-nav mode
-    const dashnav = document.querySelector('.dashboard-dash-nav');
-    dashnav.classList.toggle('light');
-    dashnav.classList.toggle('dark');
-
-    // Toggle nav items mode
-    document.querySelectorAll('.dash-nav-item').forEach(item => {
-        item.classList.toggle('light');
-        item.classList.toggle('dark');
-    });
-
-    // Toggle mode buttons
-    const lightBtn = document.getElementById('lightModeBtn');
-    const darkBtn = document.getElementById('darkModeBtn');
-    lightBtn.classList.toggle('modeSet');
-    lightBtn.classList.toggle('modeNotSet');
-    lightBtn.classList.toggle('dark')
-    darkBtn.classList.toggle('modeSet');
-    darkBtn.classList.toggle('modeNotSet');
-}
-
-document.getElementsByClassName('dashboard-dash-nav')[0].classList.add('show')
-document.getElementsByClassName('dashboard-dash-nav')[0].classList.remove('show')

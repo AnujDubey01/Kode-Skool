@@ -123,11 +123,20 @@ function CourseView(props) {
             const struct = await fetchStructure(props.host, course_id);
             const sts = await fetchEnrollStatus(props.host, course_id);
 
+            // Guard: if course structure hasn't been set up yet, stop here
+            if (!struct || !struct.Unit_List) {
+                setUnitList([]);
+                return;
+            }
+
+            // Guard: if user isn't enrolled, treat all topics as incomplete
+            const enrolledStatus = sts || [];
+
             let filterUnit = [];
             struct.Unit_List.forEach(unit => {
                 let filterTopic = [];
                 unit.Topic_List.forEach(topic => {
-                    if (sts.includes(topic._id)) {
+                    if (enrolledStatus.includes(topic._id)) {
                         topic.complete = true;
                         filterTopic.push(topic);
                     } else {
