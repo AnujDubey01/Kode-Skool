@@ -13,7 +13,8 @@ import CourseView from './Components/Courses/CourseView';
 import CourseVideo from './Components/Courses/CourseVideo';
 import Profile from './Components/Profile';
 import LandingPage from './Components/LandingPage';
-const host = 'http://localhost:5000'; // Server address of backend, This will be used to fetch data from backend.
+
+const host = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
 const navData = {
   navItems: [

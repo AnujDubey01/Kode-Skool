@@ -172,7 +172,7 @@ function FaqItem({ q, a }) {
 ════════════════════════════════════════════════════════════════════════════ */
 function LandingPage() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const BACKEND = 'http://localhost:5000';
+    const BACKEND = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
 
     const goLogin = (tab) => {
         window.location.href = `${BACKEND}/login?tab=${tab}`;
