@@ -54,6 +54,8 @@ const studentSchema = new mongoose.Schema({
         }
     },
     Name: { type: String, required: true, trim: true },
+    School: { type: mongoose.Schema.Types.ObjectId, ref: 'School' },
+    ClassSection: { type: String, trim: true },
     Address: addressSchema, // Subdocument
     Phone: { type: String, trim: true, match: [/^\d{10}$/, 'Phone number must be 10 digits'] },
     Education: educationSchema, // Subdocument

@@ -23,12 +23,12 @@ const userSchema = new mongoose.Schema({
     },
     User_Type: {
         type: String,
-        enum: ['Student', 'Faculty'],
+        enum: ['Student', 'Faculty', 'Admin'],
         required: true
     },
     User_Data: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: false
     },
 }, {
     timestamps: true,

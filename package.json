@@ -1,0 +1,21 @@
+{
+  "name": "kode-skool",
+  "version": "1.0.0",
+  "description": "Interactive coding learning platform for school students (grades 8–12)",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
+    "server": "npm run start --prefix backend",
+    "server:dev": "npm run dev --prefix backend",
+    "client": "npm run start --prefix frontend",
+    "client:build": "npm run build --prefix frontend",
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "init-db": "node backend/scripts/initDatabase.js",
+    "seed": "node backend/scripts/initDatabase.js",
+    "build": "npm run build --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
