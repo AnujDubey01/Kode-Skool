@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 
-import logo from './Assets/Img/logo.png';
+import logo from './assets/img/logo.png';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 import LandingPage from './pages/LandingPage';

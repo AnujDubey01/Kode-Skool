@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import smLogo from '../Assets/Img/small-logo.png';
+import smLogo from '../assets/img/small-logo.png';
 import chatService from '../services/chatService';
 
 const defaultSuggestions = [

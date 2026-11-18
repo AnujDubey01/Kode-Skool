@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-import logo from '../Assets/Img/logo.png';
-import loginImg from '../Assets/Img/loginImg.png';
+import logo from '../assets/img/logo.png';
+import loginImg from '../assets/img/loginImg.png';
 
 function Login() {
     const navigate = useNavigate();

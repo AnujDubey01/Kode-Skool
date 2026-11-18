@@ -2,21 +2,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /* ── images ──────────────────────────────────────────────────────────────── */
-import logo from '../Assets/Img/logo.png';
-import footerLogo from '../Assets/Img/footer-logo.png';
-import companyLogo from '../Assets/Img/company-section-logo.png';
-import tick from '../Assets/Img/tick.png';
-import whyCard1 from '../Assets/Img/why-card-1.png';
-import whyCard2 from '../Assets/Img/why-choose-2.png';
-import whyCard3 from '../Assets/Img/why-choose-3.png';
-import bigFeature1 from '../Assets/Img/big-feature-1.png';
-import bigFeature2 from '../Assets/Img/big-feature-2.png';
-import bigFeature3 from '../Assets/Img/big-feature-3.png';
-import bigFeature4 from '../Assets/Img/big-feature-4.png';
-import heroImg1 from '../Assets/Img/hero-img1.png';
-import heroImg2 from '../Assets/Img/heor-img2.png';
-import heroImg3 from '../Assets/Img/heror-img3.png';
-import downloadSection from '../Assets/Img/download-section.png';
+import logo from '../assets/img/logo.png';
+import footerLogo from '../assets/img/footer-logo.png';
+import companyLogo from '../assets/img/company-section-logo.png';
+import tick from '../assets/img/tick.png';
+import whyCard1 from '../assets/img/why-card-1.png';
+import whyCard2 from '../assets/img/why-choose-2.png';
+import whyCard3 from '../assets/img/why-choose-3.png';
+import bigFeature1 from '../assets/img/big-feature-1.png';
+import bigFeature2 from '../assets/img/big-feature-2.png';
+import bigFeature3 from '../assets/img/big-feature-3.png';
+import bigFeature4 from '../assets/img/big-feature-4.png';
+import heroImg1 from '../assets/img/hero-img1.png';
+import heroImg2 from '../assets/img/heor-img2.png';
+import heroImg3 from '../assets/img/heror-img3.png';
+import downloadSection from '../assets/img/download-section.png';
 
 /* ── data ────────────────────────────────────────────────────────────────── */
 const heroImages = [heroImg2, heroImg1, heroImg3];

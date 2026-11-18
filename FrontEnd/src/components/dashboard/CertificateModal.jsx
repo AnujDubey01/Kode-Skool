@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../Assets/Img/logo.png';
+import logo from '../../assets/img/logo.png';
 
 export default function CertificateModal({ studentName = 'Student', courseName = 'Full-Stack Web & C Programming', onClose }) {
     const handlePrint = () => {
