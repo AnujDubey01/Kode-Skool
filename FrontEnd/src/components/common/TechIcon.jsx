@@ -1,5 +1,5 @@
 import React from 'react';
-import cLang from '../../assets/img/cLang.png';
+import cLang from '../../Assets/Img/cLang.png';
 
 /**
  * Resolves the primary technology from the tech string or course title.

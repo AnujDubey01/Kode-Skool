@@ -1,5 +1,5 @@
 import React from 'react';
-import FooterLogo from '../../assets/img/footer-logo.png';
+import FooterLogo from '../../Assets/Img/footer-logo.png';
 
 function Footer(props) {
     const isDark = props.toggleMode === 'dark';
