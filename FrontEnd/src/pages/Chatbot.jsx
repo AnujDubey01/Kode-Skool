@@ -238,9 +238,8 @@ function Chatbot(props) {
           type="button"
           onClick={sendQuery}
           disabled={loading}
-          className={`h-[44px] md:h-[48px] px-4 md:px-5 rounded-2xl flex items-center justify-center text-white bg-gradient-to-r from-[#414D8E] via-[#5D74BD] to-[#169BDF] hover:opacity-95 active:scale-95 transition-all shadow-md shrink-0 ${
-            loading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
-          }`}
+          className={`h-[44px] md:h-[48px] px-4 md:px-5 rounded-2xl flex items-center justify-center text-white bg-gradient-to-r from-[#414D8E] via-[#5D74BD] to-[#169BDF] hover:opacity-95 active:scale-95 transition-all shadow-md shrink-0 ${loading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
+            }`}
           title={loading ? 'Thinking...' : 'Send Prompt'}
         >
           {loading ? (

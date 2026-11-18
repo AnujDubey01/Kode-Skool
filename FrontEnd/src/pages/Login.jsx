@@ -265,22 +265,20 @@ function Login() {
                     <div className="relative flex items-center justify-center">
                         {/* Floating decorative elements */}
                         <div
-                            className={`hidden sm:flex absolute z-0 items-center justify-center rounded-full transition-all duration-300 ${
-                                activeTab === 'signup'
+                            className={`hidden sm:flex absolute z-0 items-center justify-center rounded-full transition-all duration-300 ${activeTab === 'signup'
                                     ? 'left-0 top-[6%] -translate-x-[35%] w-24 h-24 sm:w-28 sm:h-28'
                                     : 'left-[78%] top-[6%] translate-x-[25%] w-24 h-24 sm:w-28 sm:h-28'
-                            }`}
+                                }`}
                             style={{ background: 'linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%)' }}
                         >
                             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white"></div>
                         </div>
 
                         <div
-                            className={`hidden sm:flex absolute z-0 items-center justify-center rounded-full transition-all duration-300 ${
-                                activeTab === 'signup'
+                            className={`hidden sm:flex absolute z-0 items-center justify-center rounded-full transition-all duration-300 ${activeTab === 'signup'
                                     ? 'right-0 bottom-[6%] translate-x-[35%] w-24 h-24 sm:w-28 sm:h-28'
                                     : 'right-[78%] bottom-[6%] -translate-x-[25%] w-24 h-24 sm:w-28 sm:h-28'
-                            }`}
+                                }`}
                             style={{ background: 'linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%)' }}
                         >
                             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white"></div>
@@ -288,22 +286,20 @@ function Login() {
 
                         {/* Floating Badges */}
                         <div
-                            className={`hidden sm:flex absolute z-10 items-center justify-center border-2 border-[#97B8FF] backdrop-blur-md px-4 py-1.5 transition-all duration-300 text-xs sm:text-sm font-semibold text-gray-700/80 ${
-                                activeTab === 'signup'
+                            className={`hidden sm:flex absolute z-10 items-center justify-center border-2 border-[#97B8FF] backdrop-blur-md px-4 py-1.5 transition-all duration-300 text-xs sm:text-sm font-semibold text-gray-700/80 ${activeTab === 'signup'
                                     ? '-left-6 bottom-[10%] -translate-y-4 rounded-l-2xl rounded-br-2xl'
                                     : 'left-0 bottom-[78%] -translate-x-6 rounded-t-2xl rounded-bl-2xl'
-                            }`}
+                                }`}
                             style={{ background: 'linear-gradient(120deg, rgba(92, 127, 255, 0.2) 10%, rgba(103, 79, 255, 0.45) 100%)' }}
                         >
                             <p className="m-0">Courses</p>
                         </div>
 
                         <div
-                            className={`hidden sm:flex absolute z-10 items-center justify-center border-2 border-[#97B8FF] backdrop-blur-md px-4 py-1.5 transition-all duration-300 text-xs sm:text-sm font-semibold text-gray-700/80 ${
-                                activeTab === 'signup'
+                            className={`hidden sm:flex absolute z-10 items-center justify-center border-2 border-[#97B8FF] backdrop-blur-md px-4 py-1.5 transition-all duration-300 text-xs sm:text-sm font-semibold text-gray-700/80 ${activeTab === 'signup'
                                     ? '-right-6 top-[10%] translate-y-4 rounded-t-2xl rounded-br-2xl'
                                     : 'right-0 top-[78%] translate-x-6 rounded-r-2xl rounded-bl-2xl'
-                            }`}
+                                }`}
                             style={{ background: 'linear-gradient(120deg, rgba(92, 127, 255, 0.2) 10%, rgba(103, 79, 255, 0.45) 100%)' }}
                         >
                             <p className="m-0">Test</p>
@@ -324,11 +320,10 @@ function Login() {
                                         <button
                                             type="button"
                                             onClick={handleSwitchToSignup}
-                                            className={`px-6 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
-                                                activeTab === 'signup'
+                                            className={`px-6 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${activeTab === 'signup'
                                                     ? 'text-white shadow-sm font-semibold'
                                                     : 'text-gray-500 hover:text-gray-800'
-                                            }`}
+                                                }`}
                                             style={activeTab === 'signup' ? { background: 'linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%)' } : {}}
                                         >
                                             Sign Up
@@ -336,11 +331,10 @@ function Login() {
                                         <button
                                             type="button"
                                             onClick={handleSwitchToSignin}
-                                            className={`px-6 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
-                                                activeTab === 'signin'
+                                            className={`px-6 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${activeTab === 'signin'
                                                     ? 'text-white shadow-sm font-semibold'
                                                     : 'text-gray-500 hover:text-gray-800'
-                                            }`}
+                                                }`}
                                             style={activeTab === 'signin' ? { background: 'linear-gradient(120deg, rgba(64, 77, 141, 1) 15%, rgba(89, 109, 181, 1) 50%, rgba(22, 155, 223, 1) 100%)' } : {}}
                                         >
                                             Sign In
@@ -609,11 +603,10 @@ function Login() {
                                             <p className="text-xs text-gray-500">
                                                 Didn't receive any code?{' '}
                                                 <span
-                                                    className={`font-semibold cursor-pointer ${
-                                                        canResend
+                                                    className={`font-semibold cursor-pointer ${canResend
                                                             ? 'bg-gradient-to-r from-[#404D8D] to-[#169BDF] bg-clip-text text-transparent underline'
                                                             : 'text-gray-400 pointer-events-none'
-                                                    }`}
+                                                        }`}
                                                     onClick={handleResendOTP}
                                                 >
                                                     Resend

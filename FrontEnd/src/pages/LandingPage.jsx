@@ -2,34 +2,34 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 /* ── images ──────────────────────────────────────────────────────────────── */
-import logo          from '../Assets/Img/logo.png';
-import footerLogo    from '../Assets/Img/footer-logo.png';
-import companyLogo   from '../Assets/Img/company-section-logo.png';
-import tick          from '../Assets/Img/tick.png';
-import whyCard1      from '../Assets/Img/why-card-1.png';
-import whyCard2      from '../Assets/Img/why-choose-2.png';
-import whyCard3      from '../Assets/Img/why-choose-3.png';
-import bigFeature1   from '../Assets/Img/big-feature-1.png';
-import bigFeature2   from '../Assets/Img/big-feature-2.png';
-import bigFeature3   from '../Assets/Img/big-feature-3.png';
-import bigFeature4   from '../Assets/Img/big-feature-4.png';
-import heroImg1      from '../Assets/Img/hero-img1.png';
-import heroImg2      from '../Assets/Img/heor-img2.png';
-import heroImg3      from '../Assets/Img/heror-img3.png';
+import logo from '../Assets/Img/logo.png';
+import footerLogo from '../Assets/Img/footer-logo.png';
+import companyLogo from '../Assets/Img/company-section-logo.png';
+import tick from '../Assets/Img/tick.png';
+import whyCard1 from '../Assets/Img/why-card-1.png';
+import whyCard2 from '../Assets/Img/why-choose-2.png';
+import whyCard3 from '../Assets/Img/why-choose-3.png';
+import bigFeature1 from '../Assets/Img/big-feature-1.png';
+import bigFeature2 from '../Assets/Img/big-feature-2.png';
+import bigFeature3 from '../Assets/Img/big-feature-3.png';
+import bigFeature4 from '../Assets/Img/big-feature-4.png';
+import heroImg1 from '../Assets/Img/hero-img1.png';
+import heroImg2 from '../Assets/Img/heor-img2.png';
+import heroImg3 from '../Assets/Img/heror-img3.png';
 import downloadSection from '../Assets/Img/download-section.png';
 
 /* ── data ────────────────────────────────────────────────────────────────── */
 const heroImages = [heroImg2, heroImg1, heroImg3];
 
 const skills = [
-    { icon: 'fa-brands fa-html5',   label: 'HTML'       },
-    { icon: 'fa-brands fa-css3',    label: 'CSS'        },
-    { icon: 'fa-brands fa-js',      label: 'JavaScript' },
-    { icon: 'fa-solid fa-c',        label: 'C Lang'     },
-    { icon: 'fa-brands fa-java',    label: 'Java'       },
-    { icon: 'fa-brands fa-python',  label: 'Python'     },
-    { icon: 'fa-brands fa-node',    label: 'Node.js'    },
-    { icon: 'fa-solid fa-database', label: 'Database'   },
+    { icon: 'fa-brands fa-html5', label: 'HTML' },
+    { icon: 'fa-brands fa-css3', label: 'CSS' },
+    { icon: 'fa-brands fa-js', label: 'JavaScript' },
+    { icon: 'fa-solid fa-c', label: 'C Lang' },
+    { icon: 'fa-brands fa-java', label: 'Java' },
+    { icon: 'fa-brands fa-python', label: 'Python' },
+    { icon: 'fa-brands fa-node', label: 'Node.js' },
+    { icon: 'fa-solid fa-database', label: 'Database' },
 ];
 
 const whyCards = [
@@ -138,9 +138,8 @@ function HeroCarousel() {
                 {heroImages.map((_, i) => (
                     <span
                         key={i}
-                        className={`h-2 rounded-full cursor-pointer transition-all duration-300 ${
-                            current === i ? 'bg-[#404d8d] w-7' : 'bg-[#183b56]/30 w-2'
-                        }`}
+                        className={`h-2 rounded-full cursor-pointer transition-all duration-300 ${current === i ? 'bg-[#404d8d] w-7' : 'bg-[#183b56]/30 w-2'
+                            }`}
                         onClick={() => setCurrent(i)}
                     />
                 ))}
@@ -153,9 +152,8 @@ function HeroCarousel() {
 function FaqItem({ q, a }) {
     const [open, setOpen] = useState(false);
     return (
-        <div className={`relative overflow-hidden border rounded-2xl transition-all duration-200 ${
-            open ? 'border-[#596db5] shadow-[0_4px_18px_rgba(64,77,141,0.12)] bg-slate-50/70' : 'border-gray-200 hover:border-gray-300 bg-white'
-        }`}>
+        <div className={`relative overflow-hidden border rounded-2xl transition-all duration-200 ${open ? 'border-[#596db5] shadow-[0_4px_18px_rgba(64,77,141,0.12)] bg-slate-50/70' : 'border-gray-200 hover:border-gray-300 bg-white'
+            }`}>
             {/* Subtle corner wave for active FAQ item */}
             {open && (
                 <div className="absolute -bottom-1 -right-1 w-28 h-16 pointer-events-none opacity-20">
@@ -170,9 +168,8 @@ function FaqItem({ q, a }) {
                     <i className={`fa-solid fa-plus text-xs transition-transform duration-300 ${open ? 'rotate-45' : ''}`}></i>
                 </div>
             </div>
-            <div className={`overflow-hidden transition-all duration-300 ease-in-out px-4 sm:px-5 relative z-10 ${
-                open ? 'max-h-96 pb-4 sm:pb-5 opacity-100' : 'max-h-0 pb-0 opacity-0'
-            }`}>
+            <div className={`overflow-hidden transition-all duration-300 ease-in-out px-4 sm:px-5 relative z-10 ${open ? 'max-h-96 pb-4 sm:pb-5 opacity-100' : 'max-h-0 pb-0 opacity-0'
+                }`}>
                 <p className="text-xs sm:text-sm text-[#485e76] m-0 leading-relaxed font-poppins">{a}</p>
             </div>
         </div>
