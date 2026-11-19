@@ -26,6 +26,8 @@ const screenTimeSchema = new mongoose.Schema({
     }
 })
 
+screenTimeSchema.index({ St_ID: 1, Start_Date: -1 });
+
 const ScreenTime = mongoose.model("ScreenTime",screenTimeSchema);
 
 module.exports = ScreenTime;

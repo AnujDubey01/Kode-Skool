@@ -95,49 +95,128 @@ const updateSchoolDetails = async (req, res) => {
     }
 };
 
-// 3. User Management (List Users)
+// 3. User Management (List Users with Single Aggregation Pipeline & Server-Side Pagination)
 const getUsersList = async (req, res) => {
     try {
         const { role, search } = req.query;
-        const filter = {};
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const pipeline = [];
+
+        // 1. Role filter (Index supported on User_Type)
         if (role && role !== 'All') {
-            filter.User_Type = role;
+            pipeline.push({ $match: { User_Type: role } });
         }
 
-        let users = await User.find(filter).select('-Password').sort({ createdAt: -1 });
-
-        // Enrich with Student or Teacher profile data
-        const enrichedUsers = await Promise.all(users.map(async (u) => {
-            let profile = null;
-            if (u.User_Type === 'Student' && u.User_Data) {
-                profile = await Student.findById(u.User_Data).select('Name Email Phone Education ClassSection Address');
-            } else if (u.User_Type === 'Faculty' && u.User_Data) {
-                profile = await Teacher.findById(u.User_Data).select('Name Email Phone Department AssignedClasses');
+        // 2. Lookup student profile
+        pipeline.push({
+            $lookup: {
+                from: 'students',
+                localField: 'User_Data',
+                foreignField: '_id',
+                as: 'studentProfile'
             }
+        });
 
-            return {
-                _id: u._id,
-                email: u.Email,
-                role: u.User_Type,
-                createdAt: u.createdAt,
-                name: profile?.Name || u.Email.split('@')[0],
-                phone: profile?.Phone || '',
-                classSection: profile?.ClassSection || profile?.Education?.class_year || '',
-                department: profile?.Department || ''
-            };
-        }));
+        // 3. Lookup teacher profile
+        pipeline.push({
+            $lookup: {
+                from: 'teachers',
+                localField: 'User_Data',
+                foreignField: '_id',
+                as: 'teacherProfile'
+            }
+        });
 
-        let result = enrichedUsers;
+        // 4. Project normalized fields
+        pipeline.push({
+            $project: {
+                _id: 1,
+                email: '$Email',
+                role: '$User_Type',
+                createdAt: 1,
+                student: { $arrayElemAt: ['$studentProfile', 0] },
+                teacher: { $arrayElemAt: ['$teacherProfile', 0] }
+            }
+        });
+
+        pipeline.push({
+            $project: {
+                _id: 1,
+                email: 1,
+                role: 1,
+                createdAt: 1,
+                name: {
+                    $ifNull: [
+                        '$student.Name',
+                        {
+                            $ifNull: [
+                                '$teacher.Name',
+                                { $arrayElemAt: [{ $split: ['$email', '@'] }, 0] }
+                            ]
+                        }
+                    ]
+                },
+                phone: {
+                    $ifNull: ['$student.Phone', { $ifNull: ['$teacher.Phone', ''] }]
+                },
+                classSection: {
+                    $ifNull: [
+                        '$student.ClassSection',
+                        {
+                            $ifNull: [
+                                { $toString: '$student.Education.class_year' },
+                                { $arrayElemAt: ['$teacher.AssignedClasses', 0] }
+                            ]
+                        }
+                    ]
+                },
+                department: {
+                    $ifNull: ['$teacher.Department', '']
+                }
+            }
+        });
+
+        // 5. Search filter if provided
         if (search) {
-            const s = search.toLowerCase();
-            result = enrichedUsers.filter(u =>
-                u.name.toLowerCase().includes(s) ||
-                u.email.toLowerCase().includes(s) ||
-                u.role.toLowerCase().includes(s)
-            );
+            const searchRegex = new RegExp(search, 'i');
+            pipeline.push({
+                $match: {
+                    $or: [
+                        { name: searchRegex },
+                        { email: searchRegex },
+                        { role: searchRegex }
+                    ]
+                }
+            });
         }
 
-        return res.status(200).json({ success: true, count: result.length, users: result });
+        // 6. Facet for total count and paginated data in a single DB round-trip
+        pipeline.push({
+            $facet: {
+                metadata: [{ $count: 'total' }],
+                data: [
+                    { $sort: { createdAt: -1 } },
+                    { $skip: skip },
+                    { $limit: limit }
+                ]
+            }
+        });
+
+        const [aggResult] = await User.aggregate(pipeline);
+        const total = aggResult?.metadata[0]?.total || 0;
+        const users = aggResult?.data || [];
+
+        return res.status(200).json({
+            success: true,
+            count: users.length,
+            total,
+            page,
+            totalPages: Math.ceil(total / limit) || 1,
+            users
+        });
     } catch (err) {
         return res.status(500).json({ success: false, msg: err.message });
     }
@@ -293,22 +372,22 @@ const assignCourse = async (req, res) => {
             return res.status(400).json({ success: false, msg: "Course ID is required." });
         }
 
-        const course = await Course.findById(courseId);
+        const course = await Course.findById(courseId).lean();
         if (!course) {
             return res.status(404).json({ success: false, msg: "Course not found." });
         }
 
         let targetUsers = [];
         if (userEmail) {
-            const user = await User.findOne({ Email: userEmail.toLowerCase() });
+            const user = await User.findOne({ Email: userEmail.toLowerCase() }).lean();
             if (user) targetUsers.push(user);
         } else if (classSection) {
-            const students = await Student.find({ ClassSection: classSection });
+            const students = await Student.find({ ClassSection: classSection }).lean();
             const studentIds = students.map(s => s._id);
-            targetUsers = await User.find({ User_Data: { $in: studentIds } });
+            targetUsers = await User.find({ User_Data: { $in: studentIds } }).lean();
         } else {
             // Assign to all students
-            targetUsers = await User.find({ User_Type: 'Student' });
+            targetUsers = await User.find({ User_Type: 'Student' }).lean();
         }
 
         let enrolledCount = 0;
@@ -335,21 +414,38 @@ const assignCourse = async (req, res) => {
     }
 };
 
-// 7. Academic & Certification Reports
+// 7. Academic & Certification Reports (with Server-Side Pagination & .lean())
 const getAcademicReports = async (req, res) => {
     try {
-        const enrollments = await CourseEnroll.find()
-            .populate('Std_ID', 'Name Email ClassSection')
-            .populate('Course_ID', 'Course_Name Course_Rating')
-            .sort({ createdAt: -1 });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
 
-        const results = await Result.find()
-            .populate('Std_ID', 'Name Email')
-            .populate('Test_ID')
-            .sort({ createdAt: -1 });
+        const [enrollments, results, totalEnrollments, totalResults] = await Promise.all([
+            CourseEnroll.find()
+                .populate('Std_ID', 'Name Email ClassSection')
+                .populate('Course_ID', 'Course_Name Course_Rating')
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+            Result.find()
+                .populate('Std_ID', 'Name Email')
+                .populate('Test_ID')
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+            CourseEnroll.countDocuments(),
+            Result.countDocuments()
+        ]);
 
         return res.status(200).json({
             success: true,
+            page,
+            limit,
+            totalEnrollments,
+            totalResults,
             enrollments,
             results
         });

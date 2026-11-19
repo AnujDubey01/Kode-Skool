@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
 const { registerStudent, loginUser } = require("../controllers/authController");
+const { authLimiter } = require("../middleware/rateLimiter");
 
-router.post('/register/student', [
+router.post('/register/student', authLimiter, [
     body("email", "Enter a valid Email").isEmail(),
     body("password")
         .isLength({ min: 6 }).withMessage("Password must be at least 6 characters")
@@ -21,7 +22,7 @@ router.post('/register/student', [
         }),
 ], registerStudent);
 
-router.post("/login", [
+router.post("/login", authLimiter, [
     body("email", "Enter a valid email").isEmail(),
     body("password", "Password cannot be blank").exists()
 ], loginUser);

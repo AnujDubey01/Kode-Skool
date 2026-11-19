@@ -30,6 +30,8 @@ const resultSchema = new mongoose.Schema({
   timestamps: true,
 });
 
+resultSchema.index({ Std_ID: 1, Test_ID: 1 });
+
 const Result = mongoose.model('Result', resultSchema);
 
 module.exports = Result;

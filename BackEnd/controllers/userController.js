@@ -92,14 +92,14 @@ const updateStudentProfile = async (req, res) => {
 const getStudentProfile = async (req, res) => {
     try {
         const userId = req.user.id;
-        const user = await User.findById(userId).select("-Password");
+        const user = await User.findById(userId).select("-Password").lean();
         if (!user) {
             return res.status(400).send({ msg: "User doesn't exist." });
         }
 
         let student = null;
         if (user.User_Data) {
-            student = await Student.findById(user.User_Data);
+            student = await Student.findById(user.User_Data).lean();
         }
 
         // If student doesn't exist yet, lazily find by email or create default profile
@@ -107,16 +107,16 @@ const getStudentProfile = async (req, res) => {
             const cleanEmail = user.Email ? user.Email.toLowerCase().trim() : '';
             student = await Student.findOne({ Email: cleanEmail });
             if (student) {
-                user.User_Data = student._id;
-                await user.save();
+                await User.findByIdAndUpdate(userId, { User_Data: student._id });
+                student = student.toObject();
             } else {
-                student = new Student({
+                const newStudent = new Student({
                     Email: cleanEmail,
                     Name: (cleanEmail ? cleanEmail.split('@')[0] : 'Student')
                 });
-                await student.save();
-                user.User_Data = student._id;
-                await user.save();
+                await newStudent.save();
+                await User.findByIdAndUpdate(userId, { User_Data: newStudent._id });
+                student = newStudent.toObject();
             }
         }
 

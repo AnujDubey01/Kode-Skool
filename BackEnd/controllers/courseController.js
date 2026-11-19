@@ -53,7 +53,11 @@ const addCourseStruct = async (req, res) => {
 
 const getAllCourses = async (req, res) => {
     try {
-        const courses = await Course.find();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const courses = await Course.find().skip(skip).limit(limit).lean();
         return res.status(200).json(courses);
     } catch (error) {
         return res.status(500).send({ err: error.message });
@@ -65,11 +69,15 @@ const getCourse = async (req, res) => {
         const { course_id } = req.query;
 
         if (!course_id) {
-            const courses = await Course.find();
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 20;
+            const skip = (page - 1) * limit;
+
+            const courses = await Course.find().skip(skip).limit(limit).lean();
             return res.status(200).json(courses);
         }
 
-        const course = await Course.findById(course_id);
+        const course = await Course.findById(course_id).lean();
         if (course) {
             return res.status(200).json(course);
         } else {
@@ -84,7 +92,7 @@ const getCourseStruct = async (req, res) => {
     try {
         const { course_id } = req.query;
 
-        const structure = await CourseStruct.findOne({ Course_ID: course_id });
+        const structure = await CourseStruct.findOne({ Course_ID: course_id }).lean();
         if (structure) {
             return res.status(200).json(structure);
         } else {
@@ -189,12 +197,19 @@ const enrollCourse = async (req, res) => {
 const getMyCourses = async (req, res) => {
     const userId = req.user.id;
     try {
-        const user = await User.findById(userId).select("-Password");
+        const user = await User.findById(userId).select("-Password").lean();
         if (!user) {
             return res.status(400).send({ msg: "User not logged in properly." });
         }
 
-        const userEnrolls = await CourseEnroll.find({ Std_ID: userId });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const userEnrolls = await CourseEnroll.find({ Std_ID: userId })
+            .skip(skip)
+            .limit(limit)
+            .lean();
         return res.status(200).json(userEnrolls);
     } catch (error) {
         return res.status(500).send({ success: false, err: error.message });

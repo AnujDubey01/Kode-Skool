@@ -34,6 +34,8 @@ const userSchema = new mongoose.Schema({
     timestamps: true,
 });
 
+userSchema.index({ User_Type: 1 });
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

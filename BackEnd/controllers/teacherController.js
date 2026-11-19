@@ -10,31 +10,35 @@ const Test = require("../models/Test");
 const getTeacherDashboard = async (req, res) => {
     try {
         const userId = req.user.id;
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).lean();
 
         let teacher = null;
         if (user?.User_Data) {
-            teacher = await Teacher.findById(user.User_Data);
+            teacher = await Teacher.findById(user.User_Data).lean();
         }
 
         const assignedClasses = teacher?.AssignedClasses?.length > 0 
             ? teacher.AssignedClasses 
             : ['Class 9', 'Class 10'];
 
-        // Get students in teacher's classes
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 100;
+        const skip = (page - 1) * limit;
+
+        // Get students in teacher's classes with pagination & .lean()
         const students = await Student.find({
             $or: [
                 { ClassSection: { $in: assignedClasses } },
                 { 'Education.class_year': { $exists: true } }
             ]
-        }).limit(100);
+        }).skip(skip).limit(limit).lean();
 
         const totalStudents = students.length;
-        const courses = await Course.find().limit(20);
+        const courses = await Course.find().limit(20).lean();
 
         // Get assessment results for these students
         const studentIds = students.map(s => s._id);
-        const results = await Result.find({ Std_ID: { $in: studentIds } }).populate('Test_ID');
+        const results = await Result.find({ Std_ID: { $in: studentIds } }).populate('Test_ID').lean();
 
         const passedCount = results.filter(r => r.Score >= 50).length;
         const averageScore = results.length > 0
@@ -69,11 +73,15 @@ const getTeacherDashboard = async (req, res) => {
 // 2. Student Progress & Learning Indicators
 const getStudentsProgress = async (req, res) => {
     try {
-        const students = await Student.find().limit(50);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const students = await Student.find().skip(skip).limit(limit).lean();
         const studentIds = students.map(s => s._id);
 
-        const enrollments = await CourseEnroll.find({ Std_ID: { $in: studentIds } }).populate('Course_ID');
-        const results = await Result.find({ Std_ID: { $in: studentIds } });
+        const enrollments = await CourseEnroll.find({ Std_ID: { $in: studentIds } }).populate('Course_ID').lean();
+        const results = await Result.find({ Std_ID: { $in: studentIds } }).lean();
 
         const studentList = students.map(s => {
             const studentEnrollments = enrollments.filter(e => e.Std_ID?.toString() === s._id.toString());
@@ -92,7 +100,7 @@ const getStudentsProgress = async (req, res) => {
             };
         });
 
-        return res.status(200).json({ success: true, students: studentList });
+        return res.status(200).json({ success: true, count: studentList.length, students: studentList });
     } catch (err) {
         return res.status(500).json({ success: false, msg: err.message });
     }
@@ -101,8 +109,13 @@ const getStudentsProgress = async (req, res) => {
 // 3. Assessment & Test Management
 const getAssessmentOverview = async (req, res) => {
     try {
-        const tests = await Test.find().limit(20);
-        const results = await Result.find();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const skip = (page - 1) * limit;
+
+        const tests = await Test.find().skip(skip).limit(limit).lean();
+        const testIds = tests.map(t => t._id);
+        const results = await Result.find({ Test_ID: { $in: testIds } }).lean();
 
         const assessmentList = tests.map(t => {
             const testResults = results.filter(r => r.Test_ID?.toString() === t._id.toString());
@@ -120,7 +133,7 @@ const getAssessmentOverview = async (req, res) => {
             };
         });
 
-        return res.status(200).json({ success: true, assessments: assessmentList });
+        return res.status(200).json({ success: true, count: assessmentList.length, assessments: assessmentList });
     } catch (err) {
         return res.status(500).json({ success: false, msg: err.message });
     }
