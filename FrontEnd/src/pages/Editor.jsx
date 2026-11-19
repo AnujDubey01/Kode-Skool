@@ -144,34 +144,67 @@ function Editor(props) {
     const userName = props.user?.name || localStorage.getItem('user_name') || 'Student';
 
     return (
-        <div className="w-full h-[92vh] flex flex-col pt-3">
-            {/* Mobile Header */}
-            {window.innerWidth <= 867 && (
-                <div className="flex flex-row justify-between items-center w-full px-4 mb-3 shrink-0">
-                    <div className="flex flex-row items-center gap-3">
-                        <div className="cursor-pointer text-xl text-gray-700 dark:text-gray-200" onClick={props.controlNav}>
-                            <i className="fa-solid fa-list-ul"></i>
+        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 py-5 sm:py-6 font-poppins bg-[#f8fafc] dark:bg-zinc-950 min-h-screen flex flex-col justify-between relative overflow-hidden">
+            {/* Ambient background decorative glow (subtle, no dotmatrix) */}
+            <div className="absolute top-20 -right-20 w-80 h-80 rounded-full bg-blue-100/30 dark:bg-blue-900/10 blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-20 -left-20 w-80 h-80 rounded-full bg-indigo-100/25 dark:bg-indigo-900/10 blur-3xl pointer-events-none"></div>
+
+            {/* Consistent Top Navigation Bar (Matches Dashboard, Courses, Profile) */}
+            <div className="flex flex-row justify-between items-center w-full mb-4 shrink-0 relative z-10">
+                {/* Left: Hamburger + Greeting + Badge */}
+                <div className="flex flex-row items-center gap-3">
+                    <button
+                        type="button"
+                        className="cursor-pointer text-slate-700 dark:text-gray-200 p-2 hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-xl transition-colors border-none bg-transparent"
+                        onClick={props.controlNav}
+                        title="Toggle Navigation"
+                    >
+                        <i className="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <div ref={welcome} className="flex flex-col">
+                        <div className="flex items-center gap-2.5">
+                            <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white m-0">
+                                Welcome, <span className="font-extrabold text-slate-900 dark:text-white">{userName}!</span>
+                            </h1>
+                            <span className="inline-flex items-center text-[10px] sm:text-[11px] font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 border border-blue-200/80 dark:border-blue-700/50 px-2.5 py-0.5 rounded-full whitespace-nowrap">
+                                Code Playground
+                            </span>
                         </div>
-                        <div ref={welcome} className="flex flex-col">
-                            <h1 className="text-base font-semibold text-gray-900 dark:text-white">Welcome {userName}!</h1>
-                            <p className="text-[11px] text-gray-500">Let's crack the code</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className={`flex items-center px-3 py-1 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-zinc-800 text-xs`}>
-                            <i className="fa-solid fa-magnifying-glass text-gray-400 mr-1.5" onClick={openSearchOpt}></i>
-                            <input ref={search} type="text" name="search" id="search" className="bg-transparent outline-none w-20 text-xs text-gray-800 dark:text-gray-100" placeholder="Search" />
-                        </div>
-                        <div className="relative cursor-pointer text-gray-600 dark:text-gray-300 text-sm">
-                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] w-3 h-3 rounded-full flex items-center justify-center font-bold">5</span>
-                            <ion-icon name="notifications"></ion-icon>
-                        </div>
+                        <p className="text-xs text-slate-500 dark:text-zinc-400 mt-0.5 m-0 font-medium">
+                            Let's crack the code
+                        </p>
                     </div>
                 </div>
-            )}
+
+                {/* Right: Search Pill + Notification Bell + User Avatar */}
+                <div className="flex items-center gap-3">
+                    <div className="flex items-center px-3.5 py-1.5 rounded-full border border-slate-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/90 text-xs shadow-sm hover:border-blue-400 transition-all">
+                        <i className="fa-solid fa-magnifying-glass text-slate-400 mr-2 cursor-pointer text-xs" onClick={openSearchOpt}></i>
+                        <input
+                            ref={search}
+                            type="text"
+                            name="search"
+                            id="search"
+                            className="bg-transparent outline-none w-24 sm:w-36 text-xs text-slate-800 dark:text-gray-100 placeholder-slate-400"
+                            placeholder="Search playground..."
+                        />
+                    </div>
+
+                    <div className="relative cursor-pointer w-9 h-9 rounded-full bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center text-slate-600 dark:text-zinc-300 hover:text-blue-600 hover:border-blue-400 shadow-sm transition-all text-sm">
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                            5
+                        </span>
+                        <i className="fa-solid fa-bell"></i>
+                    </div>
+
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-sm cursor-pointer select-none">
+                        {userName.charAt(0).toUpperCase()}
+                    </div>
+                </div>
+            </div>
 
             {/* Desktop / Responsive IDE Frame */}
-            <div className="flex-grow flex flex-row border-t border-gray-200 dark:border-zinc-800 overflow-hidden relative">
+            <div className="flex-grow flex flex-row rounded-2xl shadow-sm border border-slate-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden relative min-h-[calc(100vh-140px)] z-10">
                 {/* Language Controller Sidebar */}
                 <div className="w-14 sm:w-16 shrink-0 border-r border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col items-center py-2 gap-2">
                     <div

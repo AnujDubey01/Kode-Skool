@@ -164,7 +164,9 @@ function AppShell({ toggleMode, handleToggleMode, navItems, handleNavClick, dash
     name: dynamicName
   };
 
-  const isChatbot = location.pathname.toLowerCase().startsWith('/chatbot');
+  const hideFooter = ['/dashboard', '/editor', '/courses', '/profile', '/chatbot', '/admin', '/teacher'].some(
+    path => location.pathname.toLowerCase().startsWith(path)
+  );
 
   if (!isLoggedIn) {
     return <Navigate to="/home" replace />;
@@ -292,7 +294,7 @@ function AppShell({ toggleMode, handleToggleMode, navItems, handleNavClick, dash
           </Routes>
         </main>
       </div>
-      {!isChatbot && <Footer toggleMode={toggleMode} />}
+      {!hideFooter && <Footer toggleMode={toggleMode} />}
     </div>
   );
 }
