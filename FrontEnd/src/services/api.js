@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+// When deployed to production (e.g. Vercel), fallback to the live Render backend
+const API_BASE_URL =
+    process.env.REACT_APP_BACKEND_URL ||
+    (process.env.NODE_ENV === 'production'
+        ? 'https://kode-skool.onrender.com'
+        : 'http://localhost:5000');
 
 const api = axios.create({
     baseURL: API_BASE_URL,

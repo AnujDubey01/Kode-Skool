@@ -61,16 +61,25 @@ const updateStudentProfile = async (req, res) => {
             );
         }
 
-        // If student record was not found or not linked yet, create it
+        // If student record was not found or not linked yet, find by email or create it
         if (!student) {
-            student = new Student({
-                Email: user.Email,
-                Name: name || 'Student',
-                ...updateData
-            });
-            await student.save();
-            user.User_Data = student._id;
-            await user.save();
+            const cleanEmail = user.Email ? user.Email.toLowerCase().trim() : '';
+            student = await Student.findOne({ Email: cleanEmail });
+            if (student) {
+                Object.assign(student, updateData);
+                await student.save();
+                user.User_Data = student._id;
+                await user.save();
+            } else {
+                student = new Student({
+                    Email: cleanEmail,
+                    Name: name || (cleanEmail ? cleanEmail.split('@')[0] : 'Student'),
+                    ...updateData
+                });
+                await student.save();
+                user.User_Data = student._id;
+                await user.save();
+            }
         }
 
         return res.status(200).send({ success: true, msg: "Updated details successfully.", student });
@@ -93,15 +102,22 @@ const getStudentProfile = async (req, res) => {
             student = await Student.findById(user.User_Data);
         }
 
-        // If student doesn't exist yet, lazily create default profile
+        // If student doesn't exist yet, lazily find by email or create default profile
         if (!student) {
-            student = new Student({
-                Email: user.Email,
-                Name: user.Email.split('@')[0] || 'Student'
-            });
-            await student.save();
-            user.User_Data = student._id;
-            await user.save();
+            const cleanEmail = user.Email ? user.Email.toLowerCase().trim() : '';
+            student = await Student.findOne({ Email: cleanEmail });
+            if (student) {
+                user.User_Data = student._id;
+                await user.save();
+            } else {
+                student = new Student({
+                    Email: cleanEmail,
+                    Name: (cleanEmail ? cleanEmail.split('@')[0] : 'Student')
+                });
+                await student.save();
+                user.User_Data = student._id;
+                await user.save();
+            }
         }
 
         return res.status(200).send(student);

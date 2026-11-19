@@ -38,55 +38,87 @@ export default function Profile(props) {
     };
 
     /* load profile and enrolled courses */
-    useEffect(() => {
-        const load = async () => {
-            try {
-                const [data, myCourses] = await Promise.allSettled([
-                    userService.getProfile(),
-                    courseService.getMyCourses()
-                ]);
+    const load = useCallback(async () => {
+        setLoading(true);
+        setError('');
+        try {
+            const [data, myCourses] = await Promise.allSettled([
+                userService.getProfile(),
+                courseService.getMyCourses()
+            ]);
 
-                if (myCourses.status === 'fulfilled' && Array.isArray(myCourses.value) && myCourses.value.length > 0) {
-                    setCoursesCount(myCourses.value.length);
-                }
-
-                if (data.status === 'fulfilled' && data.value && data.value.Name) {
-                    const prof = data.value;
-                    setProfile(prof);
-                    localStorage.setItem('user_name', prof.Name);
-
-                    const sh = prof.Social_Handles || [];
-                    const getHandle = (name) => sh.find(h => h.handle_name === name)?.handle_link || '';
-
-                    setForm({
-                        name: prof.Name || '',
-                        phone: prof.Phone || '',
-                        dob: prof.DOB ? prof.DOB.split('T')[0] : '',
-                        gender: prof.Gender || '',
-                        street: prof.Address?.street || '',
-                        city: prof.Address?.city || 'Delhi',
-                        state: prof.Address?.state || 'Delhi',
-                        country: prof.Address?.country || 'India',
-                        pin: prof.Address?.pin || '110001',
-                        university_type: prof.Education?.university_type || 'School',
-                        school_clg_name: prof.Education?.school_clg_name || 'Kode-Skool Academy',
-                        class_year: prof.Education?.class_year || 'Class 10 — 12',
-                        linkedin: getHandle('linkedin'),
-                        github: getHandle('github'),
-                        codechef: getHandle('codechef'),
-                        instagram: getHandle('instagram'),
-                    });
-                } else {
-                    setError('Failed to load profile.');
-                }
-            } catch {
-                setError('Could not reach the server.');
-            } finally {
-                setLoading(false);
+            if (myCourses.status === 'fulfilled' && Array.isArray(myCourses.value) && myCourses.value.length > 0) {
+                setCoursesCount(myCourses.value.length);
             }
-        };
-        load();
+
+            if (data.status === 'fulfilled' && data.value) {
+                const prof = data.value;
+                const resolvedName = prof.Name || (prof.Email ? prof.Email.split('@')[0] : '') || localStorage.getItem('user_name') || 'Student';
+                prof.Name = resolvedName;
+                setProfile(prof);
+                localStorage.setItem('user_name', resolvedName);
+
+                const sh = prof.Social_Handles || [];
+                const getHandle = (name) => sh.find(h => h.handle_name === name)?.handle_link || '';
+
+                setForm({
+                    name: resolvedName,
+                    phone: prof.Phone || '',
+                    dob: prof.DOB ? prof.DOB.split('T')[0] : '',
+                    gender: prof.Gender || '',
+                    street: prof.Address?.street || '',
+                    city: prof.Address?.city || 'Delhi',
+                    state: prof.Address?.state || 'Delhi',
+                    country: prof.Address?.country || 'India',
+                    pin: prof.Address?.pin || '110001',
+                    university_type: prof.Education?.university_type || 'School',
+                    school_clg_name: prof.Education?.school_clg_name || 'Kode-Skool Academy',
+                    class_year: prof.Education?.class_year || 'Class 10 — 12',
+                    linkedin: getHandle('linkedin'),
+                    github: getHandle('github'),
+                    codechef: getHandle('codechef'),
+                    instagram: getHandle('instagram'),
+                });
+            } else {
+                const token = localStorage.getItem('auth_token');
+                const cachedName = localStorage.getItem('user_name') || 'Student';
+                const cachedEmail = localStorage.getItem('user_email') || '';
+
+                if (token && cachedName) {
+                    // Graceful fallback to cached session so user is never locked out
+                    setProfile({ Name: cachedName, Email: cachedEmail });
+                    setForm({
+                        name: cachedName,
+                        city: 'Delhi',
+                        state: 'Delhi',
+                        country: 'India',
+                        pin: '110001',
+                        university_type: 'School',
+                        school_clg_name: 'Kode-Skool Academy',
+                        class_year: 'Class 10 — 12',
+                    });
+                } else if (!token) {
+                    setError('You are not signed in. Please sign in to view and manage your profile.');
+                } else {
+                    setError('Unable to load profile. The backend server may be starting up; please try again in a few seconds.');
+                }
+            }
+        } catch {
+            const token = localStorage.getItem('auth_token');
+            const cachedName = localStorage.getItem('user_name');
+            if (token && cachedName) {
+                setProfile({ Name: cachedName, Email: localStorage.getItem('user_email') || '' });
+            } else {
+                setError('Could not reach the server. If Render backend is waking up, please allow ~30s and click Retry.');
+            }
+        } finally {
+            setLoading(false);
+        }
     }, []);
+
+    useEffect(() => {
+        load();
+    }, [load]);
 
     const showToast = (msg, type = 'success') => {
         setToast({ msg, type });
@@ -183,12 +215,27 @@ export default function Profile(props) {
 
     if (error) {
         return (
-            <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3 text-center p-6">
-                <div className="w-14 h-14 rounded-full bg-red-50 text-red-500 flex items-center justify-center text-2xl mb-2">
+            <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3.5 text-center p-6">
+                <div className="w-14 h-14 rounded-full bg-red-50 dark:bg-red-950/40 text-red-500 flex items-center justify-center text-2xl mb-1 shadow-sm">
                     <i className="fa-solid fa-circle-exclamation"></i>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Unable to connect</h3>
-                <p className="text-sm text-red-600 dark:text-red-400 max-w-sm">{error}</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Unable to connect</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md leading-relaxed">{error}</p>
+                <div className="flex flex-wrap items-center justify-center gap-3 mt-3">
+                    <button
+                        type="button"
+                        onClick={() => load()}
+                        className="px-5 py-2.5 bg-[#414D8E] hover:bg-[#343e74] text-white text-sm font-semibold rounded-xl shadow-md transition-all active:scale-95 flex items-center gap-2 cursor-pointer border-none"
+                    >
+                        <i className="fa-solid fa-rotate-right"></i> Retry Connection
+                    </button>
+                    <a
+                        href="/login?tab=signin"
+                        className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold rounded-xl transition-all no-underline"
+                    >
+                        Go to Sign In
+                    </a>
+                </div>
             </div>
         );
     }
