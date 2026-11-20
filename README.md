@@ -96,7 +96,7 @@ Kode-Skool/
 ```env
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/Kodeskool
-JWT_SECRET=your_jwt_secret_key_here
+JWT_SECRET=my-key
 FRONTEND_URL=http://localhost:3500
 ```
 
