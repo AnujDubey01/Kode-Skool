@@ -15,7 +15,7 @@ module.exports = {
           blue: '#5D74BD',
           sky: '#169BDF',
           ice: '#6EAAF3',
-          bgLight: '#F2F2F2',
+          bgLight: '#f9fafc',
           bgDark: '#0D0D0D'
         }
       },
