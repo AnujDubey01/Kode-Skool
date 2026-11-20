@@ -349,3 +349,17 @@ export interface ChatResponse {
     message: string;
     data?: ChatMessageData;
 }
+
+//
+
+export interface AuthContextType {
+    token: string | null;
+    role: string;
+    userName: string;
+    isLoggedIn: boolean;
+    setUserName: (name: string) => void;
+    login: (email: string, password: string) => Promise<AuthResponse>;
+    register: (email: string, password: string, name?: string) => Promise<AuthResponse>;
+    logout: () => void;
+}
+

@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { login as apiLogin, register as apiRegister, logout as apiLogout, getToken, getRole, getUserName } from '../services/authService';
+import { AuthResponse, AuthContextType } from '../types';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [token, setToken] = useState(getToken());
     const [role, setRole] = useState(getRole());
     const [userName, setUserName] = useState(getUserName());
@@ -17,7 +18,8 @@ export const AuthProvider = ({ children }) => {
         setIsLoggedIn(!!storedToken);
     }, []);
 
-    const login = async (email, password) => {
+
+    const login = async (email: string, password: string): Promise<AuthResponse> => {
         const data = await apiLogin(email, password);
         if (data.success && data.auth_token) {
             setToken(data.auth_token);
@@ -30,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         return data;
     };
 
-    const register = async (email, password, name) => {
+    const register = async (email: string, password: string, name: string): Promise<AuthResponse> => {
         const data = await apiRegister(email, password, name);
         if (data.success && data.auth_token) {
             setToken(data.auth_token);
@@ -57,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (!context) {
         throw new Error('useAuth must be used within an AuthProvider');
