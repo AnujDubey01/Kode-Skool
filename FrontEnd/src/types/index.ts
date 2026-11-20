@@ -337,3 +337,15 @@ export interface TeacherAssessmentsResponse {
     assessments: TeacherAssessment[];
     msg?: string;
 }
+
+// ==================== CHATBOT TYPES ====================
+export interface ChatMessageData {
+    userMessage: string;
+    aiResponse: string;
+}
+
+export interface ChatResponse {
+    success: boolean;
+    message: string;
+    data?: ChatMessageData;
+}

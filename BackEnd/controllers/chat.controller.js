@@ -16,6 +16,7 @@ const sendMessage = async (req, res) => {
         // Generate AI response
         const aiResponse = await generateAIResponse(message.trim());
 
+
         // Send response to frontend
         return res.status(200).json({
             success: true,
