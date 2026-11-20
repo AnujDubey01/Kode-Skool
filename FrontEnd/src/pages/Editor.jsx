@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import compilerService from '../services/compilerService';
 
 const languages = {
     C: `#include <stdio.h>\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}`,
@@ -17,6 +18,10 @@ function Editor(props) {
     const [currentLanguage, setCurrentLanguage] = useState("C");
     const [code, setCode] = useState(languages["C"]);
     const [output, setOutput] = useState("");
+    const [isExecuting, setIsExecuting] = useState(false);
+    const [executionStats, setExecutionStats] = useState(null);
+    const [stdin, setStdin] = useState("");
+    const [showStdin, setShowStdin] = useState(false);
     const [fullEditor, setFullEditor] = useState(false);
     const [mobileTab, setMobileTab] = useState('code'); // 'code' | 'output'
     const [saved, setSaved] = useState(false);
@@ -64,14 +69,50 @@ function Editor(props) {
         setCurrentLanguage(language);
         setCode(languages[language]);
         setOutput("");
+        setExecutionStats(null);
     };
 
-    const runCode = () => {
-        setOutput("Hello, World!");
+    const runCode = async () => {
+        if (!code || !code.trim()) {
+            setOutput("Error: Cannot execute empty code.");
+            return;
+        }
+
+        setIsExecuting(true);
+        setOutput("⏳ Compiling and executing code...");
+        setExecutionStats(null);
         if (window.innerWidth < 866) setMobileTab('output');
+
+        try {
+            const res = await compilerService.executeCode({
+                language: currentLanguage,
+                script: code,
+                stdin: stdin
+            });
+
+            if (res.success) {
+                const outputText = res.output || res.error || "(Program executed successfully with no output)";
+                setOutput(outputText);
+                setExecutionStats({
+                    cpuTime: res.cpuTime,
+                    memory: res.memory,
+                    statusCode: res.statusCode
+                });
+            } else {
+                setOutput(`Execution Error:\n${res.message || res.error || "Failed to execute"}`);
+            }
+        } catch (err) {
+            const errMsg = err.response?.data?.message || err.message || "Failed to connect to compiler service.";
+            setOutput(`Error: ${errMsg}\nPlease verify that your backend server is running.`);
+        } finally {
+            setIsExecuting(false);
+        }
     };
 
-    const clearOutput = () => { setOutput(""); };
+    const clearOutput = () => {
+        setOutput("");
+        setExecutionStats(null);
+    };
 
     const adjustTextareaHeight = () => {
         if (textareaRef.current) {
@@ -304,10 +345,15 @@ function Editor(props) {
                                 <button
                                     type="button"
                                     onClick={runCode}
-                                    className="px-4 py-1 rounded-lg text-xs font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:opacity-95 shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                                    disabled={isExecuting}
+                                    className={`px-4 py-1 rounded-lg text-xs font-semibold text-white transition-all flex items-center gap-1.5 cursor-pointer ${
+                                        isExecuting
+                                            ? 'bg-emerald-600/70 cursor-not-allowed opacity-80'
+                                            : 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:opacity-95 shadow-sm active:scale-95'
+                                    }`}
                                 >
-                                    <i className="fa-solid fa-play text-[10px]"></i>
-                                    <span>Run</span>
+                                    <i className={`fa-solid ${isExecuting ? 'fa-spinner fa-spin' : 'fa-play'} text-[10px]`}></i>
+                                    <span>{isExecuting ? 'Running...' : 'Run'}</span>
                                 </button>
                             </div>
                         </div>
@@ -335,6 +381,20 @@ function Editor(props) {
                         <div className="h-12 bg-gray-100 dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 px-4 flex items-center justify-between shrink-0">
                             <div className="flex items-center gap-2">
                                 <span className="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-zinc-400">Terminal Output</span>
+                                {executionStats && (
+                                    <div className="hidden sm:flex items-center gap-1.5 ml-1 text-[11px] font-mono">
+                                        {executionStats.cpuTime !== null && executionStats.cpuTime !== undefined && (
+                                            <span className="bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 rounded-md font-semibold border border-emerald-200 dark:border-emerald-800/60">
+                                                ⚡ {executionStats.cpuTime}s
+                                            </span>
+                                        )}
+                                        {executionStats.memory !== null && executionStats.memory !== undefined && (
+                                            <span className="bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-md font-semibold border border-blue-200 dark:border-blue-800/60">
+                                                💾 {executionStats.memory} KB
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
                                 {window.innerWidth <= 867 && (
                                     <button
                                         type="button"
@@ -345,14 +405,55 @@ function Editor(props) {
                                     </button>
                                 )}
                             </div>
-                            <button
-                                type="button"
-                                onClick={clearOutput}
-                                className="text-xs font-semibold text-gray-500 hover:text-red-500 transition-colors"
-                            >
-                                Clear
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowStdin(!showStdin)}
+                                    className={`text-xs font-medium px-2 py-0.5 rounded-md transition-colors ${
+                                        showStdin || stdin.trim()
+                                            ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-semibold'
+                                            : 'text-gray-500 hover:text-gray-800 dark:text-zinc-400 dark:hover:text-zinc-200'
+                                    }`}
+                                    title="Provide standard input (stdin) for programs that ask for user input"
+                                >
+                                    <i className="fa-solid fa-keyboard mr-1 text-[11px]"></i>
+                                    Input
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={clearOutput}
+                                    className="text-xs font-semibold text-gray-500 hover:text-red-500 transition-colors"
+                                >
+                                    Clear
+                                </button>
+                            </div>
                         </div>
+
+                        {/* Collapsible Standard Input Area */}
+                        {showStdin && (
+                            <div className="p-3 bg-amber-50/60 dark:bg-zinc-900/80 border-b border-amber-200/60 dark:border-zinc-800 flex flex-col gap-1 shrink-0">
+                                <div className="flex items-center justify-between text-[11px] font-semibold text-amber-800 dark:text-amber-400">
+                                    <span>Program Input (stdin):</span>
+                                    {stdin && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setStdin('')}
+                                            className="text-[10px] text-gray-400 hover:text-red-500"
+                                        >
+                                            Clear input
+                                        </button>
+                                    )}
+                                </div>
+                                <textarea
+                                    value={stdin}
+                                    onChange={(e) => setStdin(e.target.value)}
+                                    placeholder="Enter inputs here (separated by newlines for multiple prompts)..."
+                                    rows={2}
+                                    className="w-full p-2 bg-white dark:bg-zinc-950 border border-amber-200 dark:border-zinc-700 rounded-lg text-xs font-mono text-gray-800 dark:text-gray-200 outline-none resize-none focus:border-blue-400"
+                                />
+                            </div>
+                        )}
+
                         <div className="flex-grow p-4 overflow-auto font-mono text-xs text-gray-800 dark:text-gray-200 bg-white dark:bg-zinc-950">
                             <textarea
                                 value={output}

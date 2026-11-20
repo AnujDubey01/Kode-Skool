@@ -363,3 +363,21 @@ export interface AuthContextType {
     logout: () => void;
 }
 
+
+// ==================== COMPILER TYPES ====================
+export interface ExecuteCodePayload {
+    script: string;
+    language: string;
+    stdin?: string;
+}
+
+export interface CompilerResponse {
+    success: boolean;
+    output?: string;
+    error?: string | null;
+    statusCode?: number;
+    memory?: string | number | null;
+    cpuTime?: string | number | null;
+    isExecutionSuccess?: boolean;
+    message?: string;
+}

@@ -7,6 +7,7 @@ const courseRoutes = require("./routes/courseRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
 const chatRoutes = require("./routes/chat.routes");
+const compilerRoutes = require("./routes/compiler.routes");
 
 
 
@@ -30,5 +31,6 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/v1/chat", chatRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/compiler", compilerRoutes);
 
 module.exports = app;
