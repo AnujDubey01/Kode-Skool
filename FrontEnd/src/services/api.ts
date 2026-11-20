@@ -18,12 +18,13 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('auth_token');
     if (token) {
-        config.headers['auth-token'] = token;
+        config.headers.set('auth-token', token)
     }
     return config;
-}, (error) => {
+}, (error: any) => {
     return Promise.reject(error);
 });
+
 
 export default api;
 export { API_BASE_URL };

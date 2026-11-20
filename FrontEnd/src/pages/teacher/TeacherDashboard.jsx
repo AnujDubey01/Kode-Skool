@@ -114,11 +114,10 @@ export default function TeacherDashboard({ toggleMode }) {
                     <button
                         key={t.id}
                         onClick={() => setActiveTab(t.id)}
-                        className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer ${
-                            activeTab === t.id
+                        className={`px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer ${activeTab === t.id
                                 ? 'bg-gradient-to-r from-[#414D8E] via-[#5D74BD] to-[#169BDF] text-white shadow-sm'
                                 : 'bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-gray-600 dark:text-zinc-300 hover:bg-gray-50 dark:hover:bg-zinc-700'
-                        }`}
+                            }`}
                     >
                         <i className={`fa-solid ${t.icon}`}></i>
                         <span>{t.label}</span>

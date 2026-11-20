@@ -1,7 +1,9 @@
 import api from './api';
+import { AuthResponse, UserRole } from '../types';
 
-export const login = async (email, password) => {
-    const response = await api.post('/api/login', { email, password });
+export const login = async (email: string, password: string):
+    Promise<AuthResponse> => {
+    const response = await api.post<AuthResponse>('/api/login', { email, password });
     if (response.data && response.data.auth_token) {
         localStorage.setItem('auth_token', response.data.auth_token);
         if (response.data.userType) {
@@ -19,8 +21,8 @@ export const login = async (email, password) => {
     return response.data;
 };
 
-export const register = async (email, password, name) => {
-    const response = await api.post('/api/register/student', { email, password, name });
+export const register = async (email: string, password: string, name?: string): Promise<AuthResponse> => {
+    const response = await api.post<AuthResponse>('/api/register/student', { email, password, name });
     if (response.data && response.data.auth_token) {
         localStorage.setItem('auth_token', response.data.auth_token);
         if (response.data.userType) {
@@ -38,26 +40,26 @@ export const register = async (email, password, name) => {
     return response.data;
 };
 
-export const logout = () => {
+export const logout = (): void => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_name');
     localStorage.removeItem('user_email');
 };
 
-export const getToken = () => {
+export const getToken = (): string | null => {
     return localStorage.getItem('auth_token');
 };
 
-export const getRole = () => {
-    return localStorage.getItem('user_role') || 'Student';
+export const getRole = (): UserRole => {
+    return (localStorage.getItem('user_role') as UserRole) || 'Student';
 };
 
-export const getUserName = () => {
+export const getUserName = (): string => {
     return localStorage.getItem('user_name') || 'Student';
 };
 
-export const isAuthenticated = () => {
+export const isAuthenticated = (): boolean => {
     return !!localStorage.getItem('auth_token');
 };
 

@@ -177,7 +177,7 @@ function YourCourses(props) {
 
     return (
         <div className="your-courses">
-            <h2>Your courses</h2>                
+            <h2>Your courses</h2>
             <div className="your-course-list">
                 {courses.map((course) => (
                     <div

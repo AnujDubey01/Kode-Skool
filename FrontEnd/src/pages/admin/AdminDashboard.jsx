@@ -247,11 +247,10 @@ export default function AdminDashboard({ toggleMode }) {
                 ].map(tab => (
                     <button
                         key={tab.id}
-                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 whitespace-nowrap ${
-                            activeTab === tab.id
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 whitespace-nowrap ${activeTab === tab.id
                                 ? 'bg-blue-50 dark:bg-blue-900/30 text-[#414D8E] dark:text-blue-400 border border-blue-200 dark:border-blue-800/60 shadow-sm'
                                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
-                        }`}
+                            }`}
                         onClick={() => setActiveTab(tab.id)}
                     >
                         <i className={`fa-solid ${tab.icon}`}></i> {tab.label}
@@ -542,11 +541,10 @@ export default function AdminDashboard({ toggleMode }) {
                                     {['All', 'Student', 'Faculty', 'Admin'].map(r => (
                                         <button
                                             key={r}
-                                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                                                userFilter === r
+                                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${userFilter === r
                                                     ? 'bg-white dark:bg-slate-800 text-[#414D8E] dark:text-blue-400 shadow-sm'
                                                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                                            }`}
+                                                }`}
                                             onClick={() => setUserFilter(r)}
                                         >
                                             {r === 'Faculty' ? 'Teachers' : r}
@@ -598,13 +596,12 @@ export default function AdminDashboard({ toggleMode }) {
                                                     </td>
                                                     <td className="px-4 py-3.5 text-slate-600 dark:text-slate-300">{u.email}</td>
                                                     <td className="px-4 py-3.5">
-                                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                                                            u.role === 'Admin'
+                                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${u.role === 'Admin'
                                                                 ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300'
                                                                 : u.role === 'Faculty'
-                                                                ? 'bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300'
-                                                                : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300'
-                                                        }`}>
+                                                                    ? 'bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300'
+                                                                    : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300'
+                                                            }`}>
                                                             {u.role === 'Faculty' ? 'Teacher' : u.role}
                                                         </span>
                                                     </td>
@@ -925,9 +922,8 @@ export default function AdminDashboard({ toggleMode }) {
 
             {/* Toast Notification */}
             {toast && (
-                <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-xl shadow-xl text-sm font-semibold text-white transition-all transform duration-300 ${
-                    toast.type === 'success' ? 'bg-emerald-600' : 'bg-rose-600'
-                }`}>
+                <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-5 py-3 rounded-xl shadow-xl text-sm font-semibold text-white transition-all transform duration-300 ${toast.type === 'success' ? 'bg-emerald-600' : 'bg-rose-600'
+                    }`}>
                     <i className={`fa-solid ${toast.type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}`}></i>
                     {toast.msg}
                 </div>
