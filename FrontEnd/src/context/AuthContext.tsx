@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return data;
     };
 
-    const register = async (email: string, password: string, name: string): Promise<AuthResponse> => {
+    const register = async (email: string, password: string, name?: string): Promise<AuthResponse> => {
         const data = await apiRegister(email, password, name);
         if (data.success && data.auth_token) {
             setToken(data.auth_token);
