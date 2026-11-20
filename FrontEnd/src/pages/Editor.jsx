@@ -19,10 +19,45 @@ function Editor(props) {
     const [output, setOutput] = useState("");
     const [fullEditor, setFullEditor] = useState(false);
     const [mobileTab, setMobileTab] = useState('code'); // 'code' | 'output'
+    const [saved, setSaved] = useState(false);
     const textareaRef = useRef(null);
 
     const handleInputChange = (e) => {
         setCode(e.target.value);
+    };
+
+    const handleSaveCode = () => {
+        try {
+            const langMap = {
+                C: 'c',
+                'C++': 'cpp',
+                Java: 'java',
+                Py: 'py',
+                SQL: 'sql',
+                Swift: 'swift',
+                JS: 'js',
+                R: 'r',
+                Ruby: 'rb',
+                Rust: 'rs'
+            };
+            const langKey = langMap[currentLanguage] || 'code';
+            const fileName = `kode-skool-${langKey}.txt`;
+
+            const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
+        } catch (error) {
+            console.error('Failed to download file:', error);
+        }
     };
 
     const switchLanguage = (language) => {
@@ -333,10 +368,12 @@ function Editor(props) {
                 <div className="absolute bottom-5 right-6 flex items-center gap-2.5 z-20">
                     <button
                         type="button"
-                        className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-slate-800 hover:bg-slate-900 shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                        onClick={handleSaveCode}
+                        className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-slate-800 hover:bg-slate-900 shadow-md transition-all cursor-pointer flex items-center gap-1.5 active:scale-95"
+                        title="Download code as .txt file"
                     >
-                        <i className="fa-solid fa-floppy-disk"></i>
-                        <span>Save</span>
+                        <i className={`fa-solid ${saved ? 'fa-check text-emerald-400' : 'fa-floppy-disk'}`}></i>
+                        <span>{saved ? 'Saved!' : 'Save'}</span>
                     </button>
                     <button
                         type="button"
