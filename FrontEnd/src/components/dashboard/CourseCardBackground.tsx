@@ -1,6 +1,7 @@
 import React from 'react';
+import { CourseCardBackgroundProps } from '../../types/index';
 
-function getTechType(title = '') {
+function getTechType(title?: string): string {
     const t = title.toLowerCase();
     if (t.includes('python')) return 'python';
     if (t.includes('typescript')) return 'typescript';
@@ -14,7 +15,7 @@ function getTechType(title = '') {
     return 'default';
 }
 
-export default function CourseCardBackground({ title = '', technology = '' }) {
+export default function CourseCardBackground({ title = "", technology = "" }: CourseCardBackgroundProps) {
     const tech = getTechType(`${title} ${technology}`);
 
     return (
@@ -106,8 +107,8 @@ export default function CourseCardBackground({ title = '', technology = '' }) {
                             <text x="34" y="102">return [x**2 for x in matrix]</text>
                         </g>
                         <g transform="translate(240, 20) scale(0.65)" opacity="0.45">
-                            <path fill="url(#pyBlue)" d="M63.3 1.1c-15.6 0-25 7-25 16.3v12.3h25.4v3.6H27.9C12.4 33.3 0 43.8 0 63.8c0 19.9 10.9 30.2 26.5 30.2h7.3v-10.4c0-11.2 9.5-20.9 21.2-20.9h25.1c9.4 0 17.1-8 17.1-17.5V17.4c0-9.3-10-16.3-25.6-16.3h-8.3zm-13.6 9.8c2.6 0 4.7 2.1 4.7 4.7 0 2.6-2.1 4.7-4.7 4.7-2.6 0-4.7-2.1-4.7-4.7 0-2.6 2.1-4.7 4.7-4.7z"/>
-                            <path fill="url(#pyYellow)" d="M64.7 126.9c15.6 0 25-7 25-16.3V98.3H64.3v-3.6h35.8c15.5 0 27.9-10.5 27.9-30.5 0-19.9-10.9-30.2-26.5-30.2h-7.3v10.4c0 11.2-9.5 20.9-21.2 20.9H47.9c-9.4 0-17.1 8-17.1 17.5v27.8c0 9.3 10 16.3 25.6 16.3h8.3zm13.6-9.8c-2.6 0-4.7-2.1-4.7-4.7 0-2.6 2.1-4.7 4.7-4.7 2.6 0 4.7 2.1 4.7 4.7 0 2.6-2.1 4.7-4.7 4.7z"/>
+                            <path fill="url(#pyBlue)" d="M63.3 1.1c-15.6 0-25 7-25 16.3v12.3h25.4v3.6H27.9C12.4 33.3 0 43.8 0 63.8c0 19.9 10.9 30.2 26.5 30.2h7.3v-10.4c0-11.2 9.5-20.9 21.2-20.9h25.1c9.4 0 17.1-8 17.1-17.5V17.4c0-9.3-10-16.3-25.6-16.3h-8.3zm-13.6 9.8c2.6 0 4.7 2.1 4.7 4.7 0 2.6-2.1 4.7-4.7 4.7-2.6 0-4.7-2.1-4.7-4.7 0-2.6 2.1-4.7 4.7-4.7z" />
+                            <path fill="url(#pyYellow)" d="M64.7 126.9c15.6 0 25-7 25-16.3V98.3H64.3v-3.6h35.8c15.5 0 27.9-10.5 27.9-30.5 0-19.9-10.9-30.2-26.5-30.2h-7.3v10.4c0 11.2-9.5 20.9-21.2 20.9H47.9c-9.4 0-17.1 8-17.1 17.5v27.8c0 9.3 10 16.3 25.6 16.3h8.3zm13.6-9.8c-2.6 0-4.7-2.1-4.7-4.7 0-2.6 2.1-4.7 4.7-4.7 2.6 0 4.7 2.1 4.7 4.7 0 2.6-2.1 4.7-4.7 4.7z" />
                         </g>
                     </g>
                 )}
@@ -125,7 +126,7 @@ export default function CourseCardBackground({ title = '', technology = '' }) {
                         </g>
                         {/* Iconic JS Emblem Watermark */}
                         <g transform="translate(245, 18) scale(0.65)" opacity="0.6">
-                            <rect width="100" height="100" rx="16" fill="#F7DF1E"/>
+                            <rect width="100" height="100" rx="16" fill="#F7DF1E" />
                             <text x="68" y="80" fill="#000000" fontFamily="'Poppins', 'Arial Black', sans-serif" fontWeight="900" fontSize="56" textAnchor="middle">JS</text>
                         </g>
                     </g>
@@ -142,7 +143,7 @@ export default function CourseCardBackground({ title = '', technology = '' }) {
                             <text x="18" y="102">&#125;</text>
                         </g>
                         <g transform="translate(245, 18) scale(0.65)" opacity="0.6">
-                            <rect width="100" height="100" rx="16" fill="#3178C6"/>
+                            <rect width="100" height="100" rx="16" fill="#3178C6" />
                             <text x="68" y="80" fill="#ffffff" fontFamily="'Poppins', 'Arial Black', sans-serif" fontWeight="900" fontSize="56" textAnchor="middle">TS</text>
                         </g>
                     </g>
@@ -194,10 +195,10 @@ export default function CourseCardBackground({ title = '', technology = '' }) {
                             <text x="18" y="102">WHERE course = 'SQL' ORDER BY score DESC;</text>
                         </g>
                         <g transform="translate(250, 18) scale(0.6)" opacity="0.45">
-                            <ellipse cx="64" cy="24" rx="42" ry="14" fill="#38bdf8"/>
-                            <path d="M22 24v24c0 7.7 18.8 14 42 14s42-6.3 42-14V24" fill="none" stroke="#38bdf8" strokeWidth="6"/>
-                            <path d="M22 48v24c0 7.7 18.8 14 42 14s42-6.3 42-14V48" fill="none" stroke="#38bdf8" strokeWidth="6"/>
-                            <path d="M22 72v24c0 7.7 18.8 14 42 14s42-6.3 42-14V72" fill="none" stroke="#38bdf8" strokeWidth="6"/>
+                            <ellipse cx="64" cy="24" rx="42" ry="14" fill="#38bdf8" />
+                            <path d="M22 24v24c0 7.7 18.8 14 42 14s42-6.3 42-14V24" fill="none" stroke="#38bdf8" strokeWidth="6" />
+                            <path d="M22 48v24c0 7.7 18.8 14 42 14s42-6.3 42-14V48" fill="none" stroke="#38bdf8" strokeWidth="6" />
+                            <path d="M22 72v24c0 7.7 18.8 14 42 14s42-6.3 42-14V72" fill="none" stroke="#38bdf8" strokeWidth="6" />
                         </g>
                     </g>
                 )}
@@ -212,11 +213,11 @@ export default function CourseCardBackground({ title = '', technology = '' }) {
                             <text x="18" y="86">&lt;KodeSkool.Course /&gt;</text>
                         </g>
                         <g transform="translate(255, 30) scale(2.8)" opacity="0.45">
-                            <circle cx="0" cy="0" r="2.05" fill="#61DAFB"/>
+                            <circle cx="0" cy="0" r="2.05" fill="#61DAFB" />
                             <g stroke="#61DAFB" strokeWidth="1" fill="none">
-                                <ellipse rx="11" ry="4.2"/>
-                                <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
-                                <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
+                                <ellipse rx="11" ry="4.2" />
+                                <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+                                <ellipse rx="11" ry="4.2" transform="rotate(120)" />
                             </g>
                         </g>
                     </g>
@@ -232,9 +233,9 @@ export default function CourseCardBackground({ title = '', technology = '' }) {
                             <text x="30" y="86">public static void main() &#123;&#125;</text>
                         </g>
                         <g transform="translate(245, 18) scale(0.6)" opacity="0.45">
-                            <path fill="#EA2D2E" d="M47.7 93.3s-7.1 4.2 4.9 5.6c14.6 1.7 22.1 1.6 38.3-.9 0 0 5.3 3.3 12.3 6.1-32.9 14.8-74.8-1.5-55.5-10.8z"/>
-                            <path fill="#5382A1" d="M41.5 81.3s-8.1 6.1 5.4 7.6c16.5 1.8 28.5 2 50.8-1.2 0 0 3.7 3.8 8.6 5.3-39 12.6-84.3.4-64.8-11.7z"/>
-                            <path fill="#EA2D2E" d="M72.2 49.3c5.4 6.2-1.4 11.9-1.4 11.9s13.8-7.1 7.4-16.1c-6-8.5-11.2-12.7-22.7-24.1 3.5 11 11.3 22.1 16.7 28.3z"/>
+                            <path fill="#EA2D2E" d="M47.7 93.3s-7.1 4.2 4.9 5.6c14.6 1.7 22.1 1.6 38.3-.9 0 0 5.3 3.3 12.3 6.1-32.9 14.8-74.8-1.5-55.5-10.8z" />
+                            <path fill="#5382A1" d="M41.5 81.3s-8.1 6.1 5.4 7.6c16.5 1.8 28.5 2 50.8-1.2 0 0 3.7 3.8 8.6 5.3-39 12.6-84.3.4-64.8-11.7z" />
+                            <path fill="#EA2D2E" d="M72.2 49.3c5.4 6.2-1.4 11.9-1.4 11.9s13.8-7.1 7.4-16.1c-6-8.5-11.2-12.7-22.7-24.1 3.5 11 11.3 22.1 16.7 28.3z" />
                         </g>
                     </g>
                 )}
@@ -249,7 +250,7 @@ export default function CourseCardBackground({ title = '', technology = '' }) {
                             <text x="18" y="86">summary(data)</text>
                         </g>
                         <g transform="translate(240, 20) scale(0.65)" opacity="0.5">
-                            <ellipse cx="64" cy="64" rx="52" ry="38" fill="none" stroke="#276DC3" strokeWidth="9"/>
+                            <ellipse cx="64" cy="64" rx="52" ry="38" fill="none" stroke="#276DC3" strokeWidth="9" />
                             <text x="64" y="88" fill="#ffffff" fontFamily="'Poppins', 'Arial Black', sans-serif" fontWeight="900" fontSize="64" textAnchor="middle">R</text>
                         </g>
                     </g>

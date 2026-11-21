@@ -1,10 +1,10 @@
 import React from 'react';
 import cLang from '../../assets/img/cLang.png';
-
+import { TechIconProps } from '../../types';
 /**
  * Resolves the primary technology from the tech string or course title.
  */
-function detectTech(tech = '', name = '') {
+function detectTech(tech?: string, name?: string): string {
     const combined = `${tech} ${name}`.toLowerCase();
     if (combined.includes('python')) return 'python';
     if (combined.includes('react')) return 'react';
@@ -24,7 +24,7 @@ function detectTech(tech = '', name = '') {
     return 'generic';
 }
 
-export default function TechIcon({ technology, name, size = 56, className = '' }) {
+export default function TechIcon({ technology, name, size = 56, className = '' }: TechIconProps) {
     const techKey = detectTech(technology, name);
 
     const containerStyle = {

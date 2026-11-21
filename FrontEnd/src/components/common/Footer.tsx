@@ -1,8 +1,8 @@
 import React from 'react';
 import FooterLogo from '../../assets/img/footer-logo.png';
-
-function Footer(props) {
-    const isDark = props.toggleMode === 'dark';
+import { FooterProps } from '../../types';
+function Footer({ toggleMode }: FooterProps) {
+    const isDark = toggleMode === 'dark';
 
     return (
         <div className="relative w-full">

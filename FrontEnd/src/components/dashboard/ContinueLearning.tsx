@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import courseService from '../../services/courseService';
+import { ContinueLearningProps } from '../../types';
 
-export default function ContinueLearning({ course, lesson, progress = 68, toggleMode }) {
+export default function ContinueLearning({ course, lesson, progress = 68, toggleMode = "" }: ContinueLearningProps) {
     const [activeCourse, setActiveCourse] = useState({
         title: 'Learn Python 3',
         lesson: 'Unit 1: Hello World & Syntax',
@@ -17,11 +18,13 @@ export default function ContinueLearning({ course, lesson, progress = 68, toggle
                 const myCourses = await courseService.getMyCourses();
                 if (Array.isArray(myCourses) && myCourses.length > 0) {
                     const first = myCourses[0];
-                    const details = await courseService.getCourse(first.Course_ID);
+                    const courseId = typeof first.Course_ID === 'string' ? first.Course_ID : first.Course_ID?._id;
+                    if (!courseId) return;
+                    const details = await courseService.getCourse(courseId);
                     if (details && details.Course_Name && isMounted) {
                         let currentLessonName = 'Unit 1: Core Concepts & Practice';
                         try {
-                            const struct = await courseService.getCourseStruct(first.Course_ID);
+                            const struct = await courseService.getCourseStruct(courseId);
                             if (struct?.Unit_List?.[0]) {
                                 const unit1 = struct.Unit_List[0];
                                 const topic1 = unit1.Topic_List?.[0];
@@ -35,7 +38,7 @@ export default function ContinueLearning({ course, lesson, progress = 68, toggle
                             title: details.Course_Name,
                             lesson: currentLessonName,
                             progress: 30,
-                            link: `/Courses/View?course_id=${first.Course_ID}`
+                            link: `/Courses/View?course_id=${courseId}`
                         });
                     }
                 }

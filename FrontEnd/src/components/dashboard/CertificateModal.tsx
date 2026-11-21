@@ -1,7 +1,8 @@
 import React from 'react';
 import logo from '../../assets/img/logo.png';
+import { certificateModalProps } from '../../types';
 
-export default function CertificateModal({ studentName = 'Student', courseName = 'Full-Stack Web & C Programming', onClose }) {
+export default function CertificateModal({ studentName = 'Student', courseName = 'Full-Stack Web & C Programming', onClose }: certificateModalProps) {
     const handlePrint = () => {
         window.print();
     };

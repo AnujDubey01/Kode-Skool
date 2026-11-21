@@ -381,3 +381,34 @@ export interface CompilerResponse {
     isExecutionSuccess?: boolean;
     message?: string;
 }
+
+export interface TechIconProps {
+    technology?: string;
+    name?: string;
+    size?: number;
+    className?: string;
+}
+
+export interface FooterProps { toggleMode?: string; }
+
+export interface CourseCardBackgroundProps {
+    title?: string;
+    technology?: string;
+}
+
+export interface ContinueLearningProps {
+    course?: {
+        title?: string;
+        progress?: number;
+        link?: string;
+    };
+    lesson?: string;
+    progress?: number;
+    toggleMode?: string;
+}
+
+export interface certificateModalProps {
+    studentName: string;
+    courseName: string;
+    onClose?: () => void;
+}
