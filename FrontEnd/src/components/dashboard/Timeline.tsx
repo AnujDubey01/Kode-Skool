@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { TimelineProps, UserActivityItem } from '../../types';
 
-const getActivityByYear = (year, activity) => {
+const getActivityByYear = (year: number, activity?: UserActivityItem[]): UserActivityItem[] => {
     if (!activity) return [];
     return activity.filter(item => {
         const activityYear = new Date(item.date).getFullYear();
@@ -8,16 +9,16 @@ const getActivityByYear = (year, activity) => {
     });
 };
 
-function Timeline(props) {
+function Timeline({ toggleMode = '', activity = [] }: TimelineProps) {
     const [timelineYear, setTimelineYear] = useState(new Date().getFullYear());
 
-    const handleYearChange = (event) => {
+    const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTimelineYear(Number(event.target.value));
     };
 
     useEffect(() => {
         const currentYear = timelineYear;
-        const yearData = getActivityByYear(currentYear, props.activity);
+        const yearData = getActivityByYear(currentYear, activity);
 
         const Jan1Date = new Date(`January 01, ${currentYear}`);
         const Jan1Day = Jan1Date.getDay();
@@ -27,7 +28,7 @@ function Timeline(props) {
 
         yearData.forEach(day => {
             const date2 = new Date(day.date);
-            const diffTime = Math.abs(date2 - Jan1Date);
+            const diffTime = Math.abs(date2.getTime() - Jan1Date.getTime());
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
             const targetBox = diffDays + Jan1Day;
 
@@ -36,12 +37,12 @@ function Timeline(props) {
             }
         });
 
-    }, [timelineYear, props.activity]);
+    }, [timelineYear, activity]);
 
     return (
         <div className="timeline">
             <h2>Timeline</h2>
-            <div className={'timeline-container mt-3 px-4 pt-4 pb-2 ' + props.toggleMode}>
+            <div className={'timeline-container mt-3 px-4 pt-4 pb-2 ' + toggleMode}>
                 <div className="timeline-head-section px-2 d-flex flex-row justify-content-between fw-medium">
                     <p>Timeline</p>
                     <div className="active-days-max-streak d-flex flex-row justify-content-between">
@@ -50,7 +51,7 @@ function Timeline(props) {
                     </div>
                 </div>
                 <div className="timeline-box-year gap-2">
-                    <div className={'timeline-box d-flex flex-row rounded-2 ' + props.toggleMode}>
+                    <div className={'timeline-box d-flex flex-row rounded-2 ' + toggleMode}>
                         <div className="week-days">
                             <p></p>
                             <p>Sun</p>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { TestSectionProps, TestStats } from '../../types';
 
-function TestSection(props) {
-    const [test, setTest] = useState({
+function TestSection(props: TestSectionProps) {
+    const [test, setTest] = useState<TestStats>({
         testWritten: 0,
         overallAvg: 0,
         testsTaken: 0,
@@ -21,8 +22,8 @@ function TestSection(props) {
         };
     }, [props.test]);
 
-    const sectionRef = useRef(null);
-    const observerRef = useRef(null);
+    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const observerRef = useRef<IntersectionObserver | null>(null);
 
     const startRunningNumbers = useCallback(() => {
         const duration = 2000;
@@ -53,8 +54,8 @@ function TestSection(props) {
         requestAnimationFrame(animate);
     }, [targetValues]);
 
-    const container = useRef(null);
-    const dropBtn = useRef(null);
+    const container = useRef<HTMLDivElement | null>(null);
+    const dropBtn = useRef<HTMLDivElement | null>(null);
     const handleOpenContainer = () => {
         if (container.current) container.current.classList.toggle('close');
         if (dropBtn.current) {
@@ -64,7 +65,7 @@ function TestSection(props) {
     };
 
     useEffect(() => {
-        const handleIntersection = (entries) => {
+        const handleIntersection = (entries: IntersectionObserverEntry[]) => {
             const entry = entries[0];
             if (entry.isIntersecting) {
                 startRunningNumbers();

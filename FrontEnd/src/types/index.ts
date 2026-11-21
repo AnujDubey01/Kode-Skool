@@ -412,3 +412,27 @@ export interface certificateModalProps {
     courseName: string;
     onClose?: () => void;
 }
+
+export interface UserActivityItem {
+    date: string | Date;
+    workTime: string;
+}
+
+export interface TimelineProps {
+    toggleMode?: string;
+    activity?: UserActivityItem[];
+}
+
+export interface TestStats {
+    testWritten: number;
+    overallAvg: number;
+    testsTaken: number;
+    passed: number;
+    failed: number;
+    resultWaiting: number;
+}
+
+export interface TestSectionProps {
+    toggleMode?: string;
+    test?: TestStats;
+}
